@@ -1,6 +1,6 @@
 # CSE 351: Concurrency and Parallelism
 
-This repository is intended for students enrolled in the CSE 351 course at Brigham Young University-Idaho (BYU-I). **Please download a personal copy of this repository instead of forking it.** Your use of this repository is subject to the [License Agreement](./LICENSE.md).
+This repository is intended for students enrolled in CSE 351 at Brigham Young University-Idaho (BYU-I). **Please download a personal copy of this repository instead of forking it.** Your use of this repository is subject to the [License Agreement](./LICENSE.md).
 
 ![](./assets/download-zip.jpg)
 
