@@ -1,3 +1,4 @@
+# Run this to auto create folder structure; there are multiple versions of this without the student repo currently.
 import os
 
 parent_dir = os.getcwd()
