@@ -15,19 +15,46 @@ Section | Content
 
 :key: = Vital concepts that we will continue to build on in coming lessons / key learning outcomes for this course.
 
-3.1 Best Practices and Limitations
+
+## 3.1 Best Practices and Limitations
 When to Use Threads (I/O-bound tasks)
 The GIL's Impact on CPU-bound Tasks
 Debugging Multithreaded Programs (Challenges and Techniques)
 Thread Safety and Data Integrity
 
-3.2 Thread Pools
+## Thread Safety:
+Expand on the concept of critical sections by explicitly discussing thread safety.
+Define what it means for code to be thread-safe and why it's essential for concurrent programs.
+Discuss common sources of thread safety issues (e.g., shared mutable state).
+
+## Deadlocks and Livelocks (Introduction):
+While you mentioned deadlocks, consider providing a more detailed introduction to deadlocks and livelocks.
+Explain the conditions that lead to deadlocks and livelocks.
+Provide simple examples of how these problems can occur.
+Even if you don't go into deep solutions, alerting students to these problems early is very helpful.
+
+## Race Conditions (More Examples):
+Expand on race conditions with more diverse and illustrative examples.
+Consider examples that involve different data structures or operations.
+Demonstrate how subtle race conditions can be difficult to detect.
+
+## Context Switching:
+Give a basic overview of context switching.
+Explain how the operating system manages threads and switches between them.
+This helps students understand the overhead associated with threads.
+
+## Atomic Operations (Introduction):
+If you have time, a brief introduction to atomic operations can be useful.
+Explain that some operations can be performed indivisibly, even in concurrent environments.
+This can provide a glimpse into more advanced synchronization techniques.
+
+## 3.2 Thread Pools
 Why Thread Pools? (Resource Management)
 concurrent.futures.ThreadPoolExecutor (in Python)
 Submitting Tasks to a Thread Pool
 Managing Results (Futures)
 
-3.3 Thread Communication
+## 3.3 Thread Communication
 Shared Memory (and its challenges)
 Race Conditions
 Deadlocks, Livelocks, Starvation
@@ -38,11 +65,11 @@ threading.Semaphore
 threading.Condition (Wait/Notify Mechanisms)
 threading.Event
 
-3.4 Introduction to Inter-Process Communication
+## 3.4 Introduction to Inter-Process Communication
 Why IPC? (Data Sharing, Coordination between Processes)
 Challenges of IPC (Data Consistency, Synchronization)
 
-3.5 IPC Mechanisms
+## 3.5 IPC Mechanisms
 Pipes (Unidirectional, Bidirectional)
 Message Queues
 Shared Memory (OS-level, not just within a single process)
@@ -50,36 +77,12 @@ System V Shared Memory
 POSIX Shared Memory
 Signals
 
-3.6 Synchronization Primitives
+## 3.6 Synchronization Primitives
 Mutexes (Mutual Exclusion Locks)
 Semaphores (Counting and Binary)
 Condition Variables (Wait/Notify)
 Barriers
 Monitors (Higher-level Synchronization Construct)
-
-3.7 Deadlock Prevention and Avoidance
-Deadlock Conditions (Mutual Exclusion, Hold and Wait, No Preemption, Circular Wait)
-Strategies for Deadlock Prevention (Resource Ordering, etc.)
-Deadlock Avoidance (Banker's Algorithm - Conceptual)
-Deadlock Detection and Recovery
-
-
-
-
-
-
-
-
-### Topic 1
-
-### Topic 1
-
-
-States of a Process in an OS:
-Start by establishing the foundation: how operating systems manage processes.
-Introduce the common process states: New, Ready, Running, Waiting (Blocked), Terminated.
-Explain the transitions between these states and the events that trigger them (e.g., I/O requests, scheduling).
-Discuss the role of the process control block (PCB).
 
 Pipes:
 Introduce pipes as a basic mechanism for inter-process communication (IPC).
@@ -111,37 +114,13 @@ Conditions:
 Introduce multiprocessing.Condition for more complex synchronization scenarios.
 Explain how conditions allow processes to wait for specific events or states.
 Demonstrate how to use conditions to coordinate processes in producer-consumer or other complex scenarios.
-Show the relationship between conditions and locks.
 
 
-Advanced Semaphore Usage/Problems:
-Discuss common problems that arise when using semaphores.
-Deadlock revisited, with specific examples using semaphores.
-Starvation.
-Introduce more complex uses of counting semaphores.
-Discuss solutions to common semaphore problems.
-
-Process Management Recap/Discussion:
-Review the concepts of process states, IPC, and synchronization.
-Discuss the trade-offs between different IPC and synchronization mechanisms.
-Discuss the performance implications of process creation and communication.
-Discuss how the OS handles scheduling of multiple processes.
-
-Practical Project Introduction/Discussion:
-Introduce a practical project that utilizes the concepts covered in the previous weeks.
-Discuss project requirements, design considerations, and implementation strategies.
-Example project ideas:
-A parallel data processing pipeline using pipes or queues.
-A multi-process simulation using semaphores and barriers.
-A project that uses shared memory, if that topic is in your scope later on.
+## 3.7 Deadlock Prevention and Avoidance
+Deadlock Conditions (Mutual Exclusion, Hold and Wait, No Preemption, Circular Wait)
+Strategies for Deadlock Prevention (Resource Ordering, etc.)
+Deadlock Avoidance (Banker's Algorithm - Conceptual)
+Deadlock Detection and Recovery
 
 
-Key Considerations:
-
-Hands-on Exercises: Emphasize practical exercises to reinforce the concepts.
-Visualizations: Use diagrams and visualizations to illustrate process states, IPC, and synchronization.
-Real-World Examples: Connect the concepts to real-world applications and scenarios.
-Error Handling: Discuss the importance of error handling in concurrent programs.
-Debugging: Provide guidance on debugging concurrent programs, which can be challenging.
-Multiprocessing Module Focus: because of the GIL, the multiprocessing module will be the primary tool used.
 

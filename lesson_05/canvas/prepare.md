@@ -13,29 +13,32 @@ Section | Content
 :key: = Vital concepts that we will continue to build on in coming lessons / key learning outcomes for this course.
 
 
-5.1 Introduction to Processes
+## 5.1 Introduction to Processes
 What are Processes? (Independent Execution Units)
 Process vs. Thread (Key Differences)
 Process Creation and Management (in Python's multiprocessing module)
 Process IDs (PIDs)
 
-5.2 Process Communication
+## 5.2 Process Communication
 multiprocessing.Queue
 multiprocessing.Pipe
 multiprocessing.Manager (Shared Objects, Proxies)
 multiprocessing.shared_memory (Python 3.8+)
+multiprocessing.Value()
+multiprocessing.Array()
 
-5.3 Process Pools
+## 5.3 Process Pools
 multiprocessing.Pool
 concurrent.futures.ProcessPoolExecutor
 Mapping Functions to Processes (Parallel Mapping)
+apply_async()
 
-5.4 When to Use Processes
+## 5.4 When to Use Processes
 CPU-bound Tasks (Overcoming the GIL)
 Increased Reliability (Process Isolation)
 Scalability (Utilizing Multiple Cores)
 
-5.5 Process Synchronization
+## 5.5 Process Synchronization
 multiprocessing.Lock, 
 multiprocessing.Semaphore, 
 multiprocessing.Condition, 
