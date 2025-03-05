@@ -29,7 +29,7 @@ Successful graduates for CSE 351 will:
 
 ### Course Structure and Modules
 
-The course is divided into 2 week blocks.  For each block, students will be required to read the topic material with an assignment will be due.  These assignments are based on the reading material.
+The course is divided into 2 week blocks.  For each block, students will be required to read the topic material with an assignment.
 
 ### Assessment Methods (Assignments, Exams, Projects)
 
@@ -37,12 +37,13 @@ See syllabus.
 
 ### Required Software and Tools (Python, C#, IDEs, etc.)
 
-We will be using Python 3 in this course.  We requirement you install the latest version of Python from [python.org](https://www.python.org).  If any of the concepts or topics in the list below seem unfamiliar to you, you should review them. The following are MicroSoft videos.
+We will be using Python 3 in this course.  We highly requirement that you install the latest version of Python from [python.org](https://www.python.org).  This is version 3.13.x. 
 
-The basic data structures used in this course are the following.  Take the time to review these at the beginning of the course if you need to refresh your memory. 
+If any of the concepts or topics in the list below seem unfamiliar to you, it is your responsibility to review these topics. The basic data structures used in this course are: 
 - Lists
 - Dictionaries
 - Python Classes
+
 
 **Python Topics with Videos**
 
@@ -69,6 +70,9 @@ The basic data structures used in this course are the following.  Take the time 
 - [Python Classes/Objects](https://www.w3schools.com/python/python_classes.asp)
 - [To learn more about installing modules using the **pip** command](https://docs.python.org/3/installing/index.html#basic-usage)
 
+### C# Language Requirements
+
+The last part of the course will be in C# where reading materials and assignments ill be in that language.  Please review C# if required.
 
 ## 1.2 What is Parallelism?
 
@@ -78,11 +82,14 @@ This section introduces the core concept of parallelism in computing, contrastin
 
 **Concurrency** and **parallelism** are related but distinct concepts. Understanding the difference is crucial for designing and analyzing parallel systems.
 
-*   **Concurrency:** Concurrency is a property of a system in which multiple tasks *can be in progress* at the same time. This *doesn't* necessarily mean they are executing simultaneously. It means that tasks can start, run, and complete in overlapping time periods.  Think of a single chef juggling multiple dishes – they might be working on the sauce for one dish, then chopping vegetables for another, then checking the oven for a third, all seemingly "at the same time."  They are making progress on multiple tasks, but only one task is actively being worked on at any given instant. Concurrency is about *dealing* with lots of things at once.
+**Concurrency:** A property of a system in which multiple tasks *can be in progress* at the same time. This *doesn't* necessarily mean they are executing simultaneously. It means that tasks can start, run, and complete in overlapping time periods.  Think of a single chef juggling multiple dishes – they might be working on the sauce for one dish, then chopping vegetables for another, then checking the oven for a third, all seemingly "at the same time."  They are making progress on multiple tasks, but only one task is actively being worked on at any given instant. 
 
-*   **Parallelism:** Parallelism is a property of a system where multiple tasks, or parts of a task, *literally execute at the same time*. This requires multiple processing units (e.g., multiple CPU cores, multiple processors, multiple machines).  Imagine multiple chefs, each with their own set of ingredients and tools, working on different dishes simultaneously. Parallelism is about *doing* lots of things at once.
+**Parallelism:** A property of a system where multiple tasks, or parts of a task, *literally execute at the same time*. This requires multiple processing units (e.g., multiple CPU cores, multiple processors, multiple machines).  Imagine multiple chefs, each with their own set of ingredients and tools, working on different dishes simultaneously. 
 
 **Key Differences Summarized:**
+
+- Concurrency is about *dealing* with lots of things at once.
+- Parallelism is about *doing* lots of things at once.
 
 | Feature          | Concurrency                                 | Parallelism                                    |
 | ---------------- | ------------------------------------------- | ---------------------------------------------- |
@@ -98,15 +105,15 @@ This section introduces the core concept of parallelism in computing, contrastin
 
 These describe different approaches to breaking down a computational problem into smaller parts that can be executed concurrently:
 
-* **Data Parallelism:** The same operation is performed on different subsets of the data concurrently.  This is often associated with SIMD architectures but can also be implemented on MIMD systems.
+1. **Data Parallelism:** The same operation is performed on different subsets of the data concurrently.  This is often associated with SIMD architectures but can also be implemented on MIMD systems.
 
     **Example:** Processing a large image by dividing it into smaller blocks and applying the same filter to each block simultaneously. Another example would be calculating the sum of a large array by dividing it into chunks and having each processor sum a chunk.
 
-* **Task Parallelism:** Different tasks (or functions) are executed concurrently. These tasks may operate on the same or different data. This is typically associated with MIMD architectures.
+1. **Task Parallelism:** Different tasks (or functions) are executed concurrently. These tasks may operate on the same or different data. This is typically associated with MIMD architectures.
 
     **Example:** A web server handling multiple client requests simultaneously. Each request is a separate task, handled by a different thread or process.  Another example would be a compiler, where lexical analysis, parsing, and code generation could be performed concurrently on different parts of the source code.
 
-* **Pipeline Parallelism:** A task is broken down into a sequence of stages, and different stages are executed concurrently on different data items.  This is like an assembly line, where each stage performs a specific operation, and multiple items are processed in an overlapping fashion.
+1. **Pipeline Parallelism:** A task is broken down into a sequence of stages, and different stages are executed concurrently on different data items.  This is like an assembly line, where each stage performs a specific operation, and multiple items are processed in an overlapping fashion.
 
     **Example:**  Instruction pipelining in a CPU, where the fetch, decode, execute, memory access, and write-back stages of instruction processing are performed concurrently on different instructions.  Another example could be a video processing pipeline, where different frames are undergoing different stages of processing (e.g., decoding, color correction, encoding) simultaneously.
 
@@ -115,95 +122,79 @@ These describe different approaches to breaking down a computational problem int
 
 Granularity refers to the size of the computational units that are executed concurrently.  It's a measure of the ratio of computation to communication/synchronization overhead.
 
-*   **Coarse-grained Parallelism:** Large tasks are executed concurrently, with relatively infrequent communication or synchronization between them. The amount of computation performed by each task is significantly larger than the overhead of communication.
+1. **Coarse-grained Parallelism:** Large tasks are executed concurrently, with relatively infrequent communication or synchronization between them. The amount of computation performed by each task is significantly larger than the overhead of communication.
 
-    *   **Characteristics:**
-        *   Lower communication overhead.
-        *   Easier to implement.
-        *   Less potential for speedup (limited by the number of large tasks).
-        *   Suitable for loosely coupled systems (e.g., distributed computing).
-    *   **Example:**  Distributing the simulation of different physical systems to different nodes in a cluster. Each node performs a large amount of independent computation.
+    **Characteristics:**
+    -   Lower communication overhead.
+    -   Easier to implement.
+    -   Less potential for speedup (limited by the number of large tasks).
+    -   Suitable for loosely coupled systems (e.g., distributed computing).
+    
+    **Example:**  Distributing the simulation of different physical systems to different nodes in a cluster. Each node performs a large amount of independent computation.
 
-*   **Fine-grained Parallelism:**  Small tasks are executed concurrently, with frequent communication and synchronization. The amount of computation performed by each task is small, and the overhead of communication can be significant.
+1. **Fine-grained Parallelism:**  Small tasks are executed concurrently, with frequent communication and synchronization. The amount of computation performed by each task is small, and the overhead of communication can be significant.
 
-    *   **Characteristics:**
-        *   Higher communication overhead.
-        *   More complex to implement.
-        *   Greater potential for speedup (can exploit a higher degree of parallelism).
-        *   Suitable for tightly coupled systems (e.g., multi-core processors, GPUs).
-    *   **Example:**  Parallelizing the individual iterations of a loop within a program, where each iteration performs a small amount of work.  GPU computations often exhibit fine-grained parallelism.
+    **Characteristics:**
+    -   Higher communication overhead.
+    -   More complex to implement.
+    -   Greater potential for speedup (can exploit a higher degree of parallelism).
+    -   Suitable for tightly coupled systems (e.g., multi-core processors, GPUs).
+    
+    **Example:**  Parallelizing the individual iterations of a loop within a program, where each iteration performs a small amount of work.  GPU computations often exhibit fine-grained parallelism.
 
 **Relationship between Granularity and Parallelism Type:**
 
-*   Data parallelism often lends itself to fine-grained parallelism (e.g., operating on individual pixels in an image).
-*   Task parallelism can be either coarse-grained (e.g., running different applications on different cores) or fine-grained (e.g., breaking down a complex algorithm into many small, interdependent tasks).
-*   Pipeline parallelism is generally considered fine-grained, as the stages of the pipeline are typically small and data flows between them rapidly.
+- Data parallelism often lends itself to fine-grained parallelism (e.g., operating on individual pixels in an image).
+- Task parallelism can be either coarse-grained (e.g., running different applications on different cores) or fine-grained (e.g., breaking down a complex algorithm into many small, interdependent tasks).
+- Pipeline parallelism is generally considered fine-grained, as the stages of the pipeline are typically small and data flows between them rapidly.
 
 Choosing the appropriate granularity is a key design decision in parallel programming.  It depends on the characteristics of the problem, the hardware architecture, and the desired balance between speedup and overhead.
 
 ## 1.3 Why Parallelism?
+
 ### Performance Benefits (Speedup, Throughput)
 
 Parallelism offers two primary performance benefits: **speedup** and **throughput**.
 
-**Speedup:** This measures how much faster a parallel program is compared to its sequential counterpart.  It's defined as the ratio of the execution time of the sequential program (T<sub>s</sub>) to the execution time of the parallel program (T<sub>p</sub>) on *p* processors:
+1. **Speedup:** This measures how much faster a parallel program is compared to its sequential counterpart.  It's defined as the ratio of the execution time of the sequential program (T<sub>s</sub>) to the execution time of the parallel program (T<sub>p</sub>) on *p* processors:
 
     Speedup (S<sub>p</sub>) = T<sub>s</sub> / T<sub>p</sub>
 
     Ideally, we want linear speedup, where S<sub>p</sub> = *p*.  In practice, this is rarely achievable due to overheads like communication, synchronization, and the inherently sequential parts of the program.  A speedup less than *p* is called *sublinear speedup*.  In some rare cases, *superlinear speedup* (S<sub>p</sub> > *p*) can be observed due to factors like improved cache utilization in parallel execution.
 
-**Throughput:** This measures the amount of work completed per unit of time.  In parallel systems, higher throughput means that more tasks can be processed in a given time period. For example, a web server handling multiple requests concurrently has higher throughput than a server handling requests one at a time.  Throughput is often more relevant for systems that handle many independent tasks (e.g., transaction processing, web servers) rather than for speeding up a single, large task.
+1. **Throughput:** This measures the amount of work completed per unit of time.  In parallel systems, higher throughput means that more tasks can be processed in a given time period. For example, a web server handling multiple requests concurrently has higher throughput than a server handling requests one at a time.  Throughput is often more relevant for systems that handle many independent tasks (e.g., transaction processing, web servers) rather than for speeding up a single, large task.
 
 ### Amdahl's Law (Theoretical Speedup Limits)
 
 Amdahl's Law, formulated by Gene Amdahl in 1967, provides a theoretical upper bound on the speedup achievable by parallelizing a program. It highlights the impact of the *inherently sequential portion* of a program.
 
-Let:
-
-*   *f* be the fraction of the program that is *inherently sequential* (cannot be parallelized).
-*   (1 - *f*) be the fraction of the program that is *parallelizable*.
-*   *p* be the number of processors.
-
 Amdahl's Law states that the maximum speedup (S<sub>p</sub>) is:
 
-S<sub>p</sub> = 1 / (*f* + (1 - *f*) / *p*)
+![](./assets/formula.png)
 
-**Key Implications:**
+**where**
 
-*   **The sequential fraction (*f*) is the limiting factor.**  Even with an infinite number of processors (p → ∞), the speedup is limited to 1/*f*.  If 10% of a program is inherently sequential (*f* = 0.1), the maximum possible speedup is 10, regardless of how many processors are used.
-*   **Diminishing Returns:** As the number of processors (*p*) increases, the speedup gains diminish.  The benefit of adding more processors becomes smaller and smaller as the sequential portion dominates the execution time.
-* **Focus on reducing *f*** The largest performance improvements come from reducing the sequential fraction of the program through algorithmic changes or code optimization, *before* adding more processors.
+- S<sub>latency</sub> is the theoretical speedup of the execution of the whole task.
+- `s` is the speedup of the part of the task that benefits from improved system resources.
+- `p` is the proportion of execution time that the part benefiting from improved resources originally occupied.
 
-### Gustafson's Law (Scaled Speedup)
+Followings are implications of Amdahl's law:
 
-Gustafson's Law (also known as Gustafson-Barsis' Law), proposed by John Gustafson in 1988, offers a different perspective on parallel speedup.  Amdahl's Law assumes a *fixed problem size*, while Gustafson's Law considers a *fixed execution time*.  It argues that as computing power increases, we tend to tackle larger problems, rather than just trying to solve the same problems faster.
+1. **Diminishing Returns:** Adding more processors gives diminishing returns. Beyond a certain point, adding more processors doesn't significantly increase speedup.
+1. **Limited Speedup:** Even with many processors, there's a limit to how much faster a task can be completed due to parts of the task that cannot be parallelized.
 
-Let:
+**Example 1**
 
-*   *s* be the fraction of the *parallel execution time* spent on the sequential portion.
-*   (1 - *s*) be the fraction of the *parallel execution time* spent on the parallel portion.
-*    *p* is the number of processors.
+Amdahl's law is often used in parallel computing to predict the theoretical speedup when using multiple processors. For example, if a program needs 20 hours to complete using a single thread, but a one-hour portion of the program cannot be parallelized, therefore only the remaining 19 hours (p = 0.95) of execution time can be parallelized, then regardless of how many threads are devoted to a parallelized execution of this program, the minimum execution time cannot be less than one hour. Hence, the theoretical speedup is limited to at most 20 times the single thread performance,
 
-Gustafson's Law states that the scaled speedup is:
+![](./assets/AmdahlsLaw.svg)
 
-Scaled Speedup = *s* + *p*(1 - *s*) = *p* + *s*(1-*p*)
+The theoretical speedup of the latency of the execution of a program as a function of the number of processors executing it, according to Amdahl's law. The speedup is limited by the serial part of the program. For example, if 95% of the program can be parallelized, the theoretical maximum speedup using parallel computing would be 20 times.
 
-**Key Implications:**
+**Example 2**
 
-*   **Problem Size Scales with Processors:**  As we add processors, we can increase the problem size to maintain a constant execution time.
-*   **Focus on Parallelizable Work:** Gustafson's Law emphasizes that the potential for speedup is much greater if the parallelizable portion of the workload grows as the number of processors increases.
-*   **More Optimistic View:**  Gustafson's Law provides a more optimistic view of parallel scalability, especially for applications where the problem size can be easily increased (e.g., large-scale simulations, data analysis).
+![](./assets/example.png)
 
-**Amdahl's Law vs. Gustafson's Law:**
-
-| Feature              | Amdahl's Law                       | Gustafson's Law                        |
-| -------------------- | ---------------------------------- | ------------------------------------- |
-| Problem Size         | Fixed                               | Scales with processors                |
-| Execution Time       | Variable                            | Fixed                                 |
-| Focus                | Speeding up a fixed problem        | Solving larger problems in the same time |
-| Perspective          | Pessimistic (limits to speedup)       | Optimistic (potential for scalability) |
-
-Both laws are valid; they just address different aspects of parallel scalability.
 
 ### Real-world Applications (Scientific Computing, Machine Learning, Data Processing, Graphics, etc.)
 
@@ -220,17 +211,17 @@ Parallelism is ubiquitous in modern computing, enabling applications that would 
 
 ### The "Free Lunch is Over" - Why Multi-core is the Present and Future
 
-For decades, software developers enjoyed a "free lunch" from Moore's Law.  The exponential increase in transistor density and clock speeds meant that software automatically ran faster on newer processors without any code changes.  However, around the mid-2000s, this trend hit physical limits (power consumption, heat dissipation).
+For decades, software developers enjoyed a "free lunch" from [Moore's Law](https://en.wikipedia.org/wiki/Moore%27s_law).  The exponential increase in transistor density and clock speeds meant that software automatically ran faster on newer processors without any code changes.  However, around the mid-2000s, this trend hit physical limits (power consumption, heat dissipation).
 
 **The "Free Lunch is Over"** refers to the end of this era of automatic performance gains.  Instead of increasing clock speeds further, processor manufacturers shifted to **multi-core architectures**, placing multiple processing cores on a single chip.
 
 **Why Multi-core is the Present and Future:**
 
-*   **Physical Limits of Clock Speed:**  Increasing clock speed significantly increases power consumption and heat generation.  We've reached a point where further increases are impractical and unsustainable.
-*   **Power Efficiency:**  Multi-core processors can provide increased performance at lower power consumption compared to a single, high-clock-speed core.
-*   **Parallelism is the Key to Performance:** To continue improving performance, software *must* be designed to take advantage of multiple cores.  This means embracing parallel programming techniques.
-*   **Ubiquitous Multi-core:**  Multi-core processors are now standard in everything from smartphones and laptops to servers and supercomputers.
-*   **Software Must Adapt:**  Software developers can no longer rely on hardware to automatically speed up their applications.  They must explicitly write parallel code to utilize the available cores.
+- **Physical Limits of Clock Speed:**  Increasing clock speed significantly increases power consumption and heat generation.  We've reached a point where further increases are impractical and unsustainable.
+- **Power Efficiency:**  Multi-core processors can provide increased performance at lower power consumption compared to a single, high-clock-speed core.
+- **Parallelism is the Key to Performance:** To continue improving performance, software *must* be designed to take advantage of multiple cores.  This means embracing parallel programming techniques.
+- **Ubiquitous Multi-core:**  Multi-core processors are now standard in everything from smartphones and laptops to servers and supercomputers.
+- **Software Must Adapt:**  Software developers can no longer rely on hardware to automatically speed up their applications.  They must explicitly write parallel code to utilize the available cores.
 
 The "free lunch" of automatic performance gains is over.  Parallelism, and specifically multi-core architectures, is the foundation for future performance improvements in computing.  This shift requires a fundamental change in how software is designed and developed.
 
@@ -239,23 +230,23 @@ The "free lunch" of automatic performance gains is over.  Parallelism, and speci
 
 ### Global Interpreter Lock (GIL)
 
-The Global Interpreter Lock (GIL) is a mechanism used in CPython (the standard and most widely used implementation of Python) that allows only *one native thread* to hold control of the Python interpreter at any given time. This means that even on a multi-core processor, only one thread can be executing Python bytecode at a time.
+The Global Interpreter Lock (GIL) is a mechanism used in CPython (the standard and most widely used implementation of Python) that allows only *one native thread* to hold control of the Python interpreter at any given time. This means that even on a multi-core processor, only one thread can be executing Python at a time.
 
-*   **Crucial for understanding Python's limitations with true CPU-bound parallelism:**  The GIL effectively prevents true parallelism for CPU-bound tasks when using the `threading` module in CPython. While you can create multiple threads, they won't truly run in parallel on multiple cores; they'll be time-sliced on a single core, with the GIL switching between them.
+The GIL effectively prevents true parallelism for CPU-bound tasks when using the `threading` module in CPython. While you can create multiple threads, they won't truly run in parallel on multiple cores; they'll be time-sliced on a single core, with the GIL switching between them.
 
 **Why does the GIL exist?**
 
-*   **Simplified Memory Management:** The GIL simplifies CPython's internal memory management (specifically, reference counting for garbage collection).  It makes it easier to integrate with C extensions that are not thread-safe.  Without the GIL, complex locking mechanisms would be needed throughout the interpreter, potentially slowing down single-threaded programs.
-*   **Historical Reasons:** The GIL was introduced early in Python's development when multi-core processors were not prevalent.  Removing it now is a complex undertaking due to the extensive reliance on the GIL within CPython and its extensions.
+- **Simplified Memory Management:** The GIL simplifies CPython's internal memory management (specifically, reference counting for garbage collection).  It makes it easier to integrate with C extensions that are not thread-safe.  Without the GIL, complex locking mechanisms would be needed throughout the interpreter, potentially slowing down single-threaded programs.
+- **Historical Reasons:** The GIL was introduced early in Python's development when multi-core processors were not prevalent.  Removing it now is a complex undertaking due to the extensive reliance on the GIL within CPython and its extensions.
 
 **Consequences of the GIL:**
 
-*   **Limited CPU-Bound Parallelism:**  For CPU-bound tasks (tasks that spend most of their time performing computations), using multiple threads in CPython will *not* result in true parallelism.  The threads will contend for the GIL, and the overall performance may even be *worse* than a single-threaded implementation due to the overhead of thread switching.
-*   **I/O-Bound Parallelism Still Possible:** The GIL is *released* during I/O operations (e.g., reading from a file, network socket).  This means that for I/O-bound tasks, threads can still provide concurrency and improve responsiveness, as one thread can perform I/O while another thread holds the GIL and executes Python code.
+- **Limited CPU-Bound Parallelism:**  For CPU-bound tasks (tasks that spend most of their time performing computations), using multiple threads in CPython will *not* result in true parallelism.  The threads will contend for the GIL, and the overall performance may even be *worse* than a single-threaded implementation due to the overhead of thread switching.
+- **I/O-Bound Parallelism Still Possible:** The GIL is *released* during I/O operations (e.g., reading from a file, network socket).  This means that for I/O-bound tasks, threads can still provide concurrency and improve responsiveness, as one thread can perform I/O while another thread holds the GIL and executes Python code.
 
 ### Implications for Threading vs. Multiprocessing
 
-The GIL has a profound impact on the choice between using `threading` and `multiprocessing` for parallel programming in Python:
+The GIL has a profound impact on the choice between using the two main packages for parallel programming: `threading` and `multiprocessing`.
 
 *   **`threading`:**
     *   **Suitable for I/O-bound tasks:** Threads are useful for tasks that spend a significant amount of time waiting for external operations.  Because the GIL is released during I/O, multiple threads can run concurrently, improving responsiveness.
@@ -276,32 +267,16 @@ The GIL has a profound impact on the choice between using `threading` and `multi
 
 ### I/O vs. CPU bound
 
-### Introduce the fundamental distinction between these two types of tasks. This is crucial for understanding when and why parallelism is beneficial.
-### Explain how I/O-bound tasks spend most of their time waiting for external operations (disk, network), while CPU-bound tasks are limited by processing power.
+Tasks in computer programs, written in any programming language, can be broadly categorized as either **I/O-bound** or **CPU-bound**. This distinction is fundamental to understanding when and how parallelism can improve performance.
 
-Tasks in computer programs can be broadly categorized as either **I/O-bound** or **CPU-bound**. This distinction is fundamental to understanding when and how parallelism can improve performance.
+#### **I/O-bound Tasks** 
 
-*    **I/O-bound Tasks:** These tasks spend most of their time waiting for *Input/Output (I/O)* operations to complete. I/O operations involve interacting with external resources, such as:
-    *   **Disk I/O:** Reading from or writing to a hard drive or SSD.
-    *   **Network I/O:** Sending or receiving data over a network (e.g., making HTTP requests, downloading files).
-    *   **User Input:** Waiting for input from a keyboard, mouse, or other input device.
+These tasks spend most of their time waiting for *Input/Output (I/O)* operations to complete. I/O operations involve interacting with external resources, such as:
+- **Disk I/O:** Reading from or writing to a hard drive or SSD.
+- **Network I/O:** Sending or receiving data over a network (e.g., making HTTP requests, downloading files).
+- **User Input:** Waiting for input from a keyboard, mouse, or other input device.
 
-    During I/O operations, the CPU is often idle, waiting for the external device to respond. The speed of I/O-bound tasks is primarily limited by the speed of the external devices and the network, *not* by the CPU's processing power.
-
-*   **CPU-bound Tasks:** These tasks spend most of their time performing computations. They are limited by the speed of the CPU (and, to a lesser extent, memory access speed).
-
-    Examples include:
-    *   Complex mathematical calculations.
-    *   Image processing (e.g., applying filters, resizing).
-    *   Video encoding/decoding.
-    *   Scientific simulations.
-    *   Compiling code.
-    *   Training machine learning models.
-    *   Rendering 3d graphics.
-
-    For CPU-bound tasks, a faster CPU (or more CPU cores) will directly lead to faster execution.
-
-### Give examples of each type of task.
+During I/O operations, the CPU is often idle, waiting for the external device to respond. The speed of I/O-bound tasks is primarily limited by the speed of the external devices and the network, *not* by the CPU's processing power.
 
 **Examples of I/O-bound Tasks:**
 
@@ -311,6 +286,21 @@ Tasks in computer programs can be broadly categorized as either **I/O-bound** or
 4.  **Waiting for user input:**  A program that prompts the user for input and waits for them to type something.
 5.  **Database queries (often):**  Many database operations involve reading data from disk or waiting for results from a remote database server.
 
+#### **CPU-bound Tasks** 
+
+These tasks spend most of their time performing computations. They are limited by the speed of the CPU (and, to a lesser extent, memory access speed).
+
+Examples include:
+- Complex mathematical calculations.
+- Image processing (e.g., applying filters, resizing).
+- Video encoding/decoding.
+- Scientific simulations.
+- Compiling code.
+- Training machine learning models.
+- Rendering 3d graphics.
+
+For CPU-bound tasks, a faster CPU (or more CPU cores) will directly lead to faster execution.
+
 **Examples of CPU-bound Tasks:**
 
 1.  **Calculating the Mandelbrot set:** This involves performing many complex number calculations.
@@ -319,21 +309,20 @@ Tasks in computer programs can be broadly categorized as either **I/O-bound** or
 4.  **Training a neural network:**  The training process involves many matrix multiplications and other mathematical operations.
 5.   **Running a physics simulation:** Simulating the behavior of physical systems often requires solving complex equations.
 
-**Key Takeaway:** Understanding whether a task is I/O-bound or CPU-bound is essential for choosing the right approach to parallelism.  I/O-bound tasks benefit from concurrency (e.g., using threads or asynchronous programming), while CPU-bound tasks benefit from true parallelism (e.g., using multiple processes). The GIL in Python significantly affects how CPU-bound tasks can be parallelized.
-
+Understanding whether a task is I/O-bound or CPU-bound is essential for choosing the right approach to parallelism.  I/O-bound tasks benefit from concurrency (e.g., using threads or asynchronous programming), while CPU-bound tasks benefit from true parallelism (e.g., using multiple processes). The GIL in Python significantly affects how CPU-bound tasks can be parallelized.
 
 ## 1.7 Introduction to Threads
 
-### What are Python Threads? (Lightweight Processes)
+### What are Python Threads?
 
 In Python, a thread is a concurrent unit of execution *within a single process*. Threads are often called "lightweight processes" because they share the same memory space and resources (e.g., file handles, global variables) of the parent process, making them more efficient to create and manage than separate processes.
 
 **Key Characteristics of Threads:**
 
-*   **Shared Memory:** Threads within the same process share the same memory space. This makes communication between threads relatively easy (they can directly access and modify the same data), but it also introduces the risk of race conditions and data corruption if access to shared resources is not carefully synchronized.
-*   **Lightweight:** Threads are generally more lightweight than processes. Creating and switching between threads typically has lower overhead than creating and switching between processes.
-*   **Concurrency, Not True Parallelism (in CPython):**  Due to the Global Interpreter Lock (GIL) in CPython, threads cannot achieve true parallelism for CPU-bound tasks.  However, they can still provide concurrency for I/O-bound tasks, allowing a program to remain responsive while waiting for external operations.
-* **Pre-emptive multitasking.** The operating system can interupt a thread at any time to let another thread run.
+- **Shared Memory:** Threads within the same process share the same memory space. This makes communication between threads relatively easy (they can directly access and modify the same data), but it also introduces the risk of race conditions and data corruption if access to shared resources is not carefully synchronized.
+- **Lightweight:** Threads are generally more lightweight than processes. Creating and switching between threads typically has lower overhead than creating and switching between processes.
+- **Concurrency, Not True Parallelism (in CPython):**  Due to the Global Interpreter Lock (GIL) in CPython, threads cannot achieve true parallelism for CPU-bound tasks.  However, they can still provide concurrency for I/O-bound tasks, allowing a program to remain responsive while waiting for external operations.
+- **Pre-emptive multitasking.** The operating system can interupt a thread at any time to let another thread run.
 
 ### User-Level vs. Kernel-Level Threads
 
@@ -361,6 +350,10 @@ There are two fundamental models for implementing threads: user-level threads an
 **Python's Threading Model:**
 
 CPython's `threading` module typically uses a **one-to-one model**, where each Python thread corresponds to a kernel-level thread.  This allows Python threads to benefit from kernel-level scheduling and the ability to utilize multiple cores (for I/O-bound operations). However, the GIL *still* limits true parallelism for CPU-bound tasks within a single process. The Python API is presented in a user-friendly way, abstracting away the complexities of the underlying kernel threads.
+
+
+349587777779999999999999999999999999999999992398475bv9234875bv9234875993874592837459872349587239485793284759823745987239458793248579999999999999999999999992398475bv9234875bv9234875993874592837459872349587239485793284759823745987239458793248579999999999999999999999992398475bv9234875bv9234875993874592837459872349587239485793284759823745987239458793248579999999999999999999999992398475bv9234875bv9234875993874592837459872349587239485793284759823745987239458793248579999999999999999999999992398475bv9234875bv9234875993874592837459872349587239485793284759823745987239458793248579999999999999999999999992398475bv9234875bv9234875993874592837459872349587239485793284759823745987239458793248579999999999999999999999992398475bv9234875bv9234875993874592837459872349587239485793284759823745987239458793248579999999999999999999999992398475bv9234875bv9234875993874592837459872349587239485793284759823745987239458793248579999999999999999999999992398475bv9234875bv9234875993874592837459872349587239485793284759823745987239458793248579999999999999999999999992398475bv9234875bv9234875993874592837459872349587239485793284759823745987239458793248579999999999999999999999992398475bv9234875bv9234875993874592837459872349587239485793284759823745987239458793248579999999999999999999999992398475bv9234875bv9234875993874592837459872349587239485793284759823745987239458793248579999999999999999999999992398475bv9234875bv9234875993874592837459872349587239485793284759823745987239458793248579999999999999999999999992398475bv9234875bv9234875993874592837459872349587239485793284759823745987239458793248579999999999999999999999992398475bv9234875bv9234875993874592837459872349587239485793284759823745987239458793248579999999999999999999999992398475bv9234875bv9234875993874592837459872349587239485793284759823745987239458793248579999999999999999999999992398475bv9234875bv9234875993874592837459872349587239485793284759823745987239458793248579999999999999999999999992398475bv9234875bv9234875993874592837459872349587239485793284759823745987239458793248579999999999999999999999992398475bv9234875bv9234875993874592837459872349587239485793284759823745987239458793248579999999999999999999999992398475bv9234875bv9234875993874592837459872349587239485793284759823745987239458793248579999999999999999999999992398475bv9234875bv9234875993874592837459872349587239485793284759823745987239458793248579999999999999999999999992398475bv9234875bv9234875993874592837459872349587239485793284759823745987239458793248579999999999999999999999992398475bv9234875bv923487599387459283745987234958723948579328475982374598723945879324857v
+
 
 ### Thread Creation and Management (in Python's `threading` module)
 
