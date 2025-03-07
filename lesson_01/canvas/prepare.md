@@ -45,7 +45,7 @@ If any of the concepts or topics in the list below seem unfamiliar to you, it is
 - Python Classes
 
 
-**Python Topics with Videos**
+### Python Topics with Videos
 
 - [Introducing Python](https://www.youtube.com/watch?v=7XOhibxgBlQ&list=PLlrxD0HtieHhS8VzuMCfQD4uJ9yne1mE6&index=2)
 - [Getting Started](https://www.youtube.com/watch?v=CXZYvNRIAKM&list=PLlrxD0HtieHhS8VzuMCfQD4uJ9yne1mE6&index=3)
@@ -72,7 +72,7 @@ If any of the concepts or topics in the list below seem unfamiliar to you, it is
 
 ### C# Language Requirements
 
-The last part of the course will be in C# where reading materials and assignments ill be in that language.  Please review C# if required.
+The last part of the course will be in C# where reading materials and assignments will be in that language.  Please review C# and OOP if required.  We will be using JetBrains Rider IDE.
 
 ## 1.2 What is Parallelism?
 
@@ -122,27 +122,30 @@ These describe different approaches to breaking down a computational problem int
 
 Granularity refers to the size of the computational units that are executed concurrently.  It's a measure of the ratio of computation to communication/synchronization overhead.
 
-1. **Coarse-grained Parallelism:** Large tasks are executed concurrently, with relatively infrequent communication or synchronization between them. The amount of computation performed by each task is significantly larger than the overhead of communication.
+**Coarse-grained Parallelism:** 
 
-    **Characteristics:**
-    -   Lower communication overhead.
-    -   Easier to implement.
-    -   Less potential for speedup (limited by the number of large tasks).
-    -   Suitable for loosely coupled systems (e.g., distributed computing).
-    
-    **Example:**  Distributing the simulation of different physical systems to different nodes in a cluster. Each node performs a large amount of independent computation.
+Large tasks are executed concurrently, with relatively infrequent communication or synchronization between them. The amount of computation performed by each task is significantly larger than the overhead of communication.
 
-1. **Fine-grained Parallelism:**  Small tasks are executed concurrently, with frequent communication and synchronization. The amount of computation performed by each task is small, and the overhead of communication can be significant.
+### Characteristics
+-   Lower communication overhead.
+-   Easier to implement.
+-   Less potential for speedup (limited by the number of large tasks).
+-   Suitable for loosely coupled systems (e.g., distributed computing).
 
-    **Characteristics:**
-    -   Higher communication overhead.
-    -   More complex to implement.
-    -   Greater potential for speedup (can exploit a higher degree of parallelism).
-    -   Suitable for tightly coupled systems (e.g., multi-core processors, GPUs).
-    
-    **Example:**  Parallelizing the individual iterations of a loop within a program, where each iteration performs a small amount of work.  GPU computations often exhibit fine-grained parallelism.
+**Example:**  Distributing the simulation of different physical systems to different nodes in a cluster. Each node performs a large amount of independent computation.
 
-**Relationship between Granularity and Parallelism Type:**
+### Fine-grained Parallelism
+Small tasks are executed concurrently, with frequent communication and synchronization. The amount of computation performed by each task is small, and the overhead of communication can be significant.
+
+**Characteristics:**
+-   Higher communication overhead.
+-   More complex to implement.
+-   Greater potential for speedup (can exploit a higher degree of parallelism).
+-   Suitable for tightly coupled systems (e.g., multi-core processors, GPUs).
+
+**Example:**  Parallelizing the individual iterations of a loop within a program, where each iteration performs a small amount of work.  GPU computations often exhibit fine-grained parallelism.
+
+### Relationship between Granularity and Parallelism Type
 
 - Data parallelism often lends itself to fine-grained parallelism (e.g., operating on individual pixels in an image).
 - Task parallelism can be either coarse-grained (e.g., running different applications on different cores) or fine-grained (e.g., breaking down a complex algorithm into many small, interdependent tasks).
@@ -156,13 +159,17 @@ Choosing the appropriate granularity is a key design decision in parallel progra
 
 Parallelism offers two primary performance benefits: **speedup** and **throughput**.
 
-1. **Speedup:** This measures how much faster a parallel program is compared to its sequential counterpart.  It's defined as the ratio of the execution time of the sequential program (T<sub>s</sub>) to the execution time of the parallel program (T<sub>p</sub>) on *p* processors:
+#### Speedup
 
-    Speedup (S<sub>p</sub>) = T<sub>s</sub> / T<sub>p</sub>
+This measures how much faster a parallel program is compared to its sequential counterpart.  It's defined as the ratio of the execution time of the sequential program (T<sub>s</sub>) to the execution time of the parallel program (T<sub>p</sub>) on *p* processors:
 
-    Ideally, we want linear speedup, where S<sub>p</sub> = *p*.  In practice, this is rarely achievable due to overheads like communication, synchronization, and the inherently sequential parts of the program.  A speedup less than *p* is called *sublinear speedup*.  In some rare cases, *superlinear speedup* (S<sub>p</sub> > *p*) can be observed due to factors like improved cache utilization in parallel execution.
+Speedup (S<sub>p</sub>) = T<sub>s</sub> / T<sub>p</sub>
 
-1. **Throughput:** This measures the amount of work completed per unit of time.  In parallel systems, higher throughput means that more tasks can be processed in a given time period. For example, a web server handling multiple requests concurrently has higher throughput than a server handling requests one at a time.  Throughput is often more relevant for systems that handle many independent tasks (e.g., transaction processing, web servers) rather than for speeding up a single, large task.
+Ideally, we want linear speedup, where S<sub>p</sub> = *p*.  In practice, this is rarely achievable due to overheads like communication, synchronization, and the inherently sequential parts of the program.  A speedup less than *p* is called *sublinear speedup*.  In some rare cases, *superlinear speedup* (S<sub>p</sub> > *p*) can be observed due to factors like improved cache utilization in parallel execution.
+
+#### Throughput
+
+This measures the amount of work completed per unit of time.  In parallel systems, higher throughput means that more tasks can be processed in a given time period. For example, a web server handling multiple requests concurrently has higher throughput than a server handling requests one at a time.  Throughput is often more relevant for systems that handle many independent tasks (e.g., transaction processing, web servers) rather than for speeding up a single, large task.
 
 ### Amdahl's Law (Theoretical Speedup Limits)
 
@@ -183,7 +190,7 @@ Followings are implications of Amdahl's law:
 1. **Diminishing Returns:** Adding more processors gives diminishing returns. Beyond a certain point, adding more processors doesn't significantly increase speedup.
 1. **Limited Speedup:** Even with many processors, there's a limit to how much faster a task can be completed due to parts of the task that cannot be parallelized.
 
-**Example 1**
+#### Example 1
 
 Amdahl's law is often used in parallel computing to predict the theoretical speedup when using multiple processors. For example, if a program needs 20 hours to complete using a single thread, but a one-hour portion of the program cannot be parallelized, therefore only the remaining 19 hours (p = 0.95) of execution time can be parallelized, then regardless of how many threads are devoted to a parallelized execution of this program, the minimum execution time cannot be less than one hour. Hence, the theoretical speedup is limited to at most 20 times the single thread performance,
 
@@ -191,12 +198,12 @@ Amdahl's law is often used in parallel computing to predict the theoretical spee
 
 The theoretical speedup of the latency of the execution of a program as a function of the number of processors executing it, according to Amdahl's law. The speedup is limited by the serial part of the program. For example, if 95% of the program can be parallelized, the theoretical maximum speedup using parallel computing would be 20 times.
 
-**Example 2**
+#### Example 2
 
 ![](./assets/example.png)
 
 
-### Real-world Applications (Scientific Computing, Machine Learning, Data Processing, Graphics, etc.)
+### Real-world Applications
 
 Parallelism is ubiquitous in modern computing, enabling applications that would be impossible to run on a single processor in a reasonable amount of time. Here are some key areas:
 
@@ -248,19 +255,21 @@ The GIL effectively prevents true parallelism for CPU-bound tasks when using the
 
 The GIL has a profound impact on the choice between using the two main packages for parallel programming: `threading` and `multiprocessing`.
 
-*   **`threading`:**
-    *   **Suitable for I/O-bound tasks:** Threads are useful for tasks that spend a significant amount of time waiting for external operations.  Because the GIL is released during I/O, multiple threads can run concurrently, improving responsiveness.
-    *   **Limited by the GIL for CPU-bound tasks:**  Threads will *not* provide true parallelism for CPU-bound tasks due to the GIL.
-    *   **Lower Overhead:** Creating and managing threads is generally less resource-intensive than creating and managing processes.
-    *   **Shared Memory:** Threads share the same memory space, making communication relatively easy (but requiring careful synchronization to avoid race conditions).
+#### threading
 
-*   **`multiprocessing`:**
-    *   **Suitable for CPU-bound tasks:**  Processes bypass the GIL limitation because each process has its own independent interpreter and memory space. This allows for true parallelism on multi-core CPUs.
-    *   **Also works for I/O-bound tasks:** Processes can also be used for I/O-bound tasks, although the overhead is generally higher than using threads.
-    *   **Higher Overhead:** Creating and managing processes is more resource-intensive than creating and managing threads.
-    *   **Inter-Process Communication (IPC):** Processes have separate memory spaces, so communication requires explicit IPC mechanisms (e.g., Queues, Pipes, shared memory).
+*   **Suitable for I/O-bound tasks:** Threads are useful for tasks that spend a significant amount of time waiting for external operations.  Because the GIL is released during I/O, multiple threads can run concurrently, improving responsiveness.
+*   **Limited by the GIL for CPU-bound tasks:**  Threads will *not* provide true parallelism for CPU-bound tasks due to the GIL.
+*   **Lower Overhead:** Creating and managing threads is generally less resource-intensive than creating and managing processes.
+*   **Shared Memory:** Threads share the same memory space, making communication relatively easy (but requiring careful synchronization to avoid race conditions).
 
-**In Summary:**
+#### multiprocessing
+
+*   **Suitable for CPU-bound tasks:**  Processes bypass the GIL limitation because each process has its own independent interpreter and memory space. This allows for true parallelism on multi-core CPUs.
+*   **Also works for I/O-bound tasks:** Processes can also be used for I/O-bound tasks, although the overhead is generally higher than using threads.
+*   **Higher Overhead:** Creating and managing processes is more resource-intensive than creating and managing threads.
+*   **Inter-Process Communication (IPC):** Processes have separate memory spaces, so communication requires explicit IPC mechanisms (e.g., Queues, Pipes, shared memory).
+
+#### In Summary
 
 *   Use `threading` for I/O-bound tasks where concurrency and responsiveness are important.
 *   Use `multiprocessing` for CPU-bound tasks where true parallelism is needed to improve performance.
@@ -269,7 +278,7 @@ The GIL has a profound impact on the choice between using the two main packages 
 
 Tasks in computer programs, written in any programming language, can be broadly categorized as either **I/O-bound** or **CPU-bound**. This distinction is fundamental to understanding when and how parallelism can improve performance.
 
-#### **I/O-bound Tasks** 
+#### I/O-bound Tasks 
 
 These tasks spend most of their time waiting for *Input/Output (I/O)* operations to complete. I/O operations involve interacting with external resources, such as:
 - **Disk I/O:** Reading from or writing to a hard drive or SSD.
@@ -278,7 +287,7 @@ These tasks spend most of their time waiting for *Input/Output (I/O)* operations
 
 During I/O operations, the CPU is often idle, waiting for the external device to respond. The speed of I/O-bound tasks is primarily limited by the speed of the external devices and the network, *not* by the CPU's processing power.
 
-**Examples of I/O-bound Tasks:**
+##### Examples of I/O-bound Tasks
 
 1.  **Downloading a file from the internet:** The program spends most of its time waiting for data to arrive over the network.
 2.  **Reading a large file from disk:** The program waits for the hard drive or SSD to read the data.
@@ -286,7 +295,7 @@ During I/O operations, the CPU is often idle, waiting for the external device to
 4.  **Waiting for user input:**  A program that prompts the user for input and waits for them to type something.
 5.  **Database queries (often):**  Many database operations involve reading data from disk or waiting for results from a remote database server.
 
-#### **CPU-bound Tasks** 
+#### CPU-bound Tasks
 
 These tasks spend most of their time performing computations. They are limited by the speed of the CPU (and, to a lesser extent, memory access speed).
 
@@ -301,7 +310,7 @@ Examples include:
 
 For CPU-bound tasks, a faster CPU (or more CPU cores) will directly lead to faster execution.
 
-**Examples of CPU-bound Tasks:**
+##### Examples of CPU-bound Tasks
 
 1.  **Calculating the Mandelbrot set:** This involves performing many complex number calculations.
 2.  **Resizing a large image:** Applying image processing algorithms to a large image requires significant CPU power.
@@ -321,7 +330,7 @@ In Python, a thread is a concurrent unit of execution *within a single process*.
 >
 >[Quote Source](https://en.wikipedia.org/wiki/Thread_(computing))
 
-**Key Characteristics of Threads:**
+### Key Characteristics of Threads
 
 - **Shared Memory:** Threads within the same process share the same memory space. This makes communication between threads relatively easy (they can directly access and modify the same data), but it also introduces the risk of race conditions and data corruption if access to shared resources is not carefully synchronized.
 - **Lightweight:** Threads are generally more lightweight than processes. Creating and switching between threads typically has lower overhead than creating and switching between processes.
@@ -332,24 +341,27 @@ In Python, a thread is a concurrent unit of execution *within a single process*.
 
 There are two fundamental models for implementing threads: user-level threads and kernel-level threads. Python's `threading` module, in most common implementations (including CPython), utilizes a combination of approaches, often leveraging kernel-level threads under the hood but presenting a user-level API.
 
-*   **User-Level Threads:**
-    *   **Managed by a user-space library:** Thread creation, scheduling, and management are all handled by a library within the user process, *without* direct involvement of the operating system kernel.
-    *   **Fast Context Switching:** Switching between user-level threads is typically very fast because it doesn't require a system call (a transition to kernel mode).
-    *   **Blocking System Calls are Problematic:** If one user-level thread makes a blocking system call (e.g., reading from a file), the *entire process* blocks, including all other threads within that process. This is because the kernel is unaware of the individual threads; it only sees the process as a whole.
-    *   **Cannot Utilize Multiple Cores:** User-level threads, on their own, cannot take advantage of multiple CPU cores because the kernel only schedules the process, not the individual threads within it.
-    * **Example:** Early implementations of threading libraries often used this approach.
+#### User-Level Threads
 
-*   **Kernel-Level Threads:**
-    *   **Managed by the OS Kernel:** The operating system kernel is directly aware of and manages the threads. Thread creation, scheduling, and synchronization are handled by the kernel.
-    *   **Blocking System Calls Do Not Block Other Threads:** If one kernel-level thread makes a blocking system call, the kernel can schedule another thread from the same process (or a different process) to run. This is a major advantage.
-    *   **Can Utilize Multiple Cores:** The kernel's scheduler can assign different threads to different CPU cores, enabling true parallelism.
-    *   **Slower Context Switching:** Switching between kernel-level threads is generally slower than switching between user-level threads because it requires a system call.
-    * **Example:** Most modern operating systems (Windows, Linux, macOS) provide kernel-level thread support.
+*   **Managed by a user-space library:** Thread creation, scheduling, and management are all handled by a library within the user process, *without* direct involvement of the operating system kernel.
+*   **Fast Context Switching:** Switching between user-level threads is typically very fast because it doesn't require a system call (a transition to kernel mode).
+*   **Blocking System Calls are Problematic:** If one user-level thread makes a blocking system call (e.g., reading from a file), the *entire process* blocks, including all other threads within that process. This is because the kernel is unaware of the individual threads; it only sees the process as a whole.
+*   **Cannot Utilize Multiple Cores:** User-level threads, on their own, cannot take advantage of multiple CPU cores because the kernel only schedules the process, not the individual threads within it.
+* **Example:** Early implementations of threading libraries often used this approach.
 
-*   **Hybrid Approaches:**
-    * **Many-to-one:** Many user threads map to a single kernel thread (suffers from the blocking problem).
-    * **One-to-one:** Each user thread maps to a kernel thread (what most modern Python setups utilize).
-    * **Many-to-many:** Maps many user threads to many kernel threads.
+#### Kernel-Level Threads
+
+*   **Managed by the OS Kernel:** The operating system kernel is directly aware of and manages the threads. Thread creation, scheduling, and synchronization are handled by the kernel.
+*   **Blocking System Calls Do Not Block Other Threads:** If one kernel-level thread makes a blocking system call, the kernel can schedule another thread from the same process (or a different process) to run. This is a major advantage.
+*   **Can Utilize Multiple Cores:** The kernel's scheduler can assign different threads to different CPU cores, enabling true parallelism.
+*   **Slower Context Switching:** Switching between kernel-level threads is generally slower than switching between user-level threads because it requires a system call.
+* **Example:** Most modern operating systems (Windows, Linux, macOS) provide kernel-level thread support.
+
+#### Hybrid Approaches
+
+* **Many-to-one:** Many user threads map to a single kernel thread (suffers from the blocking problem).
+* **One-to-one:** Each user thread maps to a kernel thread (what most modern Python setups utilize).
+* **Many-to-many:** Maps many user threads to many kernel threads.
 
 **Python's Threading Model:**
 
@@ -360,13 +372,14 @@ CPython's `threading` module typically uses a **one-to-one model**, where each P
 
 The `threading` module provides a high-level interface for creating and managing threads.
 
-TODO - creating threads based on a function
+### Using `Thread` Functions
 
-**Using `Thread` Functions**
+The first method of using threads in Python is to use functions.
 
-### Simple Threading Example
+### Example 1 - Simple Threading Example
 
-Here is an example of creating, starting and ending a function thread.
+Here is an example of creating, starting and ending a function thread.  The function that will be run as a thread takes in 2 arguments.  These values are passed to the function using `args=('Sleep Function', 2)`
+
 
 ```python
 import logging
@@ -410,7 +423,7 @@ Thread "Sleep Function": finishing
 Main                   : all done
 ```
 
-### Starting and waiting on Threads
+#### Starting and waiting on Threads
 
 There are two methods used for starting and waiting for class threads.
 
@@ -426,9 +439,9 @@ This is a non-blocking function call. Start() will start the thread running and 
 This is a blocking function call. Join() will wait until that thread is finished executing before allowing the program to proceed further. If the thread is still busy doing something, then join() will not return until it's finished. If the thread never finishes, then your program will hang (deadlock) on `join()`. Some common reasons to use join() are:
 
 
-**In-depth Thread Example**
+### Example 2
 
-Coding example of creating a child thread.
+Example where the threaded function only has one argument.
 
 ```python
 import threading
@@ -495,6 +508,8 @@ Thread "Bob": finishing
 Main        : all done
 ```
 
+### Example 3
+
 Here is an example of creating 3 threads all using the same function.
 
 ```python
@@ -545,7 +560,7 @@ Thread "Bob": finishing
 Main  : all done
 ```
 
-**Timer() function in the threading package**
+### Timer() function in the threading package
 
 The `timer()` function allows you to run a function in the future by indicating the amount of time in seconds. The following code will create a timer that will call the function `display_hello()` in 3 seconds when the thread is started.
 
@@ -571,7 +586,7 @@ After the thread - End of program
 Hello, World!
 ```
 
-**Using `Thread` Classes**
+### Using `Thread` Classes
 
 The primary class for creating threads. You can create a thread in two main ways:
 
@@ -593,19 +608,19 @@ thread1.join()
 print("Main all done")
 ```
 
-*   **`start()` Method:** Starts the thread's execution by calling the `run()` method (or the target function) in a separate thread of control.  You *must* call `start()` to begin the thread's execution.
+**`start()` Method:** Starts the thread's execution by calling the `run()` method (or the target function) in a separate thread of control.  You *must* call `start()` to begin the thread's execution.
 
-*   **`join()` Method:** Blocks the calling thread until the thread whose `join()` method is called terminates (either normally or through an unhandled exception).  This is important for:
+**`join()` Method:** Blocks the calling thread until the thread whose `join()` method is called terminates (either normally or through an unhandled exception).  This is important for:
     *   Ensuring that a thread has completed before the main program exits.
     *   Coordinating the execution of multiple threads (e.g., waiting for a worker thread to finish processing data before using the results).
     *   `join()` can take an optional `timeout` argument (in seconds) to specify a maximum time to wait.
 
-* **Other Useful Methods and Attributes:**
-    * `is_alive()`: Returns True if the thread is still running, False otherwise.
-    * `name`: The thread's name (a string).
-    * `daemon`: A boolean value indicating whether the thread is a daemon thread.
-    * `ident`: thread identifier.
-    * `native_id`: thread native integral thread ID of the current thread.
+**Other Useful Methods and Attributes:**
+* `is_alive()`: Returns True if the thread is still running, False otherwise.
+* `name`: The thread's name (a string).
+* `daemon`: A boolean value indicating whether the thread is a daemon thread.
+* `ident`: thread identifier.
+* `native_id`: thread native integral thread ID of the current thread.
 
 ### Thread Lifecycle (States: New, Runnable, Running, Blocked, Terminated)
 
@@ -641,9 +656,12 @@ Understanding the thread lifecycle is essential for designing and debugging mult
 
 ### Define the concept of a critical section and the potential for race conditions.
 
-*   **Critical Section:** A critical section is a segment of code where a shared resource (like a variable, file, or data structure) is accessed and potentially modified.  Critically, the correct operation of the program depends on *exclusive access* to this shared resource during the execution of the critical section. Only one thread or process should be allowed inside the critical section at any given time.
+#### Critical Section
 
-*   **Race Condition:** A race condition occurs when multiple threads or processes access and modify a shared resource concurrently, and the final outcome of the program depends on the unpredictable order in which these accesses and modifications happen.  The "race" is between the threads/processes to access the shared resource, and the winner (the thread/process that executes a particular operation first) can affect the final result.  Race conditions lead to non-deterministic behavior, making bugs difficult to reproduce and debug.
+A critical section is a segment of code where a shared resource (like a variable, file, or data structure) is accessed and potentially modified.  Critically, the correct operation of the program depends on *exclusive access* to this shared resource during the execution of the critical section. Only one thread or process should be allowed inside the critical section at any given time.
+
+#### Race Condition
+A race condition occurs when multiple threads or processes access and modify a shared resource concurrently, and the final outcome of the program depends on the unpredictable order in which these accesses and modifications happen.  The "race" is between the threads/processes to access the shared resource, and the winner (the thread/process that executes a particular operation first) can affect the final result.  Race conditions lead to non-deterministic behavior, making bugs difficult to reproduce and debug.
 
 A race condition is the *problem* that arises when multiple threads/processes try to access a shared resource without proper synchronization, and the critical section is the *part of the code* where this problem can manifest.
 
@@ -664,7 +682,7 @@ Without proper synchronization mechanisms, concurrent access to shared resources
 
 ### Illustrate race conditions with simple examples.
 
-**Example 1: Incrementing a Shared Counter (Lost Update)**
+### Example: Incrementing a Shared Counter (Lost Update)
 
 The following program should output 2,000,000 for the totals for both variables.  In running this program in version 3.9.6 of Python, the program had the output of:
 
@@ -713,11 +731,13 @@ A **lock**, also known as a **mutex** (short for mutual exclusion), is a fundame
 
 **How Locks Work:**
 
-1.  **Acquire:** Before entering a critical section, a thread attempts to *acquire* the lock.
-    *   If the lock is *unlocked* (not held by any other thread), the requesting thread acquires the lock and proceeds into the critical section.  The lock is now considered *locked*.
-    *   If the lock is *locked* (already held by another thread), the requesting thread *blocks* (waits) until the lock becomes available.
+#### acquire()
+Before entering a critical section, a thread attempts to *acquire* the lock.
+*   If the lock is *unlocked* (not held by any other thread), the requesting thread acquires the lock and proceeds into the critical section.  The lock is now considered *locked*.
+*   If the lock is *locked* (already held by another thread), the requesting thread *blocks* (waits) until the lock becomes available.
 
-2.  **Release:** After completing the critical section, the thread that holds the lock *releases* it. This makes the lock available for other waiting threads to acquire.
+#### release()
+- After completing the critical section, the thread that holds the lock *releases* it. This makes the lock available for other waiting threads to acquire.
 
 Think of a lock like a single-occupancy restroom. Only one person (thread) can be inside (critical section) at a time.  The person locks the door (acquires the lock) when they enter and unlocks the door (releases the lock) when they leave. Anyone else who wants to use the restroom must wait until the door is unlocked.
 
@@ -727,7 +747,7 @@ Locks **ALWAYS** protect data and **NOT** threads.  In the above restroom exampl
 
 Locks prevent race conditions by ensuring that only one thread can execute the critical section at a time.  This serializes access to the shared resource, preventing the interleaving of operations that can lead to data corruption.
 
-**Example (Corrected Counter Example):**
+#### Example (Corrected Counter Example)
 
 Let's revisit the counter example from the previous section and fix it using a lock:
 
@@ -810,7 +830,7 @@ thread2.join()
 print(f"Final counter value: {counter:,}, expected: {2 * TIMES:,}")
 ```
 
-**Deadlock**
+### Deadlock
 
 A deadlock occurs when two or more threads are blocked indefinitely, waiting for each other to release resources (in this case, locks) that they need.
 
@@ -864,7 +884,7 @@ Other types of deadlocks:
 - **Complexity:** Using locks correctly requires careful design and can make code more complex and harder to reason about.
 
 
-Avoiding Deadlocks:
+### Avoiding Deadlocks
 
 - **Lock Ordering:** Establish a consistent order in which locks are acquired. If all threads acquire locks in the same order, circular dependencies (like the one in the deadlock example) can be avoided.
 - **Lock Timeout:** Use timeouts when acquiring locks. If a thread cannot acquire a lock within a specified time, it can back off and try again later, potentially breaking the deadlock. The lock.acquire(timeout=...) method supports this.
