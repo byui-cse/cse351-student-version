@@ -426,9 +426,124 @@ This is a non-blocking function call. Start() will start the thread running and 
 This is a blocking function call. Join() will wait until that thread is finished executing before allowing the program to proceed further. If the thread is still busy doing something, then join() will not return until it's finished. If the thread never finishes, then your program will hang (deadlock) on `join()`. Some common reasons to use join() are:
 
 
+**In-depth Thread Example**
 
+Coding example of creating a child thread.
 
+```python
+import threading
+import time
 
+def thread_function(name):
+    """This is the function the thread will run"""
+    print(f'Thread "{name}": starting')
+    time.sleep(2)
+    print(f'Thread "{name}": finishing')
+
+if __name__ == '__main__':
+    print('Main  : before creating thread')
+
+    t = threading.Thread(target=thread_function, args=('Bob',))
+
+    print('Main  : before running thread')
+    t.start()
+
+    print('Main  : wait for the thread to finish')
+    t.join()
+
+    print('Main  : all done')
+```
+
+Let's look again at the coding example above. There are three main steps:
+
+1. Create a thread and give the thread a function to execute.
+
+Creation of a thread is handled by called the `Thread()` function in the `threading` module. The created thread is called the child thread and the thread that creates it is called the parent. (In the example below, it's the main thread creating the thread `t`)
+
+```python
+t = threading.Thread(target=thread_function, args=('Bob',))
+```
+
+**target** is used to pass the reference of the function you want to thread to execute.
+
+**args** is used to pass information to the threaded function. Note that this is a Python tuple. Tuples that only contain one item in them need to be created with the extra `,`. The number of arguments in your threaded function needs to match the count of the tuple.
+
+2. Start the thread.
+
+A thread doesn't start to execute until you call the start() method. This allows you to create all of the threads required for your task and then start them when needed.
+
+```python
+t.start()
+```
+
+3. Wait for the thread to finish.
+
+The parent thread has full control of any child threads that are created and can wait for the child threads to finish. The function `join()` is used for this purpose. Think of the parent thread waiting for the child threads to "re-join" the parent.
+
+```python
+t.join()
+```
+
+Program output
+
+```text
+Main        : before creating thread
+Main        : before running thread
+Thread "Bob": starting
+Main        : wait for the thread to finish
+Thread "Bob": finishing
+Main        : all done
+```
+
+Here is an example of creating 3 threads all using the same function.
+
+```python
+import threading
+import time
+
+def thread_function(name, sleep_time):
+    """This is the function the thread will run"""
+    print(f'Thread "{name}": starting')
+    time.sleep(sleep_time)
+    print(f'Thread "{name}": finishing')
+
+if __name__ == '__main__':
+    print('Main  : before creating thread')
+
+    # Create a threads
+    t1 = threading.Thread(target=thread_function, args=('Bob', 3))
+    t2 = threading.Thread(target=thread_function, args=('Jim', 2))
+    t3 = threading.Thread(target=thread_function, args=('Mary', 1))
+
+    print('Main  : before running thread')
+
+    t1.start()
+    t2.start()
+    t3.start()
+
+    print('Main  : wait for the thread to finish')
+
+    t1.join()
+    t2.join()
+    t3.join()
+
+    print('Main  : all done')
+```
+
+Output
+
+```
+Main  : before creating thread
+Main  : before running thread
+Thread "Bob": starting
+Thread "Jim": starting
+Thread "Mary": starting
+Main  : wait for the thread to finish
+Thread "Mary": finishing
+Thread "Jim": finishing
+Thread "Bob": finishing
+Main  : all done
+```
 
 **Timer() function in the threading package**
 
@@ -456,10 +571,6 @@ After the thread - End of program
 Hello, World!
 ```
 
-
-===========================================
-
-
 **Using `Thread` Classes**
 
 The primary class for creating threads. You can create a thread in two main ways:
@@ -478,9 +589,9 @@ class MyThread(threading.Thread):
 thread1 = MyThread(name="Thread-1")
 thread1.start()
 thread1.join()
+
+print("Main all done")
 ```
-
-
 
 *   **`start()` Method:** Starts the thread's execution by calling the `run()` method (or the target function) in a separate thread of control.  You *must* call `start()` to begin the thread's execution.
 
@@ -534,38 +645,49 @@ Understanding the thread lifecycle is essential for designing and debugging mult
 
 *   **Race Condition:** A race condition occurs when multiple threads or processes access and modify a shared resource concurrently, and the final outcome of the program depends on the unpredictable order in which these accesses and modifications happen.  The "race" is between the threads/processes to access the shared resource, and the winner (the thread/process that executes a particular operation first) can affect the final result.  Race conditions lead to non-deterministic behavior, making bugs difficult to reproduce and debug.
 
-**In essence:** A race condition is the *problem* that arises when multiple threads/processes try to access a shared resource without proper synchronization, and the critical section is the *part of the code* where this problem can manifest.
+A race condition is the *problem* that arises when multiple threads/processes try to access a shared resource without proper synchronization, and the critical section is the *part of the code* where this problem can manifest.
 
 ### Explain how concurrent access to shared resources can lead to unexpected and incorrect results.
 
 Without proper synchronization mechanisms, concurrent access to shared resources can lead to incorrect results due to the interleaving of operations from different threads/processes. Here's why:
 
-1.  **Non-Atomic Operations:** Many seemingly simple operations (like incrementing a variable) are not atomic at the machine level. They often involve multiple steps:
+1. **Non-Atomic Operations:** Many seemingly simple operations (like incrementing a variable) are not atomic at the machine level. They often involve multiple steps:
     *   Read the current value from memory.
     *   Modify the value (e.g., add 1).
     *   Write the new value back to memory.
 
-2.  **Interleaving:** The operating system's scheduler can switch between threads/processes at any point, even in the middle of a non-atomic operation. This is called *context switching*.  The interleaving of instructions from different threads can lead to unexpected results.
+2. **Interleaving:** The operating system's scheduler can switch between threads/processes at any point, even in the middle of a non-atomic operation. This is called *context switching*.  The interleaving of instructions from different threads can lead to unexpected results.
 
-3.  **Lost Updates:**  One thread might read a value, modify it, and then be interrupted *before* it can write the updated value back. Another thread might then read the *original* value (which is now stale), modify it, and write it back. Finally, the first thread resumes and writes *its* modified value, overwriting the changes made by the second thread.  The update from the second thread is lost.
+3. **Lost Updates:**  One thread might read a value, modify it, and then be interrupted *before* it can write the updated value back. Another thread might then read the *original* value (which is now stale), modify it, and write it back. Finally, the first thread resumes and writes *its* modified value, overwriting the changes made by the second thread.  The update from the second thread is lost.
 
-4.  **Inconsistent Reads:** A thread might read a value that is in an inconsistent state because another thread is in the middle of modifying it.
+4. **Inconsistent Reads:** A thread might read a value that is in an inconsistent state because another thread is in the middle of modifying it.
 
 ### Illustrate race conditions with simple examples.
 
 **Example 1: Incrementing a Shared Counter (Lost Update)**
 
+The following program should output 2,000,000 for the totals for both variables.  In running this program in version 3.9.6 of Python, the program had the output of:
+
+```
+Final counter value: 1,411,017, expected: 2,000,000
+```
+
+In this example program, each thread is being switched before it can update the variable "value" and then change the "counter".  Note, that versions of Python 3.10+ do not have this problem.  Although this is the case, we should always consider it as a critical section.
+
 ```python
 import threading
+import time
+
+TIMES = 1000000
 
 counter = 0  # Shared resource
 
 def increment_counter():
     global counter
-    for _ in range(100000):
+    for _ in range(TIMES):
         # Critical Section (but not protected!)
         value = counter  # Read
-        value += 1     # Modify
+        value += 1       # Modify
         counter = value  # Write
 
 # Create two threads
@@ -580,7 +702,7 @@ thread2.start()
 thread1.join()
 thread2.join()
 
-print(f"Final counter value: {counter}") # Expected: 200000, Actual: Often less
+print(f"Final counter value: {counter:,}, expected: {2 * TIMES:,}")
 ```
 
 ## 1.9 Locks
@@ -591,17 +713,19 @@ A **lock**, also known as a **mutex** (short for mutual exclusion), is a fundame
 
 **How Locks Work:**
 
-1.  **Acquire:** Before entering a critical section, a thread/process attempts to *acquire* the lock.
-    *   If the lock is *unlocked* (not held by any other thread/process), the requesting thread/process acquires the lock and proceeds into the critical section.  The lock is now considered *locked*.
-    *   If the lock is *locked* (already held by another thread/process), the requesting thread/process *blocks* (waits) until the lock becomes available.
+1.  **Acquire:** Before entering a critical section, a thread attempts to *acquire* the lock.
+    *   If the lock is *unlocked* (not held by any other thread), the requesting thread acquires the lock and proceeds into the critical section.  The lock is now considered *locked*.
+    *   If the lock is *locked* (already held by another thread), the requesting thread *blocks* (waits) until the lock becomes available.
 
-2.  **Release:** After completing the critical section, the thread/process that holds the lock *releases* it. This makes the lock available for other waiting threads/processes to acquire.
+2.  **Release:** After completing the critical section, the thread that holds the lock *releases* it. This makes the lock available for other waiting threads to acquire.
 
-**Analogy:**  Think of a lock like a single-occupancy restroom. Only one person (thread/process) can be inside (critical section) at a time.  The person locks the door (acquires the lock) when they enter and unlocks the door (releases the lock) when they leave. Anyone else who wants to use the restroom must wait until the door is unlocked.
+Think of a lock like a single-occupancy restroom. Only one person (thread) can be inside (critical section) at a time.  The person locks the door (acquires the lock) when they enter and unlocks the door (releases the lock) when they leave. Anyone else who wants to use the restroom must wait until the door is unlocked.
+
+Locks **ALWAYS** protect data and **NOT** threads.  In the above restroom example, if 10 people were waiting to use the restroom, there would still only be one lock required.
 
 ### Demonstrate how locks can prevent race conditions and ensure data integrity.
 
-Locks prevent race conditions by ensuring that only one thread/process can execute the critical section at a time.  This serializes access to the shared resource, preventing the interleaving of operations that can lead to data corruption.
+Locks prevent race conditions by ensuring that only one thread can execute the critical section at a time.  This serializes access to the shared resource, preventing the interleaving of operations that can lead to data corruption.
 
 **Example (Corrected Counter Example):**
 
@@ -610,12 +734,14 @@ Let's revisit the counter example from the previous section and fix it using a l
 ```python
 import threading
 
+TIMES = 1000000
+
 counter = 0
 lock = threading.Lock()  # Create a lock object
 
 def increment_counter():
     global counter
-    for _ in range(100000):
+    for _ in range(TIMES):
         # Acquire the lock before entering the critical section
         lock.acquire()
         try:
@@ -639,27 +765,29 @@ thread2.start()
 thread1.join()
 thread2.join()
 
-print(f"Final counter value: {counter}")  # Expected: 200000, Actual: 200000
+print(f"Final counter value: {counter:,}, expected: {2 * TIMES:,}")
 ```
-
 
 1.  `lock = threading.Lock()`:  A `Lock` object is created.
 2.  `lock.acquire()`:  Before accessing the shared `counter` variable, each thread *must* acquire the lock. If the lock is already held by another thread, the calling thread will block until the lock is released.
 3.  `try...finally`: This ensures that the lock is *always* released, even if an exception occurs within the critical section.  This is crucial to prevent deadlocks.
 4.  `lock.release()`: After modifying the `counter`, the thread releases the lock, allowing another waiting thread (if any) to acquire it and enter the critical section.
 
-Result: With the lock in place, the race condition is eliminated. The final value of counter will consistently be 200,000, as expected. The acquire() and release() calls guarantee that only one thread can modify counter at a time. The try...finally block is a best practice to ensure the lock is always released.
+Result: With the lock in place, the race condition is eliminated. The final value of counter will consistently be 2,000,000, as expected. The acquire() and release() calls guarantee that only one thread can modify counter at a time. The try...finally block is a best practice to ensure the lock is always released.
 
+You can also use `wait lock:` instead of `acquire()` and `release()`
 
 ```python
 import threading
+
+TIMES = 1000000
 
 counter = 0
 lock = threading.Lock()
 
 def increment_counter():
     global counter
-    for _ in range(100000):
+    for _ in range(TIMES):
         with lock:  # Acquire the lock at the beginning of the 'with' block
             # Critical Section
             value = counter
@@ -679,13 +807,12 @@ thread2.start()
 thread1.join()
 thread2.join()
 
-print(f"Final counter value: {counter}")  # Expected: 200000, Actual: 200000
+print(f"Final counter value: {counter:,}, expected: {2 * TIMES:,}")
 ```
 
+**Deadlock**
 
-deadlock
-
-A deadlock occurs when two or more threads/processes are blocked indefinitely, waiting for each other to release resources (in this case, locks) that they need.
+A deadlock occurs when two or more threads are blocked indefinitely, waiting for each other to release resources (in this case, locks) that they need.
 
 ```python
 import threading
@@ -719,7 +846,7 @@ thread2.join()
 print("Finished (but will likely deadlock before this)")
 ```
 
-
+steps:
 
 1.  `thread1` acquires `lock1`.
 2.  `thread2` acquires `lock2`.
