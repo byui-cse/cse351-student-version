@@ -315,7 +315,11 @@ Understanding whether a task is I/O-bound or CPU-bound is essential for choosing
 
 ### What are Python Threads?
 
-In Python, a thread is a concurrent unit of execution *within a single process*. Threads are often called "lightweight processes" because they share the same memory space and resources (e.g., file handles, global variables) of the parent process, making them more efficient to create and manage than separate processes.
+In Python, a thread is a concurrent unit of execution *within a single process*. Threads are often called "lightweight processes" because they share the same memory space and resources (e.g., file handles, global variables) of the parent process, making them more efficient to create and manage than separate processes.  In the previous Python program that you wrote, there was always one thread running in your program. This is called the `main thread`.
+
+> In computer science, a thread of execution is the smallest sequence of programmed instructions that can be managed independently by a scheduler, which is typically a part of the operating system. The implementation of threads and processes differs between operating systems, but in most cases a thread is a component of a process. Multiple threads can exist within one process, executing concurrently and sharing resources such as memory, while different processes do not share these resources. In particular, the threads of a process share its executable code and the values of its dynamically allocated variables and non-thread-local global variables at any given time.
+>
+>[Quote Source](https://en.wikipedia.org/wiki/Thread_(computing))
 
 **Key Characteristics of Threads:**
 
@@ -352,46 +356,131 @@ There are two fundamental models for implementing threads: user-level threads an
 CPython's `threading` module typically uses a **one-to-one model**, where each Python thread corresponds to a kernel-level thread.  This allows Python threads to benefit from kernel-level scheduling and the ability to utilize multiple cores (for I/O-bound operations). However, the GIL *still* limits true parallelism for CPU-bound tasks within a single process. The Python API is presented in a user-friendly way, abstracting away the complexities of the underlying kernel threads.
 
 
-349587777779999999999999999999999999999999992398475bv9234875bv9234875993874592837459872349587239485793284759823745987239458793248579999999999999999999999992398475bv9234875bv9234875993874592837459872349587239485793284759823745987239458793248579999999999999999999999992398475bv9234875bv9234875993874592837459872349587239485793284759823745987239458793248579999999999999999999999992398475bv9234875bv9234875993874592837459872349587239485793284759823745987239458793248579999999999999999999999992398475bv9234875bv9234875993874592837459872349587239485793284759823745987239458793248579999999999999999999999992398475bv9234875bv9234875993874592837459872349587239485793284759823745987239458793248579999999999999999999999992398475bv9234875bv9234875993874592837459872349587239485793284759823745987239458793248579999999999999999999999992398475bv9234875bv9234875993874592837459872349587239485793284759823745987239458793248579999999999999999999999992398475bv9234875bv9234875993874592837459872349587239485793284759823745987239458793248579999999999999999999999992398475bv9234875bv9234875993874592837459872349587239485793284759823745987239458793248579999999999999999999999992398475bv9234875bv9234875993874592837459872349587239485793284759823745987239458793248579999999999999999999999992398475bv9234875bv9234875993874592837459872349587239485793284759823745987239458793248579999999999999999999999992398475bv9234875bv9234875993874592837459872349587239485793284759823745987239458793248579999999999999999999999992398475bv9234875bv9234875993874592837459872349587239485793284759823745987239458793248579999999999999999999999992398475bv9234875bv9234875993874592837459872349587239485793284759823745987239458793248579999999999999999999999992398475bv9234875bv9234875993874592837459872349587239485793284759823745987239458793248579999999999999999999999992398475bv9234875bv9234875993874592837459872349587239485793284759823745987239458793248579999999999999999999999992398475bv9234875bv9234875993874592837459872349587239485793284759823745987239458793248579999999999999999999999992398475bv9234875bv9234875993874592837459872349587239485793284759823745987239458793248579999999999999999999999992398475bv9234875bv9234875993874592837459872349587239485793284759823745987239458793248579999999999999999999999992398475bv9234875bv9234875993874592837459872349587239485793284759823745987239458793248579999999999999999999999992398475bv9234875bv9234875993874592837459872349587239485793284759823745987239458793248579999999999999999999999992398475bv9234875bv923487599387459283745987234958723948579328475982374598723945879324857v
-
-
 ### Thread Creation and Management (in Python's `threading` module)
 
 The `threading` module provides a high-level interface for creating and managing threads.
 
-*   **`Thread` Class:**  The primary class for creating threads. You can create a thread in two main ways:
+TODO - creating threads based on a function
 
-    1.  **Subclassing `Thread`:**
-        *   Create a class that inherits from `threading.Thread`.
-        *   Override the `run()` method to define the code that the thread will execute.
+**Using `Thread` Functions**
 
-        ```python
-        import threading
+### Simple Threading Example
 
-        class MyThread(threading.Thread):
-            def run(self):
-                # Code to be executed in the thread
-                print(f"Thread {self.name} is running")
+Here is an example of creating, starting and ending a function thread.
 
-        thread1 = MyThread(name="Thread-1")
-        thread1.start()
-        thread1.join()
-        ```
+```python
+import logging
+import threading
+import time
 
-    2.  **Passing a Target Function:**
-        *   Pass a callable object (usually a function) to the `target` argument of the `Thread` constructor.
-        *   Optionally, pass arguments to the function using the `args` (tuple) and `kwargs` (dictionary) arguments.
+def thread_function(name, sleep_time):
+    """This is the function the thread will run"""
+    print(f'Thread "{name}": starting')
+    time.sleep(sleep_time)
+    print(f'Thread "{name}": finishing')
 
-        ```python
-        import threading
+if __name__ == '__main__':
+    print('Main : before creating thread')
 
-        def my_function(arg1, arg2):
-            print(f"Thread running with arguments: {arg1}, {arg2}")
+    # Create a thread. This doesn't start it, just it's creation
+    # The args argument allow the main code to pass arguments to the thread.
+    t = threading.Thread(target=thread_function, args=('Sleep Function', 2))
 
-        thread2 = threading.Thread(target=my_function, args=(10, 20), name="Thread-2")
-        thread2.start()
-        thread2.join()
-        ```
+    print('Main : before running thread')
+    # Start the thread and then keep executing. 
+    # It will not wait for the thread to finish.
+    t.start()
+
+    print('Main : wait for the thread to finish')
+    # Joining a thead back to the main thread.
+    # The main thread will wait for this until the thread is finished
+    t.join()
+
+    print('Main : all done')
+```
+
+Program output
+
+```text
+Main                   : before creating thread
+Main                   : before running thread
+Thread "Sleep Function": starting
+Main                   : wait for the thread to finish
+Thread "Sleep Function": finishing
+Main                   : all done
+```
+
+### Starting and waiting on Threads
+
+There are two methods used for starting and waiting for class threads.
+
+**start()**
+
+This is a non-blocking function call. Start() will start the thread running and will return to the caller. It doesn't wait for the thread to execute. In designing programs that use threads, there are a few guiding principles:
+
+1. Don't use sleep() to control the order of when threads run. The course uses `sleep()` in some assignments and team activities just to slow execution down to simulate the thread doing meaningful work.
+2. When you start a group of threads, you as a programmer should not assume any order of execution of these threads. For example: if you create two threads (t1 and t2), and start them in the order of `t1.start()` then `t2.start()`. You should not assume that `t1` is going to run first before `t2`.
+
+**join()**
+
+This is a blocking function call. Join() will wait until that thread is finished executing before allowing the program to proceed further. If the thread is still busy doing something, then join() will not return until it's finished. If the thread never finishes, then your program will hang (deadlock) on `join()`. Some common reasons to use join() are:
+
+
+
+
+
+
+**Timer() function in the threading package**
+
+The `timer()` function allows you to run a function in the future by indicating the amount of time in seconds. The following code will create a timer that will call the function `display_hello()` in 3 seconds when the thread is started.
+
+In the statement `thread = threading.Timer(3.0, display_hello)`, the function `display_hello` is passed to the Timer. There are no `()` used for a function that is passed as an argument to a function.
+
+```python
+import threading
+
+def display_hello():
+    print ("Hello, World!")
+
+print('Before the thread')
+thread = threading.Timer(3.0, display_hello)
+thread.start()
+print('After the thread - End of program')
+```
+
+Here is the output of the above program. Notice that the text `Hello World` was displayed after the text `After the thread - End of program`. The reason for this is that the main thread will continue to run after it starts the timer (ie., `thread.start()`) The program ends when the main thread and the timer are finished.
+
+```
+Before the thread
+After the thread - End of program
+Hello, World!
+```
+
+
+===========================================
+
+
+**Using `Thread` Classes**
+
+The primary class for creating threads. You can create a thread in two main ways:
+
+*   Create a class that inherits from `threading.Thread`.
+*   Override the `run()` method to define the code that the thread will execute.
+
+```python
+import threading
+
+class MyThread(threading.Thread):
+    def run(self):
+        # Code to be executed in the thread
+        print(f"Thread {self.name} is running")
+
+thread1 = MyThread(name="Thread-1")
+thread1.start()
+thread1.join()
+```
+
+
 
 *   **`start()` Method:** Starts the thread's execution by calling the `run()` method (or the target function) in a separate thread of control.  You *must* call `start()` to begin the thread's execution.
 
