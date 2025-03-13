@@ -538,17 +538,198 @@ Producer-consumer example finished.
 
 
 ### Semaphores for Threads
-Introduce semaphores as a fundamental synchronization primitive.
-Explain the concept of a semaphore as a counter that controls access to shared resources.
-Distinguish between binary semaphores (locks) and counting semaphores.
-Demonstrate how to create and use semaphores in Python (using the multiprocessing.Semaphore module).
-Show examples of how to use semaphores to control access to limited resources.
+
+Semaphores are a fundamental synchronization primitive used to control access to shared resources in concurrent programming. They are a more general mechanism than mutexes (locks) and can be used to manage situations where a limited number of threads (or processes) can access a resource concurrently. This section focuses on using semaphores within a single process, using Python's threading module.
+
+#### Concept of a Semaphore as a Counter
+
+A semaphore maintains an internal counter. This counter represents the number of available "permits" or "slots" for accessing a shared resource.  I always like to think of a semaphore as just an integer with 2 operations:
+
+- **acquire():** When a thread wants to access the resource, it attempts to acquire the semaphore. If the counter is greater than zero, the counter is decremented, and the thread is allowed to proceed. If the counter is zero, the thread blocks until another thread releases the semaphore.
+- **release():** When a thread is finished with the resource, it releases the semaphore, incrementing the counter. This potentially unblocks a waiting thread.
+
+
+#### Binary Semaphore
+
+A semaphore whose counter can only take the values 0 and 1. It's functionally equivalent to a mutex (lock). It's used to provide exclusive access to a single resource.
+
+#### Counting Semaphore
+
+A semaphore whose counter can take any non-negative integer value. It's used to control access to a resource that has multiple instances or a limited capacity (e.g., a pool of database connections, a limited number of file handles).
+
+
+#### Semaphore Example
+
+Here is an example of using a semaphore of value 3.  The program will only allow 3 threads to "access" the resource at a time.  You can use Python's `with` statement with a semaphore.  The `with` will acquire() and release() the semaphore for you.
+
+```python
+import threading
+import time
+import random
+
+THREADS = 5
+
+def do_work(thread_id):
+    print(f"Thread {thread_id}: Acquired resource.")
+    time.sleep(random.uniform(0.5, 2))
+    print(f"Thread {thread_id}: Releasing resource.")
+
+
+def access_resource_with(thread_id, semaphore):
+    with semaphore:
+        do_work(thread_id)
+
+
+def access_resource_calls(thread_id, semaphore):
+    semaphore.acquire()
+    do_work(thread_id)
+    semaphore.release()
+
+
+def test(thread_func, message):
+    print()-
+    print('-' * 40)
+    print(message)
+    print('-' * 40)
+
+    # Simulate a resource with limited capacity (e.g., 3 database connections)
+    semaphore = threading.Semaphore(3)
+
+    threads = []
+    for i in range(THREADS):
+        thread = threading.Thread(target=thread_func, args=(i, semaphore))
+        threads.append(thread)
+
+    for thread in threads:
+        thread.start()
+
+    for thread in threads:
+        thread.join()
+
+if __name__ == '__main__':
+    test(access_resource_with, 'Using with statement')
+    test(access_resource_calls, 'Using acquire() and release()')
+```
+
+Program Output:
+
+Notice that the program will allow 3 threads access to the resource, then the others must wait until a `release()` is called.
+
+```text
+----------------------------------------
+Using with statement
+----------------------------------------
+Thread 0: Acquired resource.
+Thread 1: Acquired resource.
+Thread 2: Acquired resource.
+Thread 1: Releasing resource.
+Thread 3: Acquired resource.
+Thread 0: Releasing resource.
+Thread 4: Acquired resource.
+Thread 2: Releasing resource.
+Thread 3: Releasing resource.
+Thread 4: Releasing resource.
+
+----------------------------------------
+Using acquire() and release()
+----------------------------------------
+Thread 0: Acquired resource.
+Thread 1: Acquired resource.
+Thread 2: Acquired resource.
+Thread 1: Releasing resource.
+Thread 3: Acquired resource.
+Thread 0: Releasing resource.
+Thread 4: Acquired resource.
+Thread 3: Releasing resource.
+Thread 4: Releasing resource.
+Thread 2: Releasing resource.
+```
+
+### Semaphore VS Lock
+
+Key differences and when to use a semaphore VS a lock
+
+- Mutexs are used for exclusive access to a single resource. Only one thread can hold the lock at a time.
+- Binary Semaphores are functionally equivalent to a mutex. Use interchangeably with `threading.Lock`.
+- Counting Semaphores are usde when you have a limited number of resources or want to allow a specific number of threads to access a resource concurrently.
+
+Semaphores are a powerful tool for managing concurrency and controlling access to shared resources in multithreaded applications. They provide a flexible mechanism for both exclusive access (binary semaphores) and controlled concurrent access (counting semaphores). Understanding their behavior and proper usage is essential for writing robust and efficient concurrent code. Using the with statement is crucial for correct semaphore management, preventing deadlocks and resource leaks.
+
 
 ### Barriers for Threads
-Introduce barriers as a synchronization mechanism for coordinating multiple processes.
-Explain how barriers ensure that all processes reach a certain point before any can proceed.
-Demonstrate how to create and use barriers in Python (using the multiprocessing.Barrier module).
-Provide examples of scenarios where barriers are useful (e.g., parallel computations with dependencies).
+
+A barrier is a synchronization primitive that allows a group of threads to wait until all of them have reached a specific point in their execution before any of them can proceed. It acts like a checkpoint or rendezvous point for threads. Barriers are particularly useful in parallel computations where tasks have dependencies or need to be synchronized at certain stages. This section focuses on using barriers within a single process, using the threading module.
+
+#### Concept of a Barrier
+
+Imagine a group of runners participating in a relay race. Each runner must wait at a designated point (the barrier) until all other runners in their team have also reached that point. Only when all runners are present can the next leg of the race begin. A barrier in concurrent programming works similarly.
+
+- **Parties:** A barrier is initialized with a specific number of "parties" (threads in this case) that must reach the barrier.
+- **Waiting:** When a thread calls `wait()` on the barrier, it blocks until all participating threads have also called `wait()`.
+- **Release:** Once the required number of threads have called `wait()`, the barrier is "broken," and all waiting threads are released simultaneously (or as close to simultaneously as the operating system scheduler allows).
+- **Reset:** After being broken, some barrier implementations can be reset for reuse. Python's `threading.Barrier` can be reused.
+
+#### Barrier Example
+
+```python
+import threading
+import time
+import random
+
+THREADS = 4
+
+def worker(barrier, thread_id):
+    print(f"Thread {thread_id}: Performing initialization...")
+    time.sleep(random.uniform(0.1, 0.5))
+
+    print(f"Thread {thread_id}: Waiting at the barrier...")
+    worker_id = barrier.wait()
+
+    print(f"Thread {thread_id}: Passed the barrier! (worker id: {worker_id})")
+
+    # Perform the next stage of the computation, now synchronized
+    time.sleep(random.uniform(0.1, 0.5))
+
+    print(f"Thread {thread_id}: Finishing.")
+
+if __name__ == '__main__':
+    barrier = threading.Barrier(THREADS)
+
+    threads = []
+    for i in range(THREADS):
+        thread = threading.Thread(target=worker, args=(barrier, i))
+        threads.append(thread)
+
+    for thread in threads:
+        thread.start()
+
+    for thread in threads:
+        thread.join()
+```
+
+Program Output:
+
+Notice in the output that the threads hit the barrier in the order of 2, 3, 1, 0.  However, after the barrier was released, the order was 3, 1, 2, 0.  Remember that you don't control the scheduling of threads on the CPU, the OS does.
+
+```text
+Thread 0: Performing initialization...
+Thread 1: Performing initialization...
+Thread 2: Performing initialization...
+Thread 3: Performing initialization...
+Thread 2: Waiting at the barrier...
+Thread 3: Waiting at the barrier...
+Thread 1: Waiting at the barrier...
+Thread 0: Waiting at the barrier...
+Thread 0: Passed the barrier! (worker id: 3)
+Thread 3: Passed the barrier! (worker id: 1)
+Thread 1: Passed the barrier! (worker id: 2)
+Thread 2: Passed the barrier! (worker id: 0)
+Thread 0: Finishing.
+Thread 3: Finishing.
+Thread 2: Finishing.
+Thread 1: Finishing.
+```
+
 
 ### Conditions for Threads
 Introduce multiprocessing.Condition for more complex synchronization scenarios.
