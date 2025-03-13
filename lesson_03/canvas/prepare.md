@@ -671,6 +671,8 @@ Imagine a group of runners participating in a relay race. Each runner must wait 
 
 #### Barrier Example
 
+In this Python example, it is very important that the value of the barrier be a factor of the number of threads.  For example, you can have a barrier of 3 and 9 threads.
+
 ```python
 import threading
 import time
@@ -729,9 +731,3 @@ Thread 3: Finishing.
 Thread 2: Finishing.
 Thread 1: Finishing.
 ```
-
-
-### Conditions for Threads
-Introduce multiprocessing.Condition for more complex synchronization scenarios.
-Explain how conditions allow processes to wait for specific events or states.
-Demonstrate how to use conditions to coordinate processes in producer-consumer or other complex scenarios.
