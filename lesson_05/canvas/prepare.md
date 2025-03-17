@@ -14,10 +14,179 @@ Section | Content
 
 
 ## 5.1 Introduction to Processes
-What are Processes? (Independent Execution Units)
-Process vs. Thread (Key Differences)
-Process Creation and Management (in Python's multiprocessing module)
-Process IDs (PIDs)
+
+Processes are fundamental to modern operating systems and form the basis for true parallelism, especially in Python, where the Global Interpreter Lock (GIL) limits the effectiveness of threads for CPU-bound tasks. This section introduces the concept of processes, contrasts them with threads, and demonstrates basic process management in Python.
+
+### What is a Processes?
+
+A process is an independent instance of a program in execution.  It's a self-contained unit that has the following:
+
+- **Memory Space:** Each process has its own private memory space, completely isolated from other processes. This includes the program's code, data, heap (for dynamically allocated memory), and stack.
+- **System Resources:** Processes have their own set of resources allocated by the operating system, such as file handles, network sockets, and device access.
+- **Execution Context:** This includes the program counter (which instruction is currently being executed), CPU registers, and other information needed to manage the process's execution.
+- **Security Credentials:** Processes have associated user and group IDs, which determine their privileges and access rights.
+
+Because of this isolation, a crash in one process typically does not affect other processes. This makes processes more robust than threads.
+
+### Process vs. Thread in Python
+
+Both processes and threads provide a way to achieve concurrency, but they differ significantly in their structure and behavior. Here's a table summarizing the key differences:
+
+| Feature | Process | Thread |
+|---|---|---|
+| Memory Space | Independent; each process has its own private memory space. | Shared; all threads within a process share the same memory space. |
+| Resource Usage | Higher overhead; creating and managing processes is more resource-intensive. | Lower overhead; creating and managing threads is generally faster and uses fewer resources. |
+| Communication | Inter-Process Communication (IPC) mechanisms are required (e.g., pipes, queues, shared memory). IPC is generally more complex. | Direct communication through shared memory. Easier but requires careful synchronization (locks, etc.) to avoid race conditions. |
+| Context Switching | Slower; context switching between processes is typically slower because it involves switching entire memory spaces. | Faster; context switching between threads is faster because they share the same memory space. |
+| Fault Isolation | Higher; a crash in one process usually does not affect other processes. | Lower; a crash in one thread can bring down the entire process (and all its threads). |
+| Parallelism | True parallelism; processes can run concurrently on multiple CPU cores. | Concurrency, but true parallelism is often limited in CPython by the GIL for CPU-bound tasks. |
+| Creation | OS system calls (e.g., fork() on Unix-like systems, CreateProcess() on Windows) or higher-level libraries like multiprocessing. | OS system calls or libraries like threading. |
+
+#### In summary
+
+- Processes are isolated and independent, offering robustness and true parallelism, but with higher overhead and more complex communication.
+- Threads are lightweight and share resources within a single process, making communication easier, but are more susceptible to shared-memory issues and (in CPython) limited by the GIL for CPU-bound tasks.
+
+
+### Process Creation and Management (in Python's multiprocessing module)
+
+Python's multiprocessing module provides a high-level interface for creating and managing processes, similar in style to the threading module.
+
+### Process Example 1
+
+The following Python program creates processes that are parallel.  It looks very similar to how threads are created and used (ie., create, start, then join).  For processes, the package `multiprocessing` must be used
+
+```python
+import multiprocessing as mp
+import os
+import time
+
+def worker_function(name):
+    """A simple function to be executed in a separate process."""
+    print(f"Worker process (PID: {os.getpid()}) starting, name: {name}")
+    time.sleep(2)
+    print(f"Worker process (PID: {os.getpid()}) finishing, name: {name}")
+
+if __name__ == '__main__':
+    print(f"Main process (PID: {os.getpid()}) starting")
+
+    # Create a Process object
+    process1 = mp.Process(target=worker_function, args=("Process 1",))
+    process2 = mp.Process(target=worker_function, args=("Process 2",))
+
+    # Start the process
+    process1.start()
+    process2.start()
+
+    # Optionally, wait for the process to finish
+    process1.join()
+    process2.join()
+
+    print("Main process finishing")
+```
+
+Program Output:
+
+From the output, you can see three different processes.  The main process and two created processes.
+
+```text
+Main process (PID: 24719) starting
+Worker process (PID: 24722) starting, name: Process 2
+Worker process (PID: 24721) starting, name: Process 1
+Worker process (PID: 24722) finishing, name: Process 2
+Worker process (PID: 24721) finishing, name: Process 1
+Main process finishing
+```
+
+### Process Example 2
+
+
+```python
+import multiprocessing as mp
+import os
+import time
+
+PROCESSES = 5
+
+def worker_function(name):
+    """A simple function to be executed in a separate process."""
+    print(f"Worker process (PID: {os.getpid()}) starting, name: {name}")
+    time.sleep(2)
+    print(f"Worker process (PID: {os.getpid()}) finishing, name: {name}")
+
+if __name__ == '__main__':
+    print(f"Main process (PID: {os.getpid()}) starting")
+
+    processes = []
+    for i in range(PROCESSES):
+        process = mp.Process(target=worker_function, args=(f"Process {i + 1}",))
+        processes.append(process)
+
+    # Start the processes
+    for p in processes:
+        p.start()
+
+    # wait for them to finish
+    for p in processes:
+        p.join()
+
+    print("Main process finishing")
+```
+
+Program Output:
+
+```text
+Main process (PID: 24837) starting
+Worker process (PID: 24840) starting, name: Process 2
+Worker process (PID: 24841) starting, name: Process 3
+Worker process (PID: 24839) starting, name: Process 1
+Worker process (PID: 24843) starting, name: Process 5
+Worker process (PID: 24842) starting, name: Process 4
+Worker process (PID: 24841) finishing, name: Process 3
+Worker process (PID: 24839) finishing, name: Process 1
+Worker process (PID: 24843) finishing, name: Process 5
+Worker process (PID: 24842) finishing, name: Process 4
+Worker process (PID: 24840) finishing, name: Process 2
+Main process finishing
+```
+
+### Process IDs (PIDs)
+
+Every process in an operating system has a unique numerical identifier called a Process ID (PID).  The PID is used by the OS to track and manage processes.
+
+- `os.getpid()`: In Python, you can get the PID of the current process using the `os.getpid()` function (from the os module).
+- `os.getppid()`: Get the parent's process ID.
+
+
+#### PIDs are useful for
+
+- **Monitoring:** You can use PIDs to monitor processes using system tools (e.g., top, ps on Linux/macOS; Task Manager on Windows).
+- **Debugging:** PIDs can help you identify which process is associated with which output or error messages.
+- **Inter-Process Communication:** Some IPC mechanisms (e.g., signals) use PIDs to target specific processes.
+- **Process Management:** You can use PIDs to control processes (e.g., sending signals to them).
+
+The example above demonstrates using `os.getpid()` to print the PID of both the main process and the worker processes.  You'll see that each process has a different PID. This confirms that they are indeed running in separate processes with their own memory spaces.  If the above example was using threads instead of processes, `os.getpid()` would return the same ID in main() and in the threads.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## Inter-Process Communication
 
