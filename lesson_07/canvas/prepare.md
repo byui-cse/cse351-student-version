@@ -11,6 +11,95 @@ Section | Content
 
 :key: = Vital concepts that we will continue to build on in coming lessons / key learning outcomes for this course.
 
+
+## 7.1 Process and Thread Scheduling
+
+Scheduling is a fundamental function of an operating system, responsible for determining which process or thread should be given access to the CPU at any given time. The scheduler aims to achieve several (often conflicting) goals.
+
+1. **Maximizing CPU utilization**: Keeping the CPU busy as much as possible.
+1. **Maximizing throughput**: Completing as many processes/threads as possible per unit of time.
+1. **Minimizing turnaround time**: The total time taken to complete a process (from submission to completion).
+1. **Minimizing waiting time**: The time a process spends waiting in the ready queue.
+1. **Minimizing response time**: The time it takes for a process to produce its first response (important for interactive systems).
+1. **Fairness**: Ensuring that all processes/threads get a fair share of CPU time.
+
+These goals often require trade-offs. For example, minimizing response time might require frequent context switching, which reduces overall throughput.
+
+
+### Scheduling Algorithms
+
+Numerous scheduling algorithms have been developed, each with its own strengths and weaknesses. Here are some of the most common algorithms.
+
+#### First-Come, First-Served (FCFS) / FIFO:
+
+Description: Processes are executed in the order they arrive. Simple to implement (using a queue).
+Advantages: Easy to understand and implement.
+Disadvantages: Can lead to long waiting times for short processes if long processes arrive first (the "convoy effect"). Not suitable for interactive systems. Non-preemptive.
+Example: Imagine processes A (takes 20 units of time), B (takes 2), and C (takes 3) arriving in that order. A runs to completion first, then B, then C. B and C wait a long time.
+
+#### Shortest-Job-First (SJF) / Shortest-Process-Next (SPN):
+
+Description: The process with the shortest estimated next CPU burst time is selected to run next. Can be preemptive or non-preemptive.
+Advantages: Minimizes average waiting time (provably optimal in this regard).
+Disadvantages: Requires knowing the length of the next CPU burst, which is usually not known in advance. Can lead to starvation of long processes if short processes keep arriving.
+Example (Non-preemptive): If A (20), B (2), and C (3) arrive at the same time, B runs first, then C, then A. Much better average waiting time than FCFS.
+Example (Preemptive - Shortest Remaining Time First, SRTF): If A (20) is running, and B (2) arrives, A is preempted, B runs to completion, and then A resumes.
+
+#### Round Robin (RR):
+
+Description: Each process gets a small unit of CPU time (a "time slice" or "quantum"). After the time slice expires, the process is preempted and moved to the back of the ready queue.
+Advantages: Fairness – each process gets a share of the CPU. Good response time for interactive processes.
+Disadvantages: Performance depends heavily on the choice of the time slice. Too short a time slice leads to excessive context switching overhead. Too long a time slice approaches FCFS.
+Example: Processes A, B, and C each get a time slice of 1. The execution order would be A, B, C, A, B, C, A, B, C... until each process completes.
+
+#### Priority Scheduling:
+
+Description: Each process is assigned a priority. The scheduler selects the process with the highest priority to run. Can be preemptive or non-preemptive.
+Advantages: Allows important processes to run quickly. Flexible – can be used to implement various scheduling policies.
+Disadvantages: Can lead to starvation of low-priority processes. Requires a mechanism for assigning priorities (which can be complex).
+Example (Preemptive): If A (priority 3), B (priority 1), and C (priority 2) are ready, A runs first. If C arrives while A is running, A continues (preemptive). If B arrives while A is running, A is preempted and B runs, then A resumes.
+Aging: A technique to prevent starvation in priority scheduling. Gradually increase the priority of processes that have been waiting for a long time.
+
+#### Multilevel Queue Scheduling:
+
+Description: Partitions the ready queue into multiple queues, each with its own scheduling algorithm. Processes are assigned to a queue based on their characteristics (e.g., interactive vs. batch, I/O-bound vs. CPU-bound).
+Advantages: Can tailor scheduling to different types of processes. More flexible than single-queue algorithms.
+Disadvantages: More complex to implement. Requires careful design of the queues and their priorities.
+Example: A system might have a foreground queue (for interactive processes, using Round Robin) and a background queue (for batch processes, using FCFS).
+
+#### Multilevel Feedback Queue Scheduling:
+
+Description: Similar to multilevel queue scheduling, but processes can move between queues. If a process uses too much CPU time, it's moved to a lower-priority queue. If a process waits too long in a lower-priority queue, it might be moved to a higher-priority queue.
+Advantages: Adaptive – can adjust to changing process behavior. Combines the benefits of different scheduling algorithms. Good balance between response time and throughput.
+Disadvantages: Most complex to implement. Requires careful tuning of parameters (number of queues, scheduling algorithms for each queue, criteria for moving processes between queues).
+Example: Three queues: Q0 (RR with quantum 8ms), Q1 (RR with quantum 16ms), Q2 (FCFS). New processes enter Q0. If a process doesn't finish within 8ms, it moves to Q1. If it doesn't finish within 16ms in Q1, it moves to Q2. This favors short bursts and interactive processes.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## 7.1 Process and Thread Scheduling
 Scheduling Algorithms (FIFO, Round Robin, Priority Scheduling, Multilevel Queues, etc.)
 Context Switching
