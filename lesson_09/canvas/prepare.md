@@ -36,10 +36,20 @@ The Boss-Worker pattern involves a "boss" thread that distributes tasks to multi
 
 ### Example
 
-```python
+```mermaid
+graph LR
+    B[Boss] -- "Adds Tasks" --> Q{Queue};
+    Q -- "Gets Task" --> W1[Worker 1];
+    Q -- "Gets Task" --> W2[Worker 2];
+    Q -- "Gets Task" --> W3[Worker 3];
+    Q -- "Gets Task" --> WN[... Worker N ...];
+
+    style B fill:#ff0000,stroke:#333,stroke-width:2px
+    style W1 fill:#00ff,stroke:#333,stroke-width:1px
+    style W2 fill:#00ff,stroke:#333,stroke-width:1px
+    style W3 fill:#00ff,stroke:#333,stroke-width:1px
+    style WN fill:#00ff00,stroke:#aaa,stroke-width:1px,stroke-dasharray: 5 5
 ```
-
-
 
 ### Producer-Consumer Pattern
 
@@ -58,6 +68,54 @@ This pattern is useful for decoupling data generation from data processing.
 - Process the data.
 - Signal producers when buffer space is available.
 
+```mermaid
+graph LR
+    subgraph Producers
+        direction TB  
+        P1(Producer 1)
+        P2(Producer 2)
+        PN(...)        
+    end
+
+    subgraph Consumers
+        direction TB  
+        C1(Consumer 1)
+        C2(Consumer 2)
+        CN(...)        
+    end
+
+    subgraph SharedResource
+       direction TB
+        B{Shared Buffer / Queue}; 
+    end
+
+
+    P1 -- "Adds Item (Waits if Full)" --> B;
+    P2 -- "Adds Item (Waits if Full)" --> B;
+    PN -- "Adds Item (Waits if Full)" --> B;
+
+    B -- "Removes Item (Waits if Empty)" --> C1;
+    B -- "Removes Item (Waits if Empty)" --> C2;
+    B -- "Removes Item (Waits if Empty)" --> CN;
+
+%% Styling
+style Producers fill:#ff0000,stroke:#ddd
+style Consumers fill:#0000ff,stroke:#ddd
+style SharedResource fill:#00ff00,stroke:#ddd,color:#000000
+
+style P1 fill:#00,stroke:#333,stroke-width:2px
+style P2 fill:#00,stroke:#333,stroke-width:2px
+style PN fill:#00,stroke:#aaa,stroke-width:1px,stroke-dasharray: 5 5
+
+style C1 fill:#00,stroke:#333,stroke-width:2px
+style C2 fill:#00,stroke:#333,stroke-width:2px
+style CN fill:#00,stroke:#aaa,stroke-width:1px,stroke-dasharray: 5 5
+
+style B fill:#00,stroke:#333,stroke-width:2px
+```
+
+
+### Example
 
 ```python
 ```
@@ -71,6 +129,45 @@ A Bounded Buffer is a variation of the Producer-Consumer pattern where the share
 - Uses synchronization mechanisms (e.g., semaphores) to manage buffer access.
 - Producers block when the buffer is full.
 - Consumers block when the buffer is empty.
+
+```mermaid
+graph LR
+    subgraph Producers
+        direction TB
+        P1(Producer 1)
+        P2(...)
+    end
+
+    subgraph Consumers
+        direction TB
+        C1(Consumer 1)
+        C2(...)
+    end
+
+    subgraph SharedResource
+       direction TB
+        BB{Bounded Buffer<br>count == N}
+    end
+
+    P1 -- "put(item)<br>[Waits if Full (count==N)]" --> BB;
+    P2 -- "put(item)<br>[Waits if Full (count==N)]" --> BB;
+
+    BB -- "get()<br>[Waits if Empty (count==0)]" --> C1;
+    BB -- "get()<br>[Waits if Empty (count==0)]" --> C2;
+
+%% Styling (similar to previous)
+style Producers fill:#ff0000,stroke:#ddd
+style Consumers fill:#0000ff,stroke:#ddd
+style SharedResource fill:#00ff00,stroke:#ddd,color:#000000
+
+style P1 fill:#ccf,stroke:#333,stroke-width:2px,color:#000
+style P2 fill:#eee,stroke:#aaa,stroke-width:1px,stroke-dasharray: 5 5,color:#000
+
+style C1 fill:#ffc,stroke:#333,stroke-width:2px,color:#000
+style C2 fill:#eee,stroke:#aaa,stroke-width:1px,stroke-dasharray: 5 5,color:#000
+
+style BB fill:#f9f,stroke:#333,stroke-width:2px,color:#000
+```
 
 ```python
 ```
@@ -91,6 +188,8 @@ The Client-Server pattern involves a "server" that provides services to multiple
 - Send requests to the server.
 - Receive responses from the server.
 
+TODO - Add image
+
 ```python
 ```
 
@@ -110,6 +209,7 @@ Need exclusive access to modify the resource.
 - Starvation: Writers may be starved if there is a continuous stream of readers.
 - Deadlocks: If readers and writers acquire locks in different orders, deadlocks can occur.
 
+TODO - Add image
 
 ```python
 ```
@@ -130,6 +230,8 @@ Shared resources that can only be used by one philosopher at a time.
 #### Potential Issue
 
 - Deadlock if all philosophers pick up their left chopstick simultaneously.
+
+TODO - Add image
 
 ```python
 ```
@@ -152,6 +254,8 @@ Limited number of chairs for waiting customers.
 #### Potential Issues
 - Race Condition: Multiple customers might try to wake up the barber simultaneously.
 - Deadlock: The barber might be waiting for a customer while a customer is waiting for the barber.
+
+TODO - Add image
 
 ```python
 ```
@@ -177,6 +281,8 @@ Generate requests with source and destination floors.
 - Handling concurrent passenger requests efficiently.
 - Avoiding collisions and deadlocks.
 
+TODO - Add image
+
 ```python
 ```
 
@@ -199,7 +305,10 @@ Randomly provides two of the three resources.
 - Ensuring that only one smoker can acquire the necessary resources at a time.
 - Preventing deadlocks where smokers wait indefinitely for the missing resource.
 
+TODO - Add image
+
 ```python
+
 ```
 
 ### Monte Carlo Simulations
@@ -222,278 +331,8 @@ Aggregate the results from all samples.
 - Ensuring that random number generation is thread-safe.
 - Efficiently distributing the workload across multiple threads or tasks.
 
+TODO - Add image
+
 ```python
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-9.1 Patterns
-- Boss-Worker
-- Bounded Buffer
-- Client-Server Pattern
-
-9.2 The Producer-Consumer Problem
-Problem Definition and Scenarios
-Solutions using Different Synchronization Primitives (Mutexes, Semaphores, Condition Variables)
-Bounded Buffer Problem
-
-9.3 The Readers-Writers Problem
-Problem Definition (Multiple Readers, Exclusive Writer)
-Solutions with Different Priorities (Reader Priority, Writer Priority)
-Avoiding Starvation
-
-9.4 The Dining Philosophers Problem
-Problem Definition (Resource Contention, Deadlock Potential)
-Solutions (Resource Ordering, Semaphores, Monitors)
-
-9.5 Monte Carlo Simulations
-
-9.6 Other Classic Problems
-Sleeping Barber Problem
-Cigarette Smokers Problem
-The Search-Insert-Delete Problem
-Bankers algorithm (deadlock prevention)
-Elevator Simulation
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Lesson 9: Review of C#, Threads
-
-**Reading is key to doing well in this course. You will be required to read the provided preparation material each lesson. Take your time and read the material more than once if you don't understand it the first time.**
-
-Section | Content
---- | ---
-1   | [Course Introduction](#topic-1)
-2   | [I/O Bound vs. CPU Bound](#topic-2) :key:
-
-:key: = Vital concepts that we will continue to build on in coming lessons / key learning outcomes for this course.
-
-### Topic 1
-
-### Topic 1
-
-Overall Module Goals:
-
-- Provide a solid foundation in C# syntax, object-oriented concepts, and concurrency.
-- Introduce the Thread class and asynchronous programming with async/await.
-- Explore concurrent collections and lambda functions in C#.
-- Familiarize students with IDE shortcuts for efficient C# development.
-- Reading Material Outline:
-
-Day 1: C# Basics and Syntax Review
-
-Reading:
-- software requirements
-    - Rider
-    - DotNet 9.0
-"C# Syntax and Data Types":
-Variables, data types (primitive and reference), and operators.
-Basic C# syntax and code structure.
-"Control Flow in C#":
-Conditional statements (if, switch).
-Looping constructs (for, while, do-while).
-Concepts:
-C# language syntax.
-Data type differences from Python.
-Basic program structure.
-
-
-Day 2: Object-Oriented Programming in C#
-
-Reading:
-"Classes and Objects":
-Creating classes, defining members (fields, methods).
-Object instantiation and usage.
-"Inheritance, Polymorphism, and Encapsulation":
-Understanding OOP principles in C#.
-Abstract classes and interfaces.
-Concepts:
-Class design.
-OOP paradigms.
-Code reusability.
-
-
-Day 3: UML Review and C# Integration
-
-Reading:
-"Review of UML Diagrams":
-Class diagrams, sequence diagrams, and use case diagrams.
-Mapping UML to C# code.
-"Designing C# Classes with UML":
-Translating UML diagrams into C# class structures.
-Concepts:
-UML modeling.
-C# design patterns.
-Software design principles.
-
-
-Day 4: The Thread Class and Thread Methods
-
-Reading:
-"Introduction to the Thread Class":
-Creating and starting threads in C#.
-Understanding thread lifecycle.
-"Methods of the Thread Class":
-Start(), Join(), Sleep(), Abort(), etc.
-Thread states and properties.
-Concepts:
-Thread creation and management.
-Thread synchronization basics.
-Thread safety.
-
-
-Day 5: How Threads Work in C# (Sim Commands to Python)
-
-Reading:
-"C# Thread Execution Model":
-Understanding how the CLR manages threads.
-Comparing C# thread behavior to Python's threading and multiprocessing.
-"Thread Synchronization Mechanisms":
-Basic locking using lock keyword.
-Understanding thread context switching.
-Concepts:
-CLR thread management.
-Synchronization primitives.
-Thread scheduling.
-Week 2: Advanced C# Concurrency and Development
-
-
-
-Day 6: Asynchronous Programming with async and await
-
-Reading:
-"Introduction to async and await":
-Writing asynchronous methods.
-Handling asynchronous operations.
-"Task-Based Asynchronous Pattern (TAP)":
-Understanding Task and Task<T> classes.
-Performing asynchronous I/O operations.
-Concepts:
-Asynchronous programming model.
-Non-blocking operations.
-Task parallelism.
-
-
-Day 7: Concurrent Collections
-
-Reading:
-"Introduction to Concurrent Collections":
-ConcurrentBag<T>, ConcurrentDictionary<TKey, TValue>, ConcurrentQueue<T>.
-Thread-safe data structures.
-"Using Concurrent Collections in Multi-threaded Applications":
-Efficient data sharing and manipulation.
-Avoiding race conditions.
-Concepts:
-Thread-safe data structures.
-Concurrent access patterns.
-Data consistency.
-
-
-Day 8: Lambda Functions and Delegates
-
-Reading:
-"Lambda Expressions in C#":
-Writing anonymous functions.
-Using lambda expressions with delegates.
-"Delegates and Events":
-Understanding function pointers and event handling.
-Using lambda expressions with events.
-Concepts:
-Functional programming in C#.
-Event-driven programming.
-Code conciseness.
-
-
-Day 9: IDE Shortcuts and Efficient Development
-
-Reading:
-"IDE Shortcuts for C# Development":
-Creating classes, methods, and properties quickly.
-Code refactoring and navigation shortcuts.
-"Debugging and Testing in the IDE":
-Setting breakpoints and inspecting variables.
-Unit testing with built-in tools.
-Concepts:
-Productivity tools.
-Efficient coding practices.
-Debugging techniques.
-
-
-Day 10: Review and Project Introduction
-
-Reading:
-Comprehensive review of all topics covered.
-Introduction to the C# concurrency project.
-Q&A session.
-Concepts:
-Application of learned concepts.
-Project planning and execution.
-
-
-Additional Notes:
-Include practical coding examples and exercises for each topic.
-Emphasize the differences and similarities between C# and Python concurrency.
-Provide hands-on experience with the IDE (e.g., Visual Studio).
-Encourage students to experiment with different threading and asynchronous patterns.
-Consider including a small project that involves creating a multi-threaded or asynchronous application.
