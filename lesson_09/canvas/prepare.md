@@ -296,6 +296,10 @@ Shared resources that can only be used by one philosopher at a time.
 
 The Sleeping Barber problem models a barber shop with a single barber and a limited number of waiting chairs.  The barber sleeps when there are no customers, and customers leave if there are no available chairs.  The challenge is to ensure that the barber and customers coordinate properly to avoid race conditions and deadlocks.
 
+[Wikipedia Page](https://en.wikipedia.org/wiki/Sleeping_barber_problem)
+
+[Youtube Video](https://www.youtube.com/watch?v=cArBsUK1ufQ)
+
 
 #### Barber
 
@@ -311,12 +315,10 @@ Limited number of chairs for waiting customers.
 - Race Condition: Multiple customers might try to wake up the barber simultaneously.
 - Deadlock: The barber might be waiting for a customer while a customer is waiting for the barber.
 
-TODO - Add image
-
 ### Code Example
 
-```python
-```
+[Python Code Example](prep/sleeping.py)
+
 
 ## Elevator Simulation
 
