@@ -74,6 +74,12 @@ If any of the concepts or topics in the list below seem unfamiliar to you, it is
 
 The last part of the course will be in C# where reading materials and assignments will be in that language.  Please review C# and OOP if required.  We will be using JetBrains Rider IDE.
 
+### UML Class Diagrams
+
+UML class diagrams were introduced in CSE 210.  Please review these diagrams.
+
+[Video on UML Class Diagrams](https://www.youtube.com/watch?v=6XrL5jXmTwM)
+
 ## 1.2 What is Parallelism?
 
 This section introduces the core concept of parallelism in computing, contrasting it with concurrency, classifying different types of parallel architectures, and exploring various forms and granularities of parallel execution.

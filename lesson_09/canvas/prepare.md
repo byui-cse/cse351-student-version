@@ -341,12 +341,9 @@ Generate requests with source and destination floors.
 - Handling concurrent passenger requests efficiently.
 - Avoiding collisions and deadlocks.
 
-TODO - Add image
+### Video Example
 
-### Code Example
-
-```python
-```
+[YouTube Elevator Simulation Video](https://www.youtube.com/watch?v=xOayymoIl8U)
 
 
 ## Cigarette Smokers Problem
