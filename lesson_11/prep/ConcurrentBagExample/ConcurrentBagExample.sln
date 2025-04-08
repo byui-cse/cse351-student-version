@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConcurrentBagExample", "ConcurrentBagExample.csproj", "{B99C7EB0-7359-4B3F-9FE0-DD607A597E1D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B99C7EB0-7359-4B3F-9FE0-DD607A597E1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B99C7EB0-7359-4B3F-9FE0-DD607A597E1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B99C7EB0-7359-4B3F-9FE0-DD607A597E1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B99C7EB0-7359-4B3F-9FE0-DD607A597E1D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
