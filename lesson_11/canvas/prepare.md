@@ -1,4 +1,4 @@
-# Lesson 11: Review of C#, C# Threads, and Tasks 
+# Lesson 11: Review of C#, Threads, and Tasks 
 
 TODO - place all C# readin material in this week.  This will
 be the last reading material for the course.  Students will be 
@@ -44,6 +44,8 @@ The development environment for this section of the course will be using C#.  Yo
 1. .NET Core - C#
 
     We will be using the platform independent version of C# called .NET Core. You will need to use version 9 of .NET core. Please download the version for your operating system and install it so that you’re ready for class to begin.
+
+    THe version of dotnet that we are using in this course is `version 8`.  It can be [downloaded here](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
 
 1. VS Code or JetBrains Rider
 
