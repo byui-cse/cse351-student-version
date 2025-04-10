@@ -1,8 +1,8 @@
 # Course Functions and Objects
 
-To simplify the process of creating your assignments we have created [this Python package](https://github.com/byui-cse/cse251-py-package) that contains common libraries needed for this course. You will need to install this package using `pip` and `git`.
+To simplify the process of creating your assignments we have created [this Python package](https://github.com/byui-cse/cse351-py-package) that contains common libraries needed for this course. You will need to install this package using `pip` and `git`.
 
-If you are comfortable installing python packages please see the [Quick Install](#quick-install) instructions below. If you run into trouble installing the package you should review the [detailed installation instructions](https://github.com/byui-cse/cse251-py-package?tab=readme-ov-file#installation-instructions). **Keep in mind tht it is very common to have multiple versions of Python on your computer. You must ensure that you install this package with the correct python version for this course.**
+If you are comfortable installing python packages please see the [Quick Install](#quick-install) instructions below. If you run into trouble installing the package you should review the [detailed installation instructions](https://github.com/byui-cse/cse351-py-package?tab=readme-ov-file#installation-instructions). **Keep in mind tht it is very common to have multiple versions of Python on your computer. You must ensure that you install this package with the correct python version for this course.**
 
 ### Quick Install
 
@@ -18,17 +18,16 @@ You need to have `git` installed on your computer. [Instructions to installing g
 
 ```
 Command to run (Mac or Windows):
-<python path used in VS Code> -m pip install git+https://github.com/byui-cse/cse251-py-package.git
+<python path used in VS Code> -m pip install git+https://github.com/byui-cse/cse351-py-package.git
 ```
 
 ### Using the package in your projects
 
-The following code will include the common files for the course. Most of your assignments include this already but if it
-is ever missing, you can import it into your assignments:
+The following code will include the common files for the course. Most of your assignments include this already but if it is ever missing, you can import it into your assignments:
 
 ```python
-# Include cse 251 common Python files
-from cse251 import *
+# Include cse 351 common Python files
+from cse351 import *
 ```
 
 ### Functions

@@ -1,11 +1,11 @@
 # Software Used in the Course
 
-### Python 3
+## Python 3
 
-We will be using Python throughout the course. Please ensure that you have version 3.10 or higher; it is preferred to have the latest version of Python. Also, make sure you have the latest update for the version of Python that you are using. For example, version `3.10.0` has issues in this course but version `3.10.9` does not.  Python can be [downloaded here](https://www.python.org/downloads/).
+We will be using Python throughout the course. Please ensure that you have version 3.13.x or higher; it is preferred to have the latest version of Python. Python can be [downloaded here](https://www.python.org/downloads/).
  
 
-### Python Videos
+## Python Videos
 
 If any of the concepts or topics in the list below seem unfamiliar to you, you should review them. The following are MicroSoft videos.
 
@@ -23,7 +23,7 @@ If any of the concepts or topics in the list below seem unfamiliar to you, you s
 - [Python dictionaries: realpython](https://realpython.com/lessons/dictionary-python/)
 - [Python slicing](https://www.youtube.com/watch?v=ajrtAuDg3yw)
 
-### Links to Python Articles
+## Links to Python Articles
 
 - [Python.org](https://www.python.org/)
 - [Python lists](https://www.w3schools.com/python/python_lists.asp)
@@ -33,17 +33,17 @@ and [Lists and Tuples in Python](https://realpython.com/courses/lists-tuples-pyt
 - [To learn more about installing modules using the **pip** command](https://docs.python.org/3/installing/index.html#basic-usage)
  
 
-### Visual Studio Code (vscode)
+## Visual Studio Code (vscode)
 
 There are a number of code editors available to programmers. You are free to use any editor that you want. However, the course will use Visual Studio Code as the editor in video examples and during class time. VSCode can be downloaded at [VSCode](https://code.visualstudio.com)
 
-### Python Package in VSCode 
+## Python Package in VSCode 
 
 When you open a Python file, VSCode will want you to install the Python Package from MicroSoft. Please install it.
 
 ![](assets/code-python-package.png)
 
-### You Will Install Python Packages for this Course
+## You Will Install Python Packages for this Course
 
 The course uses the several Python packages that must be installed on your computer, they are listed in the next section. Keep in mind that a computer can have more than one version of Python. It is important that these packages are installed on the version of Python that is used in VSCode and required for this class; at least 3.10 but the latest version preferably.
 
@@ -68,7 +68,7 @@ print('Hello World')
 Note that Mac users might need to add `--user` to the install command line. Also, Mac users can try `pip3 install --user <package>` in the terminal app to see if that works on their computer.
 
 
-### Packages that are installed with Python
+## Packages that are installed with Python
 
 We will be using the following packages that are already installed on you computers.
 
@@ -76,6 +76,6 @@ We will be using the following packages that are already installed on you comput
 - **multiprocessor**: Process package that allows for the creation and management of processes
 
 
-### CSE251 Library
+## CSE351 Library
 
-To simplify the process of creating your assignments we have created a Python package that contains common libraries (additional packages) we expect you to use. Please follow this link for more information about the [CSE 251 Course Package](package.md)
+To simplify the process of creating your assignments we have created a Python package that contains common libraries (additional packages) we expect you to use. Please follow this link for more information about the [CSE 351 Course Package](package.md)
