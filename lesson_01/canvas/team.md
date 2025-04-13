@@ -42,8 +42,8 @@ no threads - no prints
 
 When your program is finished, There are two solutions.  Compare them to your approach.
 
-1. [Solution 1](../team/team_solution.py) for 10 threads and range_count = 100000
-1. [Solution 2](../team/team_solution2.py) for random number of threads and range_count
+1. [Solution 1](../team/team01_solution.py) for 10 threads and range_count = 100000
+1. [Solution 2](../team/team01_solution2.py) for random number of threads and range_count
 
 You should work to complete this team activity for the one hour period first, without looking at the sample solution. However, if you have worked on it for at least an hour and are still having problems, you may feel free to use the sample solution to help you finish your program.
 
