@@ -417,6 +417,9 @@ There are two fundamental models for implementing threads: user-level threads an
 
 CPython's `threading` module typically uses a **one-to-one model**, where each Python thread corresponds to a kernel-level thread.  This allows Python threads to benefit from kernel-level scheduling and the ability to utilize multiple cores (for I/O-bound operations). However, the GIL *still* limits true parallelism for CPU-bound tasks within a single process. The Python API is presented in a user-friendly way, abstracting away the complexities of the underlying kernel threads.
 
+## Using Global Variables in Python Programs
+
+We will be using a few global variables in this course, however, this will only happen if we can't pass values to a thread when it's created.  Using global variables when they is a solution with using arguments will cause points to be taken off from assignments.
 
 ## Thread Creation and Management (in Python's `threading` module)
 
@@ -609,6 +612,49 @@ Thread "Jim": finishing
 Thread "Bob": finishing
 Main  : all done
 ```
+
+## Bad Example of Using Threads
+
+In the following threading example, the code starts each thread and then calls `join()` on that thread.  This causes the program to `NOT` be concurrent but instead serially executed.  In this case, having threads serves no purpose.
+
+```python
+import threading
+import time
+
+def thread_function(name, sleep_time):
+    """This is the function the thread will run"""
+    print(f'Thread "{name}": starting')
+    time.sleep(sleep_time)
+    print(f'Thread "{name}": finishing')
+
+if __name__ == '__main__':
+    print('Main  : before creating thread')
+
+    # Create a threads
+    t1 = threading.Thread(target=thread_function, args=('Bob', 3))
+    t2 = threading.Thread(target=thread_function, args=('Jim', 2))
+    t3 = threading.Thread(target=thread_function, args=('Mary', 1))
+
+    print('Main  : before running thread')
+
+    t1.start()
+    t1.join()
+   
+    t2.start()
+    t2.join()
+   
+    t3.start()
+    t3.join()
+    
+    print('Main  : all done')
+```
+
+You want to do 3 steps with threads:
+
+1. Create as many threads as you can, then
+1. Start them all with `start()`, then
+1. Join them all with `Join()`
+
 
 ## Timer() function in the threading package
 
