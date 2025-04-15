@@ -38,10 +38,11 @@ urls = [
 
 start_time = time.time()
 
-with concurrent.futures.ThreadPoolExecutor(max_workers=30) as executor:
+with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
 
     # map all the urls to the download_page function
-    # This will use all 5 threads in the pool
+    # This will use all 10 threads in the pool. This means that 10 URLS
+    # will be downloaded concurrently.
     results = executor.map(download_page, urls)
 
     for url, result in zip(urls, results):

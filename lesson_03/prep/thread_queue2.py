@@ -40,16 +40,10 @@ if __name__ == '__main__':
         producers.append(threading.Thread(target=producer, args=(i, q, num_items)))
         consumers.append(threading.Thread(target=consumer, args=(q,)))
 
-    for p in producers:
+    for p in producers + consumers:
         p.start()
 
-    for c in consumers:
-        c.start()
-
-    for p in producers:
+    for p in producers + consumers:
         p.join()
-
-    for c in consumers:
-        c.join()
 
     print("Producer-consumer example finished.")
