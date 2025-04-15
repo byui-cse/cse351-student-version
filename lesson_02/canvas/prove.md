@@ -2,9 +2,16 @@
 
 ## Overview
 
-There are 10 ATM machines through out the city.  At the end of the day, the bank collects all the transactions from each ATM.  The wants to update the account balances based on those transactions.  To speed up the processing of these transactions, you will be programming threads where each thread will load and process a data file from one ATM machine.
+There are 10 ATM machines through out the city.  At the end of the day, the bank collects all the transactions from each ATM.  It wants to update the account balances based on those transactions.  To speed up the processing of these transactions, you will be programming threads where each thread will load and process a data file from one ATM machine.
 
 When you run `assignment02.py` for the first time, the program will create the ATM transaction files in the sub folder `data_files`.
+
+## Assignment files
+
+These files are found in the folder `lesson_02/prove` in the Github repository.
+
+- `assignment02.py` program file for your assignment.  This is the file you will be submitting.
+- `money.py` Money class to manage money values.
 
 ## Requirements
 
@@ -43,6 +50,9 @@ classDiagram
     Bank *-- Account
     Account *-- Money
 
+    class threading.Thread {
+    }
+
     class Bank{
         - accounts: dictionary
         +\_\_init__()
@@ -78,19 +88,24 @@ classDiagram
         -__sub(a, b)string
         -__insert_commas(s) void
     }
+    
+    threading.Thread <|-- ATM_Reader 
+    ATM_Reader o-- Bank
 ```
 
 ## Graph of the Classes
 
+There will be a ATM_Reader for each ATM data file.  While reading the data files, there can be any number of accounts found within them.
+
 ```mermaid
-graph LR
+flowchart LR
     %% Define Nodes
     ATM1[ATM_Reader 1]
     ATM2[ATM_Reader 2]
     ATMN[ATM_Reader N]
     Bank[Bank]
     Account[Account]
-    AccountN[Account N]
+    AccountM[Account M]
     Money1[Money]
     Money2[Money]
 
@@ -99,9 +114,9 @@ graph LR
     ATM2 --> Bank
     ATMN --> Bank
     Bank --> Account
-    Bank --> AccountN
+    Bank --> AccountM
     Account --> Money1
-    AccountN --> Money2
+    AccountM --> Money2
     
     %% Optional Styling
     style ATM1 fill:#D6EAF8,stroke:#2874A6,color:#000000
@@ -109,7 +124,7 @@ graph LR
     style ATMN fill:#D6EAF8,stroke:#2874A6,stroke-dasharray: 5 5,color:#000000
     style Bank fill:#D5F5E3,stroke:#1D8348,stroke-width:2px,color:#000000
     style Account fill:#D5F5E3,stroke:#1D8348,stroke-width:2px,color:#000000
-    style AccountN fill:#D5F5E3,stroke:#1D8348,stroke-width:2px,color:#000000
+    style AccountM fill:#D5F5E3,stroke:#1D8348,stroke-width:2px,color:#000000
     style Money1 fill:#D5F5E3,stroke:#1D8348,stroke-width:2px,color:#000000
     style Money2 fill:#D5F5E3,stroke:#1D8348,stroke-width:2px,color:#000000
 ```
@@ -118,13 +133,15 @@ graph LR
 
 The format and examples of the data files are as follows:
 
-- `# ...` A line that starts with "#".  this is a comment, ignore them
+- `# ...` A line that starts with "#" is a comment, ignore them in your program.
 
 - `5,w,118.92` this is a transaction:  Account number = 5, withdraw, amount = 118.92
 
 - `8,d,126.65` this is a transaction:  Account number = 8, deposit, amount = 126.65
 
 ## How to use Money Class
+
+The Money() is used by the Account class to represent money (ie., dollars and cents).  It's constructor takes a money value as a string.
 
 ```python
 x = Money('123.45')
@@ -133,11 +150,11 @@ print(x)
 y = Money('3.99')
 print(y)
 
-# Add them (x changes)
+# Add y to x (x changes)
 x.add(y)
 print(x)
 
-# Subtract them (x changes)
+# Subtract y from x (x changes)
 x.sub(y)
 print(x)
 ```

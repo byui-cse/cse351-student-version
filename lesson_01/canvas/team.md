@@ -8,7 +8,7 @@ Programs can run with and without threads. In the team activity today, you will 
 
 **Core Requirements**
 
-1. Install all of the [software required](requierments.md) for the course. Create the folders for the course and copy the required files from GitHub to allow you to write programs in this course. Each team member needs to complete this step.
+1. Install all of the [software required](requirements.md) for the course. Create the folders for the course and copy the required files from GitHub to allow you to write programs in this course. Each team member needs to complete this step.
 2. Open the folder `lesson_01/team` and get the program file `team.py` to run. It will create a log file and display that it found 4,306 primes.
     - Note that each time you run the program, a new log file will be created. You can delete any that you don't need.
     - Keep track on how long it takes for the program to run.
@@ -22,7 +22,7 @@ Programs can run with and without threads. In the team activity today, you will 
 2. Question: compare the run times of the original non-threaded program with the 10 threaded version. Talk with your team members to explain the difference. Also, do we need a lock to protect the global variables `prime_count` and `numbers_processed`?
 3. Remove (comment out) the `print` statements that display when a prime is found. Test the non-threaded and threaded program and compare run times.
     - Why is the program faster when you don't print out the found primes?
-    - Why is there a greater time difference when you remove print statements from the threaded program when compared to the non-threaded version. (ie., run each program with and without the print statements and review the log files). The following is my test results. Do you get the same results?
+    - Why is there a greater time difference when you remove print statements from the threaded program when compared to the non-threaded version. (ie., run each program with and without the print statements and review the log files). The following is my test results. Do you get the same relative results?
 
 ```
 threaded - with prints

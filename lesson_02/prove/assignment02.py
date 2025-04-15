@@ -40,19 +40,19 @@ def main():
 
 # ===========================================================================
 class ATM_Reader():
-    # TODO - implement ths class here
+    # TODO - implement this class here
     ...
 
 
 # ===========================================================================
 class Account():
-    # TODO - implement ths class here
+    # TODO - implement this class here
     ...
 
 
 # ===========================================================================
 class Bank():
-    # TODO - implement ths class here
+    # TODO - implement this class here
     ...
 
 
