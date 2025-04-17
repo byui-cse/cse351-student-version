@@ -37,7 +37,48 @@ Note: all classes are found in the assignment file `assignment04.py`.  Normally,
 
 ### Program Diagram
 
-![](assests/assignment04.png)
+```mermaid
+graph LR
+    main[Main Process/Thread]
+    Q1[(Queue 1)]
+    T1(Thread 1)
+    T2(Thread 2)
+    TN(...)
+    Q2[(Queue 2)]
+    W1[Worker 1]
+    W2[Worker 2]
+    WN[...]
+    NOAA_Class[NOAA Class]
+
+    main -- Commands --> Q1;
+
+    Q1 --> T1;
+    Q1 --> T2;
+    Q1 --> TN;
+
+    T1 --> Q2;
+    T2 --> Q2;
+    TN --> Q2;
+
+    Q2 --> W1;
+    Q2 --> W2;
+    Q2 --> WN;
+
+    W1 --> NOAA_Class;
+    W2 --> NOAA_Class;
+    WN --> NOAA_Class;
+
+style main fill:#f9f,stroke:#333,stroke-width:2px,color:#000
+style Q1 fill:#e6e6fa,stroke:#333,stroke-width:1px,color:#000
+style Q2 fill:#e6e6fa,stroke:#333,stroke-width:1px,color:#000
+style T1 fill:#ccf,stroke:#333,stroke-width:1px,color:#000
+style T2 fill:#ccf,stroke:#333,stroke-width:1px,color:#000
+style TN fill:#eee,stroke:#aaa,stroke-width:1px,stroke-dasharray: 5 5,color:#000
+style W1 fill:#ffc,stroke:#333,stroke-width:1px,color:#000
+style W2 fill:#ffc,stroke:#333,stroke-width:1px,color:#000
+style WN fill:#eee,stroke:#aaa,stroke-width:1px,stroke-dasharray: 5 5,color:#000
+style NOAA_Class fill:#cfc,stroke:#333,stroke-width:2px,color:#000
+```
 
 ### Main
 
