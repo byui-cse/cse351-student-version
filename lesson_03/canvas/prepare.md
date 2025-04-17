@@ -13,6 +13,14 @@ Section | Content
 :key: = Vital concepts that we will continue to build on in coming lessons / key learning outcomes for this course.
 
  
+
+
+
+
+
+
+
+
 # 3.1 Threads Best Practices and Limitations
 
 While threads offer a way to achieve concurrency within a single Python process, they come with specific strengths and weaknesses. Understanding these is crucial for writing efficient and correct multithreaded programs.
@@ -55,6 +63,14 @@ Debugging multithreaded programs can be significantly more challenging than debu
 - **Heisenbugs:** Bugs that disappear or change their behavior when you try to observe them (e.g., Using a bugger, or print() statements). This can happen because the act of debugging can alter the timing and execution order of threads.
 
 Logging (writing print statements to a file), can help track the flow of execution and the state of assignments and programs.
+
+
+
+
+
+
+
+
 
 
 # 3.2 Thread Safety
@@ -109,6 +125,14 @@ Even when using synchronization primitives (locks, semaphores, etc.), incorrect 
 - **Livelock**: Similar to deadlock.  Threads are not blocked, but they keep retrying an action that will always fail because of another thread.
 
 
+
+
+
+
+
+
+
+
 # 3.3 Context Switching
 
 Context switching is a fundamental concept in operating systems and concurrency, and it's essential for understanding how threads are managed and how they share CPU time. It's the mechanism that allows multiple threads to appear to run simultaneously, even on a single-core processor.
@@ -161,6 +185,14 @@ Context switching is not free.  It introduces overhead, which can impact the per
 - As discussed earlier, the overhead of context switching is less significant for I/O-bound tasks because the threads spend much of their time waiting anyway. The context switch allows other threads to form useful work during these waiting periods. For CPU-bound tasks, the overhead of context switching (combined with the GIL's limitations) often outweighs the benefits of threading in CPython.
 - Excessive context switching can degrade performance. If you have too many threads competing for CPU time, the system may spend more time switching between them than actually executing their code. This is known as "thrashing".
 - Threads pool help manage the overhead by reusing a limited number of threads instead of creating and destroying them repeatedly. This reduced the frequency of thread creation and destruction, and can improve efficiency.
+
+
+
+
+
+
+
+
 
 
 # 3.4 Thread Pools
@@ -313,6 +345,14 @@ Here, you will notice that the time for the thread pool was a lot slower.  The s
 Time taken (with thread pool): 0.5908 seconds
 Time taken (sequential): 0.0097 seconds
 ```
+
+
+
+
+
+
+
+
 
 # 3.5 Thread Communication
 
