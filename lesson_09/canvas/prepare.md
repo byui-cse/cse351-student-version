@@ -43,11 +43,12 @@ graph LR
     Q -- "Gets Task" --> W3[Worker 3];
     Q -- "Gets Task" --> WN[... Worker N ...];
 
-    style B fill:#ff0000,stroke:#333,stroke-width:2px
-    style W1 fill:#00ff,stroke:#333,stroke-width:1px
-    style W2 fill:#00ff,stroke:#333,stroke-width:1px
-    style W3 fill:#00ff,stroke:#333,stroke-width:1px
-    style WN fill:#00ff,stroke:#aaa,stroke-width:1px,stroke-dasharray: 5 5
+    style B fill:#ff0000,stroke:#333,stroke-width:2px,color:#ffffff
+    style Q fill:#0000ff,stroke:#333,stroke-width:1px,color:#ffffff
+    style W1 fill:#0000ff,stroke:#333,stroke-width:1px,color:#ffffff
+    style W2 fill:#0000ff,stroke:#333,stroke-width:1px,color:#ffffff
+    style W3 fill:#0000ff,stroke:#333,stroke-width:1px,color:#ffffff
+    style WN fill:#0000ff,stroke:#aaa,stroke-width:1px,stroke-dasharray: 5 5,color:#ffffff
 ```
 
 ### Code Example
