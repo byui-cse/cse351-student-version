@@ -104,8 +104,8 @@ graph LR
     B -- "Removes Item (Waits if Empty)" --> CN;
 
 %% Styling
-style Producers fill:#ff0000,stroke:#ddd
-style Consumers fill:#0000ff,stroke:#ddd
+style Producers fill:#ff0000,stroke:#ddd,color:#ffffff
+style Consumers fill:#0000ff,stroke:#ddd,color:#ffffff
 style SharedResource fill:#00ff00,stroke:#ddd,color:#000000
 
 style P1 fill:#00,stroke:#333,stroke-width:2px
@@ -160,8 +160,8 @@ graph LR
     BB -- "get()<br>[Waits if Empty (count==0)]" --> C2;
 
 %% Styling (similar to previous)
-style Producers fill:#ff0000,stroke:#ddd
-style Consumers fill:#0000ff,stroke:#ddd
+style Producers fill:#ff0000,stroke:#ddd,color:#ffffff
+style Consumers fill:#0000ff,stroke:#ddd,color:#ffffff
 style SharedResource fill:#00ff00,stroke:#ddd,color:#000000
 
 style P1 fill:#ccf,stroke:#333,stroke-width:2px,color:#000
