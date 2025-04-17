@@ -39,12 +39,12 @@ Note: all classes are found in the assignment file `assignment04.py`.  Normally,
 
 ```mermaid
 graph LR
-    main[Main Process/Thread]
-    Q1[(Queue 1)]
+    main[Main]
+    Q1[Queue 1]
     T1(Thread 1)
     T2(Thread 2)
     TN(...)
-    Q2[(Queue 2)]
+    Q2[Queue 2]
     W1[Worker 1]
     W2[Worker 2]
     WN[...]
@@ -69,8 +69,8 @@ graph LR
     WN --> NOAA_Class;
 
 style main fill:#f9f,stroke:#333,stroke-width:2px,color:#000
-style Q1 fill:#e6e6fa,stroke:#333,stroke-width:1px,color:#000
-style Q2 fill:#e6e6fa,stroke:#333,stroke-width:1px,color:#000
+style Q1 fill:#06e6fa,stroke:#333,stroke-width:1px,color:#000
+style Q2 fill:#06e6fa,stroke:#333,stroke-width:1px,color:#000
 style T1 fill:#ccf,stroke:#333,stroke-width:1px,color:#000
 style T2 fill:#ccf,stroke:#333,stroke-width:1px,color:#000
 style TN fill:#eee,stroke:#aaa,stroke-width:1px,stroke-dasharray: 5 5,color:#000
