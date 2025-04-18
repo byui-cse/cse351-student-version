@@ -6,18 +6,27 @@ Section | Content
 --- | ---
 5.1 | [Introduction to Processes](#Introduction-to-Processes)
 5.2 | [Inter-Process Communication](#Inter-Process-Communication)
-5.3 | [Process Communication](#Process-Communication)
-5.4 | [Process Pools](#Process-Pools)
-5.5 | [When to Use Processes](#When-to-Use-Processes)
+5.3 | [Process Communication](#Process-Communication) :key:
+5.4 | [Process Pools](#Process-Pools) :key:
+5.5 | [When to Use Processes](#When-to-Use-Processes) :key:
 5.6 | [Process Synchronization](#Process-Synchronization)
 
 :key: = Vital concepts that we will continue to build on in coming lessons / key learning outcomes for this course.
 
-## 5.1 Introduction to Processes
+
+
+
+
+
+
+
+
+
+# 5.1 Introduction to Processes
 
 Processes are fundamental to modern operating systems and form the basis for true parallelism, especially in Python, where the Global Interpreter Lock (GIL) limits the effectiveness of threads for CPU-bound tasks. This section introduces the concept of processes, contrasts them with threads, and demonstrates basic process management in Python.
 
-### What is a Processes?
+## What is a Processes?
 
 A process is an independent instance of a program in execution.  It's a self-contained unit that has the following:
 
@@ -28,7 +37,7 @@ A process is an independent instance of a program in execution.  It's a self-con
 
 Because of this isolation, a crash in one process typically does not affect other processes. This makes processes more robust than threads.
 
-### Process vs. Thread in Python
+## Process vs. Thread in Python
 
 Both processes and threads provide a way to achieve concurrency, but they differ significantly in their structure and behavior. Here's a table summarizing the key differences:
 
@@ -40,19 +49,18 @@ Both processes and threads provide a way to achieve concurrency, but they differ
 | Context Switching | Slower; context switching between processes is typically slower because it involves switching entire memory spaces. | Faster; context switching between threads is faster because they share the same memory space. |
 | Fault Isolation | Higher; a crash in one process usually does not affect other processes. | Lower; a crash in one thread can bring down the entire process (and all its threads). |
 | Parallelism | True parallelism; processes can run concurrently on multiple CPU cores. | Concurrency, but true parallelism is often limited in CPython by the GIL for CPU-bound tasks. |
-| Creation | OS system calls (e.g., fork() on Unix-like systems, CreateProcess() on Windows) or higher-level libraries like multiprocessing. | OS system calls or libraries like threading. |
 
-#### In summary
+### In summary
 
 - Processes are isolated and independent, offering robustness and true parallelism, but with higher overhead and more complex communication.
 - Threads are lightweight and share resources within a single process, making communication easier, but are more susceptible to shared-memory issues and (in CPython) limited by the GIL for CPU-bound tasks.
 
 
-### Process Creation and Management (in Python's multiprocessing module)
+## Process Creation and Management (in Python's multiprocessing module)
 
 Python's multiprocessing module provides a high-level interface for creating and managing processes, similar in style to the threading module.
 
-### Process Example 1
+## Process Example 1
 
 The following Python program creates processes that are parallel.  It looks very similar to how threads are created and used (ie., create, start, then join).  For processes, the package `multiprocessing` must be used
 
@@ -78,7 +86,7 @@ if __name__ == '__main__':
     process1.start()
     process2.start()
 
-    # Optionally, wait for the process to finish
+    # Wait for the process to finish
     process1.join()
     process2.join()
 
@@ -98,11 +106,12 @@ Worker process (PID: 24721) finishing, name: Process 1
 Main process finishing
 ```
 
-### Process Example 2
+## Process Example 2
 
+This example shows how to have a list of processes.
 
 ```python
-import multiprocessing as mp
+import multiprocessing as mp 
 import os
 import time
 
@@ -150,15 +159,15 @@ Worker process (PID: 24840) finishing, name: Process 2
 Main process finishing
 ```
 
-### Process IDs (PIDs)
+## Process IDs (PIDs)
 
 Every process in an operating system has a unique numerical identifier called a Process ID (PID).  The PID is used by the OS to track and manage processes.
 
 - `os.getpid()`: In Python, you can get the PID of the current process using the `os.getpid()` function (from the os module).
-- `os.getppid()`: Get the parent's process ID.
+- `os.getppid()`: Get the parent's process ID.  Note that every process running in a OS has a parent process.
 
 
-#### PIDs are useful for
+### PIDs are useful for
 
 - **Monitoring:** You can use PIDs to monitor processes using system tools (e.g., top, ps on Linux/macOS; Task Manager on Windows).
 - **Debugging:** PIDs can help you identify which process is associated with which output or error messages.
@@ -168,15 +177,24 @@ Every process in an operating system has a unique numerical identifier called a 
 The example above demonstrates using `os.getpid()` to print the PID of both the main process and the worker processes.  You'll see that each process has a different PID. This confirms that they are indeed running in separate processes with their own memory spaces.  If the above example was using threads instead of processes, `os.getpid()` would return the same ID in main() and in the threads.
 
 
-## 5.2 Inter-Process Communication
+
+
+
+
+
+
+
+
+
+# 5.2 Inter-Process Communication
 
 Inter-Process Communication (IPC) refers to the mechanisms provided by an operating system that allow different processes to exchange data and synchronize their execution. Unlike threads, which share the same memory space within a single process, processes have their own independent memory spaces. This isolation provides robustness (a crash in one process won't necessarily bring down others), but it also necessitates specific mechanisms for communication and coordination.
 
-### Why IPC? (Data Sharing, Coordination between Processes)
+## Why IPC? (Data Sharing, Coordination between Processes)
 
 IPC is essential for a variety of reasons:
 
-#### Data Sharing
+### Data Sharing
 
 Processes often need to share data.  
 
@@ -185,7 +203,7 @@ Processes often need to share data.
 - A scientific simulation might distribute calculations across multiple processes to leverage multiple CPU cores.
 
 
-#### Coordination and Synchronization
+### Coordination and Synchronization
 
 Processes may need to coordinate their activities.
 
@@ -194,71 +212,80 @@ Processes may need to coordinate their activities.
 - A process launching and controlling other processes (e.g., a shell executing commands).
 - Signaling between processes. One process might need to notify another process that an event has occurred.
 
-#### Resource Sharing
+### Resource Sharing
 
 IPC can be used to share resources that are not directly shareable, such as hardware devices or network connections. A single process might manage access to the resource and communicate with other processes via IPC.
 
-#### Modularity and Fault Isolation
+### Modularity and Fault Isolation
 
 Dividing a large application into multiple processes can improve modularity and fault isolation.  If one process crashes, it's less likely to affect other processes.  This is particularly important for long-running applications or systems that require high reliability.
 
-#### Overcoming the GIL (in Python)
+### Overcoming the GIL (in Python)
 
 As discussed in the threading section, CPython's Global Interpreter Lock (GIL) limits true parallelism for CPU-bound tasks within a single process.  Using multiple processes bypasses the GIL, allowing you to fully utilize multiple CPU cores for CPU-bound computations. This is the primary reason to use multiprocessing in Python.
 
-### Challenges of IPC (Data Consistency, Synchronization)
+## Challenges of IPC (Data Consistency, Synchronization)
 
 While IPC is powerful, it introduces its own set of challenges, many of which are analogous to the challenges of multithreading, but often more complex due to the lack of shared memory.
 
-#### Data Consistency
+### Data Consistency
 
 Since processes don't share memory directly, ensuring data consistency requires careful design.  Data must be serialized (converted to a byte stream) for transmission between processes and then deserialized.  This process can introduce overhead and potential errors.
 
-#### Synchronization
+### Synchronization
 
 Just like with threads, processes need mechanisms to synchronize their access to shared resources (even if those resources are managed through IPC).  Race conditions can occur if multiple processes try to modify the same data simultaneously without proper coordination.  IPC mechanisms often provide synchronization primitives similar to those used in threading (e.g., locks, semaphores, queues).
 
-#### Overhead
+### Overhead
 
 IPC is generally more expensive (in terms of performance) than inter-thread communication.  Data needs to be copied between processes, and the operating system kernel is involved in managing the communication channels. This overhead can be significant, especially for frequent or large data transfers.
 
-#### Complexity
+### Complexity
 
 IPC can be more complex to implement than threading.  You need to choose an appropriate IPC mechanism, handle serialization/deserialization, and manage the communication channels.
 
-#### Deadlocks and Livelocks
+### Deadlocks and Livelocks
 
 Similar to threading, improper use of synchronization primitives in IPC can lead to deadlocks (where processes are blocked indefinitely waiting for each other) or livelocks (where processes repeatedly change their state without making progress).
 
-#### Security
+### Security
 
 When processes communicate across machine boundaries (e.g., over a network), security becomes a critical concern.  IPC mechanisms need to provide secure ways to authenticate processes and encrypt data.
 
-#### Data Marshalling/Serialization
+### Data Marshalling/Serialization
 
 Data passed between processes often needs to be converted into a format suitable for transmission. This process, called marshalling or serialization, can be complex, especially for custom data structures. Common serialization formats include JSON, XML, and Pickle (in Python).  However, Pickle is generally not recommended for untrusted data due to security risks.
 
 In summary, despite these challenges, IPC is a fundamental and essential technique for building robust, scalable, and parallel applications.  Python's multiprocessing module provides a high-level interface for working with processes and various IPC mechanisms, simplifying many of these complexities. The next sections will delve into specific IPC mechanisms available in Python.
 
-## 5.3 Process Communication
+
+
+
+
+
+
+
+
+
+# 5.3 Process Communication
 
 Since processes have separate memory spaces, they can't directly share variables like threads do.  Inter-Process Communication (IPC) mechanisms are required for processes to exchange data and synchronize their activities. Python's multiprocessing module (mp) provides several convenient IPC tools.
 
-### mp.Queue
+## mp.Queue
 
-mp.Queue is a process-safe queue, similar in concept to queue.Queue (used for threads), but designed for communication between processes. It handles all the necessary serialization (pickling) and synchronization internally.
+mp.Queue is a process-safe queue, similar in concept to queue.Queue (used for threads), but designed for communication between processes. It handles all the necessary serialization (pickling) and synchronization internally.  Note that you `can't` use the normal queue.Queue class with processes.
 
-#### Purpose
+### Purpose
 
 A general-purpose, FIFO (first-in, first-out) queue for passing objects between processes.
 
-#### Key Features
+### Key Features
 
 - **Process-safe:** Handles locking and synchronization automatically.
 - **Blocking Operations:** `put()` and `get()` block by default, simplifying coordination.
 - **Pickling:** Objects sent through the queue are pickled (serialized) and unpickled (deserialized).
 
-#### Methods (same as queue.Queue)
+### Methods (same as queue.Queue)
 
 - `put(obj, block=True, timeout=None):` Adds an item to the queue.
 - `get(block=True, timeout=None):` Removes and returns an item from the queue.
@@ -269,7 +296,9 @@ A general-purpose, FIFO (first-in, first-out) queue for passing objects between 
 - `join_thread():` Must be called after close. Waits until the background thread exits.
 - `cancel_join_thread():` Prevents join_thread from blocking.
 
-### Queue Example
+## Queue Example
+
+This example creates 3 processes that share a mp.Queue() with the main function. The main function places numbers in the queue and the processes extract them from the queue.
 
 ```python
 import multiprocessing as mp
@@ -327,26 +356,28 @@ Worker: Exiting
 All tasks completed
 ```
 
-### mp.Pipe
+## mp.Pipe
 
 mp.Pipe provides a simple, unidirectional (or bidirectional) communication channel between two processes. It's typically used for communication between a parent process and a child process.
 
 Purpose is to Direct communication between two processes.
 
-#### Key Features
+### Key Features
 
 - Two Connection Objects: Pipe() returns a pair of connection objects representing the two ends of the pipe.
 -  Unidirectional or Bidirectional: By default, pipes are bidirectional, but Pipe(duplex=False) creates a unidirectional pipe. Unidirectional pipes are generally safer and easier to reason about.
 - Pickling: Objects are pickled for transmission.
 
-#### Pipe Methods
+### Pipe Methods
 
 - `send(obj)`: Sends an object to the other end of the pipe.
 - `recv()`: Receives an object from the other end of the pipe (blocks until an object is available).
 - `close()`: Closes the connection. Crucially important to close unused ends.
 - `poll(timeout=None)`: Returns True if data is available to be read, False otherwise. Can be used to avoid blocking indefinitely on recv().
 
-### Pipe Example
+## Pipe Example
+
+This example creates a mp.Pipe() where it returns two connections.  Each connection is passed to it's own process.  This allows the processes to communicate with each other.
 
 ```python
 import multiprocessing as mp
@@ -404,69 +435,71 @@ Child Exiting
 Both Parent and Child Exited
 ```
 
-### mp.Queue VS mp.Pipe()
+## mp.Queue VS mp.Pipe()
 
 Both `mp.Queue()` and `mp.Pipe()` in Python's multiprocessing module provide mechanisms for inter-process communication (IPC), but they have distinct characteristics and are suited for different use cases.
 
-#### 1. Communication Direction:
+### 1. Communication Direction:
 
 - `mp.Pipe():` Creates a bidirectional communication channel. Data can flow in both directions through the pipe. You get two connection objects, one for each end of the pipe. Each process involved typically uses one end for sending and/or receiving.   
 - `mp.Queue():` Creates a unidirectional communication channel Data flows in a first-in, first-out (FIFO) manner from producers to consumers. Multiple processes can put items onto the queue, and multiple processes can get items from it.
 
 
-#### 2. Number of Connections:
+### 2. Number of Connections:
 
 - `mp.Pipe():` Typically involves two endpoints connected directly. It's primarily designed for communication between two closely related processes (e.g., a parent and a child).   
 - `mp.Queue():` Can have multiple producers putting items onto the queue and multiple consumers taking items off. It's better suited for scenarios where you have a pool of workers and a set of tasks to be distributed, or where multiple sources need to send data to multiple destinations in a decoupled way.   
 
 
-#### 3. Structure and Usage:
+### 3. Structure and Usage:
 
 - `mp.Pipe():` Returns a tuple of two connection objects. Each process needs to hold onto its end of the connection and use the send() and recv() methods to exchange data. You often close the unused end of the pipe in each process to avoid potential deadlocks or unexpected behavior.   
 - `mp.Queue():` Returns a single queue object. Processes use the `put()` method to add items to the queue and the `get()` method to retrieve items.
 
-#### 4. Buffering and Capacity:
+### 4. Buffering and Capacity:
 
 - `mp.Pipe():` May have some internal buffering, but it's generally considered less explicitly managed than a queue. The capacity might be limited by the operating system's pipe buffer size. Blocking behavior on `send()` and `recv()` depends on the buffer and the state of the other end.
 - `mp.Queue():` Provides more explicit control over buffering. You can create a queue with a specific maxsize to limit the number of items it can hold. `put()` can block if the queue is full (unless block=False is used), and `get()` can block if the queue is empty (unless block=False is used).
 
-#### 5. Complexity of Management:
+### 5. Complexity of Management:
 
 - `mp.Pipe():` Requires more manual management of the connection objects, especially when dealing with more than two processes. You need to ensure each process has the correct end of the pipe and closes the unnecessary one.
 - `mp.Queue():` Offers a higher-level abstraction, simplifying the management of communication between multiple processes. The queue handles the routing and synchronization of messages.   
 
-#### 6. Use Cases:
+### 6. Use Cases:
 
 - `mp.Pipe():` Best suited for direct, two-way communication between two related processes.  A parent process sending commands to a child process and receiving results.  Two worker processes collaborating on a specific task.
 - `mp.Queue():` Ideal for distributing work among multiple processes or for scenarios where you have multiple producers and/or consumers.  A pool of worker processes processing tasks from a job queue.  Multiple sensor processes feeding data into a central processing unit.  Implementing producer-consumer patterns.
 
 
-#### 7. Closing:
+### 7. Closing:
 
 - `mp.Pipe():` It's crucial to explicitly close both ends of the pipe in all involved processes when communication is finished to release system resources and avoid potential issues.   
 - `mp.Queue():` Don't need to close a queue.
 
 
-### mp.Manager()
+## mp.Manager()
 
 mp.Manager() provides a way to create shared objects that can be safely accessed and modified by multiple processes. It uses a server process to manage the shared objects and provides proxies to access them from other processes.
 
-#### Purpose
+### Purpose
 
 Creating shared objects (lists, dictionaries, values, etc.) that can be safely modified by multiple processes without explicit locking.
 
-#### Key Features
+### Key Features
 
 - **Proxy Objects:** The manager creates proxy objects that act as intermediaries to the shared objects. Operations on the proxies are automatically synchronized.
 - **Variety of Shared Objects:** Supports lists, dictionaries, namespaces, locks, semaphores, barriers, queues, and Value/Array.
 - **Server Process:** Uses a separate server process to manage the shared objects, ensuring consistency.
 
-#### Methods
+### Methods
 
 - `Manager()`: Creates a manager object. It's best to use this as a context manager (with a `with` statement).
 - `list()`, `dict()`, `Namespace()`, `Lock()`, `RLock()`, `Semaphore()`, `BoundedSemaphore()`, `Condition()`, `Event()`, `Barrier()`, `Queue()`, `Value()`, `Array()`.  These methods are used to create shared objects of various types.
 
-### Manager() Example 1
+## Manager() Example 1
+
+This example create a list and dictionary using the mp.manager().  This allows that list and dictionary to be shared between processes.
 
 ```python
 import multiprocessing as mp
@@ -500,7 +533,9 @@ Shared list: ['Process-2', 'Process-4', 'Process-3']
 Shared dict: {'Process-2': 2, 'Process-4': 2, 'Process-3': 3}
 ```
 
-### Manager() Example 2
+## Manager() Example 2
+
+This example creates a shared variable using `mp.manager().Value()`.  This allows that variable to be shared between processes.
 
 ```python
 import multiprocessing as mp
@@ -585,21 +620,21 @@ Final shared_int: 12
 Final shared_float_array: [4.0, 5.5, 6.0]
 ```
 
-### mp.shared_memory (Python 3.8+)
+## mp.shared_memory (Python 3.8+)
 
 The multiprocessing.shared_memory module (introduced in Python 3.8) provides a way to create shared memory regions that can be directly accessed by multiple processes. This offers much lower overhead than pickling (used by Queue, Pipe, and Manager), especially for large numerical arrays.
 
-#### Purpose
+### Purpose
 
 Efficiently sharing raw bytes of memory between processes. Ideal for NumPy arrays.
 
-#### Key Features
+### Key Features
 
 - **Direct Memory Access:** Processes can directly read and write to the shared memory region without pickling/unpickling.
 - **SharedMemory Class:** Provides the interface for creating and accessing shared memory blocks.
 - **ShareableList:** Similar to a list, but stored in a shared memory region.
 
-#### Methods
+### Methods
 
 - `SharedMemory(name=None, create=False, size=0)`: Creates or connects to a shared memory block.
 - `name`: A unique name for the shared memory block (optional if creating).
@@ -610,7 +645,9 @@ Efficiently sharing raw bytes of memory between processes. Ideal for NumPy array
 - `close()`: Closes access to the shared memory block from the current process.
 - `unlink()`: Releases the shared memory block (should only be called once by a single process, usually the creator).
 
-### Shared Memory Example 
+## Shared Memory Example 
+
+This example creates shared memory between processes.
 
 ```python
 import multiprocessing as mp
@@ -650,11 +687,11 @@ Worker: [2 3 4 5 6]
 Main process: [2 3 4 5 6]
 ```
 
-### mp.Value and mp.Array
+## mp.Value and mp.Array
 
-`mp.Value` and `mp.Array` provide simpler (but less flexible) ways to create shared memory objects for single values and arrays of a specific type, respectively. They are older than shared_memory but are still useful in some cases.  They use ctypes under the hood.
+`mp.Value` and `mp.Array` provide simpler (but less flexible) ways to create shared memory objects for single values and arrays of a specific type, respectively. They are older than shared_memory but are still useful in some cases.  They use ctypes under the hood. [ctypes documentation]()
 
-#### mp.Value(typecode, initial_value, lock=True)
+### mp.Value(typecode, initial_value, lock=True)
 
 Creates a shared object to hold a single value of a specified type.
 
@@ -662,8 +699,24 @@ Creates a shared object to hold a single value of a specified type.
 - The initial value of the shared object.
 - lock, If set to True (default), creates a recursive lock to synchronize access.
 
+Value() takes two arguments: the data type code and the initial value. It returns a synchronized, shared object that can be safely accessed from multiple processes. Options for the data type code include:
 
-#### mp.Array(typecode, size_or_initializer, lock=True)
+- 'b': signed char
+- 'B': unsigned char
+- 'h': signed short
+- 'H': unsigned short
+- 'i': signed int
+- 'I': unsigned int
+- 'l': signed long
+- 'L': unsigned long
+- 'q': signed long long
+- 'Q': unsigned long long
+- 'f': float
+- 'd': double
+- 'c': char
+- 'u': unicode
+
+### mp.Array(typecode, size_or_initializer, lock=True)
 
 Creates a shared array of a specified type.
 
@@ -672,7 +725,9 @@ Creates a shared array of a specified type.
 - **lock:** If set to true, creates a recursive lock to syncronize access.
 
 
-### mp.Value() Example 
+## mp.Value() Example 
+
+This example creates two shared variables. An integer and a double.  Note, that when you use them, you need to use `.value`.
 
 ```python
 import multiprocessing as mp
@@ -700,7 +755,9 @@ Shared integer: 11
 Shared float: 6.28
 ```
 
-### mp.Array() Example 
+## mp.Array() Example 
+
+This example shows how to create a shared array of integers.
 
 ```python
 from multiprocessing import Process, Value, Array
@@ -771,11 +828,20 @@ def f(n, a):
 
 When using shared variables, remember that if there are processes writing to and reading from them, then you need to stop a potential race condition by using a shared lock.
 
-## 5.4 Process Pools
+
+
+
+
+
+
+
+
+
+# 5.4 Process Pools
 
 Process pools provide a convenient way to manage a fixed number of worker processes and distribute tasks among them. They are particularly useful for parallelizing independent computations across multiple CPU cores. Python offers two main classes for creating process pools: multiprocessing.Pool (older, more established) and concurrent.futures.ProcessPoolExecutor (newer, more consistent interface with thread pools).
 
-### Process Pool and Map() Function
+## Process Pool and Map() Function
 
 Please review the [Python documentation](https://docs.python.org/3/library/multiprocessing.html#module-multiprocessing.pool) on the multiprocessing module for in-depth information.
 
@@ -876,7 +942,7 @@ PID = 14268: 13434 + -23272 = -9838
 
 Finally, the size of your process pool should not be greater than the number of CPUs on your computer.
 
-### Asynchronous vs Synchronous Programming
+## Asynchronous vs Synchronous Programming
 
 In programming, synchronous operations block instructions until the task is completed, while asynchronous operations can execute without blocking. Asynchronous operations are generally completed by firing an event or by calling a provided callback function.
 
@@ -884,9 +950,9 @@ In programming, synchronous operations block instructions until the task is comp
 
 It is important to understand that asynchronous program is not parallelism, it is concurrency.
 
-### Coding Examples Using Process Pools
+## Coding Examples Using Process Pools
 
-#### Example 1
+### Example 1
 
 In this first example, we are using the `map()` function to map a list to a function. Note that we need to get all of the data in a list before the call to the `map()` function and that the `map()` call is synchronous meaning that it doesn't return until the function is finished.
 
@@ -920,7 +986,7 @@ Output:
 12:13:39| Finished:  = 234.72213530
 ```
 
-#### Example 2
+### Example 2
 
 This second example is using the function `apply_async()`. It is asynchronous meaning that the function will return before the processes are finished processes the data.
 
@@ -975,7 +1041,7 @@ With this next statement, the program is now collecting the results of the proce
 output = [p.get() for p in results]
 ```
 
-#### Example 3
+### Example 3
 
 Here is the same program from example 2 processing a larger range of values.
 
@@ -1009,7 +1075,7 @@ Output:
 [5000000050000000, 5000000150000001, 5000000250000003, 5000000350000006, 5000000450000010, 5000000550000015, 5000000650000021, 5000000750000028, 5000000850000036, 5000000950000045, 5000001050000055, 5000001150000066, 5000001250000078, 5000001350000091, 5000001450000105, 5000001550000120, 5000001650000136, 5000001750000153, 5000001850000171, 5000001950000190, 5000002050000210, 5000002150000231, 5000002250000253, 5000002350000276, 5000002450000300, 5000002550000325, 5000002650000351, 5000002750000378, 5000002850000406, 5000002950000435, 5000003050000465, 5000003150000496, 5000003250000528, 5000003350000561, 5000003450000595, 5000003550000630, 5000003650000666, 5000003750000703, 5000003850000741, 5000003950000780, 5000004050000820, 5000004150000861, 5000004250000903, 5000004350000946, 5000004450000990, 5000004550001035, 5000004650001081, 5000004750001128, 5000004850001176, 5000004950001225, 5000005050001275, 5000005150001326, 5000005250001378, 5000005350001431, 5000005450001485, 5000005550001540, 5000005650001596, 5000005750001653, 5000005850001711, 5000005950001770, 5000006050001830, 5000006150001891, 5000006250001953, 5000006350002016, 5000006450002080, 5000006550002145, 5000006650002211, 5000006750002278, 5000006850002346, 5000006950002415, 5000007050002485, 5000007150002556, 5000007250002628, 5000007350002701, 5000007450002775, 5000007550002850, 5000007650002926, 5000007750003003, 5000007850003081, 5000007950003160, 5000008050003240, 5000008150003321, 5000008250003403, 5000008350003486, 5000008450003570, 5000008550003655, 5000008650003741, 5000008750003828, 5000008850003916, 5000008950004005, 5000009050004095, 5000009150004186, 5000009250004278, 5000009350004371, 5000009450004465, 5000009550004560, 5000009650004656, 5000009750004753, 5000009850004851, 5000009950004950] 
 ```
 
-#### Example 4
+### Example 4
 
 In this example, the `pool()` using the method `apply_async()`. The way that this works is that instead of having all of the tasks in a list and the results in a list, as each process finishes their job with the data, the callback function is called. In this callback function, you can collect the results - one at a time for the process pool.
 
@@ -1073,7 +1139,7 @@ Notice that the `for` loop was quick to get the data to the process pool.
 12:22:12| Finished:  = 195.08828210
 ```
 
-#### Example 5
+### Example 5
 
 Once a process pool is created, you are free to add jobs to the pool any time in your program as long as it's before calling `pool.close()` and `pool.join()`. Here is an example where the program adds a job to the pool after sleeping a little while.
 
@@ -1142,7 +1208,16 @@ Output:
 [5000000050000000, 5000000150000001, 5000000250000003, 5000000350000006]
 ```
 
-## 5.5 When to Use Processes
+
+
+
+
+
+
+
+
+
+# 5.5 When to Use Processes
 
 Choosing between processes and threads depends on the specific characteristics of your application and the goals you're trying to achieve. Processes offer distinct advantages in certain scenarios, particularly when dealing with CPU-bound tasks, requiring increased reliability, or aiming for scalability across multiple CPU cores.
 
@@ -1158,7 +1233,7 @@ Choosing between processes and threads depends on the specific characteristics o
 
     Processes allow you to scale your application to utilize multiple CPU cores effectively.  This is crucial for achieving maximum performance on modern multi-core processors.
 
-### When `Not` to Use Processes:
+## When `Not` to Use Processes:
 
 While processes offer significant advantages, they also have some drawbacks:
 
@@ -1167,21 +1242,30 @@ While processes offer significant advantages, they also have some drawbacks:
 1. Sharing data between processes requires explicit IPC mechanisms (queues, pipes, shared memory), which can be more challenging to implement correctly than simply sharing variables between threads.
 
 
-## 5.6 Process Synchronization
+
+
+
+
+
+
+
+
+
+# 5.6 Process Synchronization
 
 When multiple processes share resources (e.g., shared memory, files, or even conceptual resources like a counter), you need synchronization mechanisms to prevent race conditions and ensure data consistency.  Python's multiprocessing module provides several synchronization primitives that are process-safe, mirroring the primitives available for threads in the threading module. The difference is these are designed to work across process boundaries.
 
 The following synchronization tools are the same as the ones we read about when learning threads.  The main difference is that they must be created from the `multiprocessing` module.
 
-### mp.Lock()
+## mp.Lock()
 
 provides a mutual exclusion lock, often simply called a "mutex". It ensures that only one process can hold the lock at a time, providing exclusive access to a shared resource.
 
-### mp.Semaphore()
+## mp.Semaphore()
 
 `mp.Semaphore()` is a more general synchronization primitive than a lock.  It maintains an internal counter and allows a specified number of processes to access a resource concurrently.
 
-### mp.Condition()
+## mp.Condition()
 
 `mp.Condition()` is used for more complex synchronization scenarios where processes need to wait for a specific condition to become true and be notified by other processes when that condition changes.  It combines a lock with wait/notify capabilities.
 
