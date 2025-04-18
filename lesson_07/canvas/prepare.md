@@ -5,14 +5,23 @@
 Section | Content
 --- | ---
 7.1 | [Process and Thread Scheduling](#Process-and-Thread-Scheduling)
-7.2 | [Memory Management](#Memory-Management)
-7.3 | [Hardware Considerations](#Hardware-Considerations)
-7.4 | [File Systems](#File-Systems)
+7.2 | [Context Switching](#Context-Switching)
+7.3 | [Memory Management](#Memory-Management)
+7.4 | [Hardware Considerations](#Hardware-Considerations)
+7.5 | [File Systems](#File-Systems)
 
 :key: = Vital concepts that we will continue to build on in coming lessons / key learning outcomes for this course.
 
 
-## 7.1 Process and Thread Scheduling
+
+
+
+
+
+
+
+
+# 7.1 Process and Thread Scheduling
 
 Scheduling is a fundamental function of an operating system, responsible for determining which process or thread should be given access to the CPU at any given time. The scheduler aims to achieve several (often conflicting) goals.
 
@@ -26,18 +35,18 @@ Scheduling is a fundamental function of an operating system, responsible for det
 These goals often require trade-offs. For example, minimizing response time might require frequent context switching, which reduces overall throughput.
 
 
-### Scheduling Algorithms
+## Scheduling Algorithms
 
 Numerous scheduling algorithms have been developed, each with its own strengths and weaknesses. Here are some of the most common algorithms.
 
-#### First-Come, First-Served (FCFS) / FIFO:
+### First-Come, First-Served (FCFS) / FIFO:
 
 - **Description**: Processes are executed in the order they arrive. Simple to implement (using a queue).
 - **Advantages**: Easy to understand and implement.
 - **Disadvantages**: Can lead to long waiting times for short processes if long processes arrive first (the "convoy effect"). Not suitable for interactive systems. Non-preemptive.
 - **Example**: Imagine processes A (takes 20 units of time), B (takes 2), and C (takes 3) arriving in that order. A runs to completion first, then B, then C. B and C wait a long time.
 
-#### Shortest-Job-First (SJF) / Shortest-Process-Next (SPN):
+### Shortest-Job-First (SJF) / Shortest-Process-Next (SPN):
 
 - **Description**: The process with the shortest estimated next CPU burst time is selected to run next. Can be preemptive or non-preemptive.
 - **Advantages**: Minimizes average waiting time (provably optimal in this regard).
@@ -45,14 +54,14 @@ Numerous scheduling algorithms have been developed, each with its own strengths 
 - **Example** (Non-preemptive): If A (20), B (2), and C (3) arrive at the same time, B runs first, then C, then A. Much better average waiting time than FCFS.
 - **Example** (Preemptive - Shortest Remaining Time First, SRTF): If A (20) is running, and B (2) arrives, A is preempted, B runs to completion, and then A resumes.
 
-#### Round Robin (RR):
+### Round Robin (RR):
 
 - **Description**: Each process gets a small unit of CPU time (a "time slice" or "quantum"). After the time slice expires, the process is preempted and moved to the back of the ready queue.
 - **Advantages**: Fairness – each process gets a share of the CPU. Good response time for interactive processes.
 - **Disadvantages**: Performance depends heavily on the choice of the time slice. Too short a time slice leads to excessive context switching overhead. Too long a time slice approaches FCFS.
 - **Example**: Processes A, B, and C each get a time slice of 1. The execution order would be A, B, C, A, B, C, A, B, C... until each process completes.
 
-#### Priority Scheduling:
+### Priority Scheduling:
 
 - **Description**: Each process is assigned a priority. The scheduler selects the process with the highest priority to run. Can be preemptive or non-preemptive.
 - **Advantages**: Allows important processes to run quickly. Flexible – can be used to implement various scheduling policies.
@@ -60,21 +69,27 @@ Numerous scheduling algorithms have been developed, each with its own strengths 
 - **Example** (Preemptive): If A (priority 3), B (priority 1), and C (priority 2) are ready, A runs first. If C arrives while A is running, A continues (preemptive). If B arrives while A is running, A is preempted and B runs, then A resumes.
 - **Aging**: A technique to prevent starvation in priority scheduling. Gradually increase the priority of processes that have been waiting for a long time.
 
-#### Multilevel Queue Scheduling:
+### Multilevel Queue Scheduling:
 
 - **Description**: Partitions the ready queue into multiple queues, each with its own scheduling algorithm. Processes are assigned to a queue based on their characteristics (e.g., interactive vs. batch, I/O-bound vs. CPU-bound).
 - **Advantages**: Can tailor scheduling to different types of processes. More flexible than single-queue algorithms.
 - **Disadvantages**: More complex to implement. Requires careful design of the queues and their priorities.
 - **Example**: A system might have a foreground queue (for interactive processes, using Round Robin) and a background queue (for batch processes, using FCFS).
 
-#### Multilevel Feedback Queue Scheduling:
+### Multilevel Feedback Queue Scheduling:
 
 - **Description**: Similar to multilevel queue scheduling, but processes can move between queues. If a process uses too much CPU time, it's moved to a lower-priority queue. If a process waits too long in a lower-priority queue, it might be moved to a higher-priority queue.
 - **Advantages**: Adaptive – can adjust to changing process behavior. Combines the benefits of different scheduling algorithms. Good balance between response time and throughput.
 - **Disadvantages**: Most complex to implement. Requires careful tuning of parameters (number of queues, scheduling algorithms for each queue, criteria for moving processes between queues).
 - **Example**: Three queues: Q0 (RR with quantum 8ms), Q1 (RR with quantum 16ms), Q2 (FCFS). New processes enter Q0. If a process doesn't finish within 8ms, it moves to Q1. If it doesn't finish within 16ms in Q1, it moves to Q2. This favors short bursts and interactive processes.
 
-### Context Switching
+
+
+
+
+
+
+# 7.2 Context Switching
 
 Context switching is the process of saving the state of the currently running process (or thread) and restoring the state of another process (or thread), allowing the CPU to switch between them. This is what enables multitasking and concurrency.
 
@@ -95,9 +110,9 @@ Steps for a context switch:
 
 Context switching has overhead. It takes time to save and restore the process/thread state, and it can also lead to cache misses (as the new process/thread will likely access different memory locations).  Excessive context switching can degrade performance.
 
-### Preemptive vs. Non-Preemptive Multitasking
+## Preemptive vs. Non-Preemptive Multitasking
 
-#### Non-Preemptive (Cooperative) Multitasking
+### Non-Preemptive (Cooperative) Multitasking
 
 - Processes voluntarily give up control of the CPU (e.g., by calling a yield() function or when performing I/O).
 - A process can monopolize the CPU if it doesn't yield.
@@ -105,7 +120,7 @@ Context switching has overhead. It takes time to save and restore the process/th
 - Less suitable for interactive systems, as a single long-running process can make the system unresponsive.
 - Rarely used in modern general-purpose operating systems.
 
-#### Preemptive Multitasking
+### Preemptive Multitasking
 
 - The operating system can interrupt a running process at any time and switch to another process.
 - Uses a timer interrupt to trigger context switches at regular intervals (time slices).
@@ -118,7 +133,15 @@ Scheduling algorithms determine which process or thread runs next, context switc
 
 
 
-## 7.2 Memory Management
+
+
+
+
+
+
+
+
+# 7.3 Memory Management
 
 Memory management is a crucial function of an operating system, responsible for efficiently and safely allocating memory to processes and threads.  It involves several key tasks:
 
@@ -128,7 +151,7 @@ Memory management is a crucial function of an operating system, responsible for 
 *   **Abstraction:** Providing a simplified view of memory to processes (virtual memory).
 *   **Sharing:** Allowing certain regions of memory to be shared between processes.
 
-### Virtual Memory
+## Virtual Memory
 
 Virtual memory is a fundamental memory management technique that provides several critical benefits.
 
@@ -137,13 +160,13 @@ Virtual memory is a fundamental memory management technique that provides severa
 *   **Larger Address Space:** The virtual address space can be *larger* than the physical RAM available. This allows programs to run even if they require more memory than is physically present.  The OS uses disk space (a "swap file" or "page file") to store parts of the virtual address space that are not currently in RAM.
 *   **Efficient Memory Use:** Only the parts of a process's virtual address space that are actively being used need to be loaded into physical RAM. This allows the system to run more processes concurrently than would be possible if the entire address space of each process had to be loaded.
 
-### Memory Allocation (for Processes and Threads)
+## Memory Allocation (for Processes and Threads)
 
 **Process Memory Allocation:**
 
 When a process is created, the operating system allocates a virtual address space for it. This typically includes:
 
-TODO - need image of address space
+![](images/process_memory.jpg)
 
 *   **Text Segment (Code Segment):** Contains the program's executable code (read-only).
 *   **Data Segment:** Contains initialized and uninitialized global and static variables.
@@ -155,28 +178,36 @@ TODO - need image of address space
 
 Threads within a process share the same address space (heap, data segment, code segment), but each thread has its own:
 
-TODO - image needed for threads and one for processes
+![](images/single-and-multithreaded-process.png)
 
 *   **Stack:**  Each thread has its own stack for local variables, function calls, etc.  The stack size is often limited (e.g., 8MB on Linux). Stack overflow can occur.
 *   **Thread-Local Storage (TLS):**  A mechanism to provide each thread with its own private global variables.
 
 Because threads share the heap, dynamic memory allocation (e.g., using `malloc` or `new` in C/C++) needs to be *thread-safe*. The memory allocator must use synchronization mechanisms (like locks) to prevent race conditions when multiple threads try to allocate or deallocate memory concurrently. Python's memory allocator is thread-safe.
 
-## 7.3 Hardware Considerations for Parallelism
+
+
+
+
+
+
+
+
+# 7.4 Hardware Considerations for Parallelism
 
 Parallel programming's efficiency and scalability are heavily influenced by the underlying hardware. Understanding hardware architectures is crucial for writing high-performance parallel code. This section explores key hardware aspects relevant to parallelism.
 
-### Multi-core Processors (Architecture, Cache Coherence)
+## Multi-core Processors (Architecture, Cache Coherence)
 
 Modern CPUs are almost universally multi-core, meaning they contain multiple independent processing units (cores) on a single chip.  This allows for true parallel execution of multiple processes or threads.
 
-#### Architecture
+### Architecture
 *   **Cores:** Each core is essentially a separate CPU, capable of executing instructions independently.
 *   **Shared Cache:** Cores often share some levels of cache memory (L2, L3).  This allows for faster communication and data sharing between cores, but introduces the need for cache coherence.
 *   **Private Cache:** Each core typically has its own private L1 cache (and sometimes L2). This provides very fast access to frequently used data.
 *   **Interconnect:** The cores are connected by an interconnect (e.g., a bus or a crossbar switch), which allows them to communicate and access shared resources (like main memory).
 
-#### Cache Coherence:
+### Cache Coherence:
 
 A critical issue in multi-core systems is *cache coherence*. Since each core has its own private cache, multiple copies of the same data might exist in different caches.  If one core modifies its cached copy, the other cores' copies become stale (invalid).  Cache coherence protocols ensure that all cores have a consistent view of memory.
 
@@ -195,39 +226,39 @@ data[1] = 2;
 ```
 Even though thread 1 is modifying data[0] and thread 2 is modifying data[1], they both end up with the same cache line. So the cache coherency protocol makes sure that only one is able to operate.
 
-### Hyperthreading (Simultaneous Multithreading - SMT)
+## Hyperthreading (Simultaneous Multithreading - SMT)
 
 Hyperthreading (Intel's term; also known as Simultaneous Multithreading or SMT) is a technique that allows a *single* physical core to appear as multiple logical cores to the operating system.
 
-#### How it Works
+### How it Works
 
 The core duplicates certain parts of its architecture (e.g., registers, instruction queues), but shares other resources (e.g., execution units, caches).  This allows the core to switch between threads very quickly (often on every clock cycle), hiding latency (e.g., waiting for memory access).
 
-#### Benefits
+### Benefits
 
 Improves CPU utilization, especially when threads are frequently blocked (e.g., waiting for I/O). Can provide a performance boost, but it's *not* the same as having truly independent cores.
 
-#### Limitations
+### Limitations
 
 The performance gain is typically less than having additional physical cores.  Threads still share resources, so they can contend for those resources.
 
-### NUMA (Non-Uniform Memory Access) Architectures
+## NUMA (Non-Uniform Memory Access) Architectures
 
 In Non-Uniform Memory Access (NUMA) systems, the time it takes for a processor to access memory depends on the location of the memory relative to the processor.
 
-#### Concept
+### Concept
 
 The system is divided into *nodes*. Each node contains one or more processors and a portion of the system's RAM.  Processors have fast access to their *local* memory (within the same node) and slower access to *remote* memory (in other nodes).
 
-#### Impact on Parallelism
+### Impact on Parallelism
 
 It's crucial to be aware of NUMA when writing parallel code.  Data locality becomes very important.  You want to place data in the memory that's local to the processor that will be accessing it most frequently.  Otherwise, performance can suffer due to the increased latency of remote memory access.
 
-#### Operating System Support
+### Operating System Support
 
 Modern operating systems are NUMA-aware and try to allocate memory for a process on the same node as the processor running the process.  However, for optimal performance, you may need to explicitly manage memory placement in your code (e.g., using libraries like `numactl` on Linux).
 
-### GPUs (Graphics Processing Units) and their Role in Parallelism (Brief Overview)
+## GPUs (Graphics Processing Units) and their Role in Parallelism (Brief Overview)
 
 GPUs are specialized processors originally designed for graphics rendering, but they have become increasingly important for general-purpose parallel computing.
 
@@ -236,7 +267,7 @@ GPUs are specialized processors originally designed for graphics rendering, but 
 - **Programming Models:**  Specialized programming models like CUDA (NVIDIA) and OpenCL are used to write code for GPUs.
 - **Use Cases:**  Machine learning, scientific computing, data analysis, image/video processing, cryptography.
 
-### Clusters and Distributed Systems (Brief Overview)
+## Clusters and Distributed Systems (Brief Overview)
 
 For very large-scale parallelism, clusters and distributed systems are used.
 
@@ -247,49 +278,57 @@ For very large-scale parallelism, clusters and distributed systems are used.
 
 This section provides a high-level overview of hardware considerations that are crucial for understanding and optimizing parallel programs. From the intricacies of multi-core processors and cache coherence to the massively parallel architecture of GPUs and the distributed nature of clusters, the hardware landscape significantly impacts the design and performance of parallel applications.
 
-## 7.4 File Systems
+
+
+
+
+
+
+
+
+# 7.5 File Systems
 
 The file system plays a significant, and often overlooked, role in the performance and correctness of parallel programs.  Here's a breakdown of how the file system affects parallelism.
 
-### I/O Bottleneck and Parallel Performance:
+## I/O Bottleneck and Parallel Performance:
 
-#### Sequential Access Limitation
+### Sequential Access Limitation
 
 Traditional hard disk drives (HDDs) are inherently sequential access devices. While they can handle multiple requests concurrently, true parallelism is limited by the physical movement of the read/write head. This is a major bottleneck. If multiple threads/processes are all trying to read or write to different locations on the same HDD, performance degrades significantly due to "seek time" (the time it takes for the head to move). The OS's I/O scheduler tries to optimize this, but there are limits.
 
-#### Solid State Drives (SSDs)
+### Solid State Drives (SSDs)
 
 SSDs, with their lack of moving parts, significantly mitigate this issue. They have much lower latency and can handle concurrent requests with far less performance degradation. However, even SSDs have limits on their bandwidth and the number of simultaneous operations they can efficiently handle. Different SSD technologies (SATA, NVMe) have different performance characteristics.
 
-#### File System Caching
+### File System Caching
 
 Operating systems use file system caches (often called the "buffer cache" or "page cache") to keep frequently accessed data in RAM. This dramatically speeds up reads, if the data is already in the cache. However, cache coherency becomes a concern in parallel scenarios.
 
-#### Write-Back
+### Write-Back
 
 Changes are written to the cache, and only periodically flushed to disk. This improves performance but introduces a risk of data loss if there's a power failure. In parallel programs, if one thread writes to the cache and another tries to read from it before the data is flushed to disk, the second thread might read stale data.
 
-#### Write-Through
+### Write-Through
 
 Changes are immediately written to both the cache and the disk. This is safer but slower.
 
-#### Buffering
+### Buffering
 
 Even without caching, the OS and file system drivers often use buffers to group small writes together into larger, more efficient disk operations. This buffering can affect the order in which writes from different threads/processes actually reach the disk.
 
 
-### File Locking and Synchronization:
+## File Locking and Synchronization:
 
-#### Data Races and Inconsistency
+### Data Races and Inconsistency
 
 If multiple threads/processes access the same file concurrently without proper synchronization, data corruption can occur. This is a classic race condition. For example, two processes might try to append to the same log file simultaneously, resulting in interleaved (and corrupted) log entries.
 File Locking Mechanisms: Operating systems provide file locking mechanisms to prevent these issues.
 
-#### Advisory Locking
+### Advisory Locking
 
 A cooperative locking mechanism. Processes agree to check for locks before accessing the file. This relies on all processes behaving correctly. If one process ignores the lock, it can still cause problems.
 
-#### Mandatory Locking
+### Mandatory Locking
 
 The operating system enforces the lock. Attempts to access a locked file without acquiring the lock will result in an error or blocking. This is more robust but can be less portable.
 
@@ -300,80 +339,80 @@ The operating system enforces the lock. Attempts to access a locked file without
 - Deadlocks: Just like with threads and processes, improper use of file locks can lead to deadlocks. For example, process A might lock file X and then try to lock file Y, while process B locks file Y and then tries to lock file X.
 
 
-### File System Metadata Operations
+## File System Metadata Operations
 
-#### Metadata Operations
+### Metadata Operations
 
 Operations like creating files, deleting files, renaming files, and changing permissions involve modifying file system metadata (inodes, directory entries, etc.). These operations are typically handled by the file system kernel code and often require exclusive access to certain data structures.
 
-#### Contention
+### Contention
 
 If many threads/processes are concurrently creating/deleting files in the same directory, they may contend for access to the directory's metadata, creating a bottleneck. This is less of an issue with modern, journaled file systems, but it can still occur.
 
-#### Directory Structure
+### Directory Structure
 
 The organization of files and directories can impact parallelism. Having many small files in a single directory can lead to more metadata contention than having files spread across multiple directories.
 
 
-### Network File Systems (NFS, SMB/CIFS)
+## Network File Systems (NFS, SMB/CIFS)
 
-#### Network Latency
+### Network Latency
 
 When dealing with network file systems, network latency and bandwidth become major factors. Parallel operations that involve frequent access to files over a slow network will be severely limited.
 
-#### Caching and Consistency
+### Caching and Consistency
 
 Network file systems often employ complex caching mechanisms to improve performance. Maintaining cache coherency across multiple clients accessing the same files concurrently is a challenging problem. Different protocols (NFS, SMB) have different approaches to this, with varying trade-offs between performance and consistency.
 
-#### Locking over the Network
+### Locking over the Network
 
 File locking becomes even more complex in a distributed environment. The locking mechanism must be implemented across the network, and network failures can introduce additional complications.
 
 
-### File System Type and Features:
+## File System Type and Features:
 
-#### Journaling
+### Journaling
 
 Modern file systems (like ext4, NTFS, APFS) typically use journaling. This means that changes to the file system are first written to a journal (a log) before being applied to the main file system. This improves data integrity and recovery in case of crashes, but it can also introduce some overhead.
 
-#### Copy-on-Write (COW)
+### Copy-on-Write (COW)
 
 Some file systems (like Btrfs, ZFS) use copy-on-write. When a file is modified, the changed blocks are written to a new location on disk, and then the metadata is updated to point to the new blocks. This can improve data integrity and enable features like snapshots, but it can also affect performance in some parallel workloads.
 
-#### RAID
+### RAID
 
 RAID configurations, which combine multiple physical disks into a single logical unit, can have a significant effect. RAID level affects parallelization.
 
-#### Distributed File Systems
+### Distributed File Systems
 
 Systems like HDFS and Ceph are designed for parallelism and distributed data storage. They handle data replication, fault tolerance, and parallel access across multiple nodes.
 
-### Practical Implications for Parallel Programming:
+## Practical Implications for Parallel Programming:
 
-#### Minimize File I/O
+### Minimize File I/O
 
 If possible, design your parallel program to minimize file I/O during the computationally intensive parts. Load data into memory before starting parallel processing, and write results only when necessary.
 
-#### Use SSDs
+### Use SSDs
 
 Use SSDs whenever possible, especially for temporary files and data that will be accessed frequently by multiple threads/processes.
 
-#### Consider File Locking
+### Consider File Locking
 
 If multiple threads/processes need to modify the same file, use appropriate file locking mechanisms to prevent data corruption. Choose the appropriate lock granularity (whole-file vs. byte-range).
 
-#### Optimize Directory Structure
+### Optimize Directory Structure
 
 Avoid having too many files in a single directory, especially if those files will be created/deleted concurrently.
 
-#### Network File System Awareness
+### Network File System Awareness
 
 Be aware of the limitations and performance characteristics of network file systems if your program will be running in a distributed environment.
 
-#### Asynchronous I/O
+### Asynchronous I/O
 
 Use asynchronous I/O operations (if available) to allow your program to continue processing while waiting for I/O operations to complete. This can improve responsiveness and overlap I/O with computation.
 
-#### Memory-Mapped Files
+### Memory-Mapped Files
 
 Memory-mapped files (using mmap in POSIX systems or equivalent APIs in other OSes) can provide a way to access file data as if it were in memory, potentially simplifying parallel access and reducing the need for explicit I/O operations. However, careful synchronization is still required.
