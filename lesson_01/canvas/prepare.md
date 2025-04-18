@@ -4,20 +4,22 @@
 
 Section | Content
 --- | ---
-1.1 | [Course Overview](#Course-Overview)
-1.2 | [What is Parallelism?](#What-is-Parallelism?)
-1.3 | [Why Parallelism?](#Why-Parallelism?)
+1.1 | [Course Overview](#course-overview)
+1.2 | [What is Parallelism](#what-is-parallelism)
+1.3 | [Why Parallelism](#why-parallelism)
 1.4 | [Python Memory Model](#Python-Memory-Model)
-1.5 | [Introduction to Threads](#Introduction-to-Threads) :key:
-1.6 | [Critical Section](#Critical-Section)  :key:
-1.7 | [Locks](#Locks)  :key:
+1.5 | [Introduction to Threads](#introduction-to-threads) :key:
+1.6 | [Critical Section](#critical-section)  :key:
+1.7 | [Locks](#locks)  :key:
 
 :key: = Vital concepts that we will continue to build on in coming lessons / key learning outcomes for this course.
 
 
 
 
-# 1.1 Course Overview
+
+
+# Course Overview
 
 ## Learning Objectives
 
@@ -31,6 +33,10 @@ Successful graduates for CSE 351 will:
 ## Course Structure and Modules
 
 The course is divided into 2 week blocks.  For each block, students will be required to read the topic material with an assignment.
+
+## Coding Examples
+
+The reading material as many coding examples.  Please take the time to understand them in each reading module.  All coding examples can be found in coding files under the folder `prep` for each module.
 
 ## Assessment Methods (Assignments, Exams, Projects)
 
@@ -96,7 +102,7 @@ UML class diagrams were introduced in CSE 210.  Please review these diagrams.
 
 
 
-# 1.2 What is Parallelism?
+# What is Parallelism
 
 This section introduces the core concept of parallelism in computing, contrasting it with concurrency, classifying different types of parallel architectures, and exploring various forms and granularities of parallel execution.
 
@@ -186,9 +192,7 @@ Choosing the appropriate granularity is a key design decision in parallel progra
 
 
 
-
-
-# 1.3 Why Parallelism?
+# Why Parallelism
 
 ## Performance Benefits (Speedup, Throughput)
 
@@ -281,7 +285,7 @@ For decades, software developers enjoyed a "free lunch" from [Moore's Law](https
 
 
 
-# 1.4 Python Memory Model
+# Python Memory Model
 
 ## Global Interpreter Lock (GIL)
 
@@ -370,7 +374,7 @@ Understanding whether a task is I/O-bound or CPU-bound is essential for choosing
 
 
 
-# 1.5 Introduction to Threads
+# Introduction to Threads
 
 ## What are Python Threads?
 
@@ -767,7 +771,7 @@ Understanding the thread lifecycle is essential for designing and debugging mult
 
 
 
-# 1.6 Critical Sections
+# Critical Sections
 
 ## Define the concept of a critical section and the potential for race conditions.
 
@@ -846,7 +850,7 @@ print(f"Final counter value: {counter:,}, expected: {2 * TIMES:,}")
 
 
 
-# 1.7 Locks
+# Locks
 
 ## Introduce locks as a mechanism for synchronizing access to critical sections.
 

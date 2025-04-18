@@ -4,14 +4,14 @@
 
 Section | Content
 --- | ---
-11.1 | [Software requirements for this section of the course](#Software-requirements-for-this-section-of-the-course)
-11.2 | [Key Differences Threading in Python vs C Sharp](#Key-Differences-Threading-in-Python-vs-C-Sharp)
-11.3 | [Creating and Using Threads in C#](#Creating-and-Using-Threads-in-C#) :key:
-11.4 | [Synchronization Primitives in C#](#Synchronization-Primitives-in-C#) :key:
-11.5 | [Thread Pools in C#](#Thread-Pools-in-C#)
-11.6 | [Task Parallel Library (TPL)](#Task-Parallel-Library-(TPL)) :key:
-11.7 | [Asynchronous Programming with async and await](#Asynchronous-Programming-with-async-and-await)
-11.8 | [Concurrent Collections](#Concurrent-Collections) :key:
+11.1 | [Software requirements for this section of the course](#software-requirements-for-this-section-of-the-course)
+11.2 | [Key Differences Threading in Python vs C Sharp](#key-differences-threading-in-python-vs-c-sharp)
+11.3 | [Creating and Using Threads](#creating-and-using-threads) :key:
+11.4 | [Synchronization Primitives](#synchronization-primitives) :key:
+11.5 | [Thread Pools](#thread-pools)
+11.6 | [Task Parallel Library](#task-parallel-library) :key:
+11.7 | [Asynchronous Programming with async and await](#asynchronous-programming-with-async-and-await)
+11.8 | [Concurrent Collections](#concurrent-collections) :key:
 
 :key: = Vital concepts that we will continue to build on in coming lessons / key learning outcomes for this course.
 
@@ -25,7 +25,7 @@ Section | Content
 
 
 
-# 11.1 Software requirements for this section of the course
+# Software requirements for this section of the course
 
 The development environment for this section of the course will be using C#.  Your development environment must be functional to successfully submit assignments. We will use .NET Core, Rider or VS Code. Please install these tools on your laptops as we will require them this week.
 
@@ -72,7 +72,7 @@ This section of the course requires that you already know how to write software 
 
 
 
-# 11.2 Key Differences Threading in Python vs C Sharp
+# Key Differences Threading in Python vs C Sharp
 
 While the fundamental concepts of threading and concurrency – managing shared resources, avoiding race conditions, preventing deadlocks – apply across languages, the specific implementation details and capabilities differ significantly between Python and C#/.NET. Understanding these differences is crucial as you transition from using Python's threading model to C#'s.
 
@@ -119,7 +119,7 @@ While the fundamental concepts of threading and concurrency – managing shared 
 
 
 
-# 11.3 Creating and Using Threads in C#
+# Creating and Using Threads
 
 ## System.Threading.Thread Class
 
@@ -384,7 +384,7 @@ workerThread.Start();
 
 
 
-# 11.4 Synchronization Primitives in C#
+# Synchronization Primitives
 
 Having understood the fundamental need for synchronization from our earlier discussions (preventing race conditions, ensuring data integrity, coordinating actions between concurrent operations), let's explore the specific tools C# provides to achieve this. Unlike Python's GIL which implicitly handles some low-level interpreter locking, C# requires explicit synchronization when multiple threads access shared, mutable state. Fortunately, the .NET Framework offers a rich set of primitives.
 
@@ -999,7 +999,7 @@ C# offers a comprehensive suite of synchronization primitives. Understanding the
 
 
 
-# 11.5 Thread Pools in C#
+# Thread Pools
 
 While C# has a threadPool feature, it is simpler to keep track of threads using a list.  You can read about [Thread Pools Here](https://learn.microsoft.com/en-us/dotnet/api/system.threading.threadpool?view=net-9.0).
 
@@ -1079,7 +1079,7 @@ Main thread: All threads completed. Exiting.
 
 
 
-# 11.6 Task Parallel Library (TPL)
+# Task Parallel Library
 
 The Task Parallel Library (TPL), primarily located in the `System.Threading.Tasks` namespace, represents .NET's modern, preferred approach for creating concurrent and parallel applications. It provides a higher level of abstraction over raw threads and the ThreadPool, simplifying common patterns, managing resources efficiently, and integrating seamlessly with features like async/await.
 
@@ -1413,7 +1413,7 @@ Data Parallelism Example finished.
 
 
 
-# 11.7 Asynchronous Programming with async and await
+# Asynchronous Programming with async and await
 
 Building upon the foundation laid by the Task Parallel Library (TPL), C# provides powerful language features – the async and await keywords – specifically designed to simplify writing asynchronous code. While TPL's Task object represents an asynchronous operation, async/await provides a much more readable and manageable syntax for working with these operations, especially for I/O-bound scenarios.  [See Documentation on async and await](https://learn.microsoft.com/en-us/dotnet/csharp/asynchronous-programming/)
 
@@ -1555,7 +1555,7 @@ Main thread 1: ProcessDataAsync completed. Exiting.
 
 
 
-# 11.8 Concurrent Collections
+# Concurrent Collections
 
 A common requirement in concurrent programming is to have multiple threads safely access and modify a shared collection (like a list, dictionary, queue, etc.) without causing race conditions or data corruption.
 

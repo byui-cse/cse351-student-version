@@ -4,20 +4,29 @@
 
 Section | Content
 --- | ---
-9.1 | [Boss-Worker Pattern](#Boss-Worker-Pattern)
-9.2 | [Producer-Consumer Pattern](#Producer-Consumer-Pattern)
-9.3 | [Bounded Buffer](#Bounded-Buffer)
-9.4 | [Client-Server Pattern](#Client-Server-Pattern)
-9.5 | [Reader-Writer Problem](#Reader-Writer-Problem)
-9.6 | [Dining Philosophers Problem](#Dining-Philosophers-Problem)
-9.7 | [Sleeping Barber Problem](#Sleeping-Barber-Problem)
-9.8 | [Elevator Simulation](#Elevator-Simulation)
-9.9 | [Cigarette Smokers Problem](#Cigarette-Smokers-Problem)
-9.10 | [Monte Carlo Simulations](#Monte-Carlo-Simulations)
+9.1 | [Boss-Worker Pattern](#boss-worker-pattern)
+9.2 | [Producer-Consumer Pattern](#producer-consumer-pattern)
+9.3 | [Bounded Buffer](#bounded-buffer)
+9.4 | [Client-Server Pattern](#client-server-pattern)
+9.5 | [Reader-Writer Problem](#reader-writer-problem)
+9.6 | [Dining Philosophers Problem](#dining-philosophers-problem)
+9.7 | [Sleeping Barber Problem](#sleeping-barber-problem)
+9.8 | [Elevator Simulation](#elevator-simulation)
+9.9 | [Cigarette Smokers Problem](#cigarette-smokers-problem)
+9.10 | [Monte Carlo Simulations](#monte-carlo-simulations)
 
 :key: = Vital concepts that we will continue to build on in coming lessons / key learning outcomes for this course.
 
-# 9.1 Boss-Worker Pattern
+
+
+
+
+
+
+
+
+
+# Boss-Worker Pattern
 
 The Boss-Worker pattern involves a "boss" thread that distributes tasks to multiple "worker" threads. The boss thread is responsible for task creation and distribution, while worker threads perform the actual work.  This pattern is useful for parallelizing tasks that can be divided into independent subtasks.
 
@@ -107,7 +116,16 @@ if __name__ == "__main__":
     print("BOSS: All workers have finished. Program complete.")
 ```
 
-# 9.2 Producer-Consumer Pattern
+
+
+
+
+
+
+
+
+
+# Producer-Consumer Pattern
 
 The Producer-Consumer pattern involves one or more "producer" threads that generate data and one or more "consumer" threads that process that data.
 A shared buffer is used to hold the data between producers and consumers.
@@ -226,7 +244,16 @@ if __name__ == "__main__":
     print("Main: Program complete.")
 ```
 
-# 9.3 Bounded Buffer
+
+
+
+
+
+
+
+
+
+# Bounded Buffer
 
 A Bounded Buffer is a variation of the Producer-Consumer pattern where the shared buffer has a fixed size.  Producers wait if the buffer is full, and consumers wait if the buffer is empty.  This pattern is used to control the rate of data production and consumption.
 
@@ -337,7 +364,16 @@ if __name__ == "__main__":
     print("Main: Bounded Buffer program complete.")
 ```
 
-# 9.4 Client-Server Pattern
+
+
+
+
+
+
+
+
+
+# Client-Server Pattern
 
 The Client-Server pattern involves a "server" that provides services to multiple "clients."  Clients send requests to the server, and the server processes the requests and sends responses back to the clients.  This pattern is fundamental to network applications.
 
@@ -387,7 +423,16 @@ style S fill:#ffc,stroke:#333,stroke-width:2px,color:#000
 ```
 
 
-# 9.5 Reader-Writer Problem
+
+
+
+
+
+
+
+
+
+# Reader-Writer Problem
 
 The Reader-Writer problem involves managing concurrent access to a shared resource, where multiple readers can access the resource simultaneously, but writers require exclusive access.  The challenge is to allow concurrent reads while preventing data corruption when a writer modifies the resource.
 
@@ -513,7 +558,16 @@ if __name__ == "__main__":
     print("\n--- Simulation End (Main thread exiting) ---")
 ```
 
-# 9.6 Dining Philosophers Problem
+
+
+
+
+
+
+
+
+
+# Dining Philosophers Problem
 
 The Dining Philosophers problem illustrates a classic synchronization issue where multiple philosophers sit around a table with a single 
 chopstick between each pair.  Each philosopher needs two chopsticks to eat, but they can only pick up one chopstick at a time.  The challenge is to prevent deadlocks where each philosopher holds one chopstick and waits indefinitely for the other.
@@ -538,7 +592,16 @@ Shared resources that can only be used by one philosopher at a time.
 [Youtube Video](https://www.youtube.com/watch?v=NbwbQQB7xNQ)
 
 
-# 9.7 Sleeping Barber Problem
+
+
+
+
+
+
+
+
+
+# Sleeping Barber Problem
 
 The Sleeping Barber problem models a barber shop with a single barber and a limited number of waiting chairs.  The barber sleeps when there are no customers, and customers leave if there are no available chairs.  The challenge is to ensure that the barber and customers coordinate properly to avoid race conditions and deadlocks.
 
@@ -566,7 +629,16 @@ Limited number of chairs for waiting customers.
 - Deadlock: The barber might be waiting for a customer while a customer is waiting for the barber.
 
 
-# 9.8 Elevator Simulation
+
+
+
+
+
+
+
+
+
+# Elevator Simulation
 
 Simulate the behavior of an elevator system with multiple elevators, floors, and passengers.  The simulation should handle passenger requests, elevator movement, and floor selection.  This problem demonstrates concurrent process interactions and resource management.
 
@@ -593,7 +665,16 @@ Generate requests with source and destination floors.
 [YouTube Elevator Simulation Video](https://www.youtube.com/watch?v=xOayymoIl8U)
 
 
-# 9.9 Cigarette Smokers Problem
+
+
+
+
+
+
+
+
+
+# Cigarette Smokers Problem
 
 The Cigarette Smokers problem is a classic concurrency problem that illustrates synchronization challenges.  Three smokers have different resources (tobacco, paper, matches), and an agent provides two of the three resources at a time.  Each smoker needs all three resources to make a cigarette, but they can only acquire the resources provided by the agent.  The challenge is to synchronize the smokers and the agent to avoid deadlocks and ensure progress.
 
@@ -616,7 +697,16 @@ Randomly provides two of the three resources.
 [Wikipedia Page](https://en.wikipedia.org/wiki/Cigarette_smokers_problem)
 
 
-# 9.10 Monte Carlo Simulations
+
+
+
+
+
+
+
+
+
+# Monte Carlo Simulations
 
 Monte Carlo simulations use random sampling to estimate numerical results.  These simulations are often used in finance, physics, and engineering.  Parallelizing Monte Carlo simulations can significantly improve performance.
 

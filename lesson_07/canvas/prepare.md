@@ -4,11 +4,11 @@
 
 Section | Content
 --- | ---
-7.1 | [Process and Thread Scheduling](#Process-and-Thread-Scheduling)
-7.2 | [Context Switching](#Context-Switching) :key:
-7.3 | [Memory Management](#Memory-Management)
-7.4 | [Hardware Considerations](#Hardware-Considerations)
-7.5 | [File Systems](#File-Systems)
+7.1 | [Process and Thread Scheduling](#process-and-thread-scheduling)
+7.2 | [Context Switching](#context-switching) :key:
+7.3 | [Memory Management](#memory-management)
+7.4 | [Hardware Considerations for Parallelism](#hardware-considerations-for-parallelism)
+7.5 | [File Systems](#file-systems)
 
 :key: = Vital concepts that we will continue to build on in coming lessons / key learning outcomes for this course.
 
@@ -21,7 +21,7 @@ Section | Content
 
 
 
-# 7.1 Process and Thread Scheduling
+# Process and Thread Scheduling
 
 Scheduling is a fundamental function of an operating system, responsible for determining which process or thread should be given access to the CPU at any given time. The scheduler aims to achieve several (often conflicting) goals.
 
@@ -89,7 +89,7 @@ Numerous scheduling algorithms have been developed, each with its own strengths 
 
 
 
-# 7.2 Context Switching
+# Context Switching
 
 Context switching is the process of saving the state of the currently running process (or thread) and restoring the state of another process (or thread), allowing the CPU to switch between them. This is what enables multitasking and concurrency.
 
@@ -141,7 +141,7 @@ Scheduling algorithms determine which process or thread runs next, context switc
 
 
 
-# 7.3 Memory Management
+# Memory Management
 
 Memory management is a crucial function of an operating system, responsible for efficiently and safely allocating memory to processes and threads.  It involves several key tasks:
 
@@ -193,7 +193,7 @@ Because threads share the heap, dynamic memory allocation (e.g., using `malloc` 
 
 
 
-# 7.4 Hardware Considerations for Parallelism
+# Hardware Considerations for Parallelism
 
 Parallel programming's efficiency and scalability are heavily influenced by the underlying hardware. Understanding hardware architectures is crucial for writing high-performance parallel code. This section explores key hardware aspects relevant to parallelism.
 
@@ -286,7 +286,7 @@ This section provides a high-level overview of hardware considerations that are 
 
 
 
-# 7.5 File Systems
+# File Systems
 
 The file system plays a significant, and often overlooked, role in the performance and correctness of parallel programs.  Here's a breakdown of how the file system affects parallelism.
 

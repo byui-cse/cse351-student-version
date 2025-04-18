@@ -4,11 +4,11 @@
 
 Section | Content
 --- | ---
-3.1 | [Threads Best Practices and Limitations](#Threads_Best_Practices_and_Limitations)
-3.2 | [Thread Safety](#Thread_Safety) :key:
-3.3 | [Context Switching](#Context_Switching)
-3.4 | [Thread Pools](#Thread_Pools) :key:
-3.5 | [Thread Communication](#Thread_Communication) :key:
+3.1 | [Threads Best Practices and Limitations](#threads-best-practices-and-limitations)
+3.2 | [Thread Safety](#thread-safety) :key:
+3.3 | [Context Switching](#context-switching)
+3.4 | [Thread Pools](#thread-pools) :key:
+3.5 | [Thread Communication](#thread-communication) :key:
 
 :key: = Vital concepts that we will continue to build on in coming lessons / key learning outcomes for this course.
 
@@ -21,7 +21,7 @@ Section | Content
 
 
 
-# 3.1 Threads Best Practices and Limitations
+# Threads Best Practices and Limitations
 
 While threads offer a way to achieve concurrency within a single Python process, they come with specific strengths and weaknesses. Understanding these is crucial for writing efficient and correct multithreaded programs.
 
@@ -73,7 +73,7 @@ Logging (writing print statements to a file), can help track the flow of executi
 
 
 
-# 3.2 Thread Safety
+# Thread Safety
 
 Building upon the previous introduction of synchronization primitives, we now delve deeper into the core concept of thread safety. Thread safety is paramount in concurrent programming, and understanding it is crucial for writing reliable multithreaded applications.
 
@@ -133,7 +133,7 @@ Even when using synchronization primitives (locks, semaphores, etc.), incorrect 
 
 
 
-# 3.3 Context Switching
+# Context Switching
 
 Context switching is a fundamental concept in operating systems and concurrency, and it's essential for understanding how threads are managed and how they share CPU time. It's the mechanism that allows multiple threads to appear to run simultaneously, even on a single-core processor.
 
@@ -195,7 +195,7 @@ Context switching is not free.  It introduces overhead, which can impact the per
 
 
 
-# 3.4 Thread Pools
+# Thread Pools
 
 Thread pools provide a powerful and efficient way to manage threads in concurrent applications. They address many of the challenges associated with creating and destroying threads on demand.
 
@@ -354,7 +354,7 @@ Time taken (sequential): 0.0097 seconds
 
 
 
-# 3.5 Thread Communication
+# Thread Communication
 
 Threads within a single process share the same memory space. This shared memory can be used for communication, but it also introduces significant challenges related to data integrity and synchronization. This section explores various mechanisms for thread communication, from the pitfalls of shared memory to robust synchronization primitives.
 

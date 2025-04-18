@@ -4,12 +4,12 @@
 
 Section | Content
 --- | ---
-5.1 | [Introduction to Processes](#Introduction-to-Processes)
-5.2 | [Inter-Process Communication](#Inter-Process-Communication)
-5.3 | [Process Communication](#Process-Communication) :key:
-5.4 | [Process Pools](#Process-Pools) :key:
-5.5 | [When to Use Processes](#When-to-Use-Processes) :key:
-5.6 | [Process Synchronization](#Process-Synchronization)
+5.1 | [Introduction to Processes](#introduction-to-processes)
+5.2 | [Inter-Process Communication](#inter-process-communication)
+5.3 | [Process Communication](#process-communication) :key:
+5.4 | [Process Pools](#process-pools) :key:
+5.5 | [When to Use Processes](#when-to-use-processes) :key:
+5.6 | [Process Synchronization](#process-synchronization)
 
 :key: = Vital concepts that we will continue to build on in coming lessons / key learning outcomes for this course.
 
@@ -22,7 +22,7 @@ Section | Content
 
 
 
-# 5.1 Introduction to Processes
+# Introduction to Processes
 
 Processes are fundamental to modern operating systems and form the basis for true parallelism, especially in Python, where the Global Interpreter Lock (GIL) limits the effectiveness of threads for CPU-bound tasks. This section introduces the concept of processes, contrasts them with threads, and demonstrates basic process management in Python.
 
@@ -186,7 +186,7 @@ The example above demonstrates using `os.getpid()` to print the PID of both the 
 
 
 
-# 5.2 Inter-Process Communication
+# Inter-Process Communication
 
 Inter-Process Communication (IPC) refers to the mechanisms provided by an operating system that allow different processes to exchange data and synchronize their execution. Unlike threads, which share the same memory space within a single process, processes have their own independent memory spaces. This isolation provides robustness (a crash in one process won't necessarily bring down others), but it also necessitates specific mechanisms for communication and coordination.
 
@@ -267,7 +267,7 @@ In summary, despite these challenges, IPC is a fundamental and essential techniq
 
 
 
-# 5.3 Process Communication
+# Process Communication
 
 Since processes have separate memory spaces, they can't directly share variables like threads do.  Inter-Process Communication (IPC) mechanisms are required for processes to exchange data and synchronize their activities. Python's multiprocessing module (mp) provides several convenient IPC tools.
 
@@ -837,7 +837,7 @@ When using shared variables, remember that if there are processes writing to and
 
 
 
-# 5.4 Process Pools
+# Process Pools
 
 Process pools provide a convenient way to manage a fixed number of worker processes and distribute tasks among them. They are particularly useful for parallelizing independent computations across multiple CPU cores. Python offers two main classes for creating process pools: multiprocessing.Pool (older, more established) and concurrent.futures.ProcessPoolExecutor (newer, more consistent interface with thread pools).
 
@@ -1217,7 +1217,7 @@ Output:
 
 
 
-# 5.5 When to Use Processes
+# When to Use Processes
 
 Choosing between processes and threads depends on the specific characteristics of your application and the goals you're trying to achieve. Processes offer distinct advantages in certain scenarios, particularly when dealing with CPU-bound tasks, requiring increased reliability, or aiming for scalability across multiple CPU cores.
 
@@ -1251,7 +1251,7 @@ While processes offer significant advantages, they also have some drawbacks:
 
 
 
-# 5.6 Process Synchronization
+# Process Synchronization
 
 When multiple processes share resources (e.g., shared memory, files, or even conceptual resources like a counter), you need synchronization mechanisms to prevent race conditions and ensure data consistency.  Python's multiprocessing module provides several synchronization primitives that are process-safe, mirroring the primitives available for threads in the threading module. The difference is these are designed to work across process boundaries.
 
