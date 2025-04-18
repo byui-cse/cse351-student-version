@@ -5,7 +5,7 @@
 Section | Content
 --- | ---
 11.1 | [Software requirements for this section of the course](#Software-requirements-for-this-section-of-the-course)
-11.2 | [Key Differences: Threading in Python vs. C#](#Key-Differences:-Threading-in-Python-vs.-C#)
+11.2 | [Key Differences Threading in Python vs C Sharp](#Key-Differences-Threading-in-Python-vs-C-Sharp)
 11.3 | [Creating and Using Threads in C#](#Creating-and-Using-Threads-in-C#) :key:
 11.4 | [Synchronization Primitives in C#](#Synchronization-Primitives-in-C#) :key:
 11.5 | [Thread Pools in C#](#Thread-Pools-in-C#)
@@ -72,7 +72,7 @@ This section of the course requires that you already know how to write software 
 
 
 
-# 11.2 Key Differences: Threading in Python vs. C#
+# 11.2 Key Differences Threading in Python vs C Sharp
 
 While the fundamental concepts of threading and concurrency – managing shared resources, avoiding race conditions, preventing deadlocks – apply across languages, the specific implementation details and capabilities differ significantly between Python and C#/.NET. Understanding these differences is crucial as you transition from using Python's threading model to C#'s.
 
