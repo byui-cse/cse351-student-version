@@ -1,12 +1,3 @@
-<style>
-  h1 {
-    background-color: gray;
-    padding: 5px;
-    display: inline-block;
-    width: 100%; /* Optional: Makes background cover full line width (often default) */
-  }
-</style>
-
 # Lesson 1: Course Introduction, Review of Python, Threads
 
 **Reading is key to doing well in this course. You will be required to read the provided preparation material each lesson. Take your time and read the material more than once if you don't understand it the first time.**
