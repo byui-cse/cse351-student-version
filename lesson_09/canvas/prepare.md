@@ -676,6 +676,8 @@ if __name__ == "__main__":
 
 ## Code Example using Processes
 
+In using processes, the program can calculate PI with more samples.
+
 ```python
 import random
 import math

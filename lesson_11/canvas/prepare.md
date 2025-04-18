@@ -1,51 +1,39 @@
 # Lesson 11: Review of C#, Threads, and Tasks 
 
-TODO - place all C# readin material in this week.  This will
-be the last reading material for the course.  Students will be 
-working on assignments for the rest of the course.  Maybe 2 assignments.
-
-1) basic threads
-2) advanced assignment
-
-Overall Module Goals:
-
-- Provide a solid foundation in C# syntax, object-oriented concepts, and concurrency.
-- Introduce the Thread class and asynchronous programming with async/await.
-- Explore concurrent collections and lambda functions in C#.
-- Familiarize students with IDE shortcuts for efficient C# development.
-- Reading Material Outline:
-
-----
-----
-----
-----
-----
-----
-----
-----
-
-
 **Reading is key to doing well in this course. You will be required to read the provided preparation material each lesson. Take your time and read the material more than once if you don't understand it the first time.**
 
 Section | Content
 --- | ---
-11.1 | [C# Language Basics](#C#-Language-Basics)
-11.2 | [Threading in C#](#Threading-in-C#)
-11.3 | [The Task Parallel Library](#The-Task-Parallel-Library)
-11.4 | [Thread Pools in C#](#Thread-Pools-in-C#)
-11.5 | [Comparing C# and Python Parallelism](#Comparing-C#-and-Python-Parallelism)
+11.1 | [Software requirements for this section of the course](#Software-requirements-for-this-section-of-the-course)
+11.2 | [Key Differences: Threading in Python vs. C#](#Key-Differences:-Threading-in-Python-vs.-C#)
+11.3 | [Creating and Using Threads in C#](#Creating-and-Using-Threads-in-C#) :key:
+11.4 | [Synchronization Primitives in C#](#Synchronization-Primitives-in-C#) :key:
+11.5 | [Thread Pools in C#](#Thread-Pools-in-C#)
+11.6 | [Task Parallel Library (TPL)](#Task-Parallel-Library-(TPL)) :key:
+11.7 | [Asynchronous Programming with async and await](#Asynchronous-Programming-with-async-and-await)
+11.8 | [Concurrent Collections](#Concurrent-Collections) :key:
 
 :key: = Vital concepts that we will continue to build on in coming lessons / key learning outcomes for this course.
 
-## Software requirements for this section of the course
+
+
+
+
+
+
+
+
+
+
+# 11.1 Software requirements for this section of the course
 
 The development environment for this section of the course will be using C#.  Your development environment must be functional to successfully submit assignments. We will use .NET Core, Rider or VS Code. Please install these tools on your laptops as we will require them this week.
 
 1. .NET Core - C#
 
-    We will be using the platform independent version of C# called .NET Core. You will need to use version 9 of .NET core. Please download the version for your operating system and install it so that you’re ready for class to begin.
+    We will be using the platform independent version of C# called .NET Core. You will need to use version 8 of .NET core. Please download the version for your operating system and install it so that you’re ready for class to begin.
 
-    THe version of dotnet that we are using in this course is `version 8`.  It can be [downloaded here](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
+    The version of dotnet that we are using in this course is `version 8`.  It can be [downloaded here](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
 
 1. VS Code or JetBrains Rider
 
@@ -60,7 +48,7 @@ The development environment for this section of the course will be using C#.  Yo
     You will need to activate a [student license](https://www.jetbrains.com/community/education/#students) which involves creating an account and supplying your BYU-Idaho email address. You will need to download [JetBrains Rider](https://www.jetbrains.com/rider/) or the [JetBrains Toolbox](https://www.jetbrains.com/toolbox-app/) (which then allows you to install Rider).
 
 
-### Review of C#
+## Review of C#
 
 This section of the course requires that you already know how to write software in C#. If you’d like a review of C#, you should look at the following links.  We will not be spending time in class to review C#.
 
@@ -74,58 +62,76 @@ This section of the course requires that you already know how to write software 
 - [C# Lambda Functions](https://www.programiz.com/csharp-programming/lambda-expression)
 
 
-## Key Differences: Threading in Python vs. C#
+
+
+
+
+
+
+
+
+
+
+# 11.2 Key Differences: Threading in Python vs. C#
 
 While the fundamental concepts of threading and concurrency – managing shared resources, avoiding race conditions, preventing deadlocks – apply across languages, the specific implementation details and capabilities differ significantly between Python and C#/.NET. Understanding these differences is crucial as you transition from using Python's threading model to C#'s.
 
-### The Global Interpreter Lock (GIL)
+## The Global Interpreter Lock (GIL)
 
 - **Python**: Python employs a Global Interpreter Lock (GIL). This is a mutex that allows only one thread to execute Python bytecode at any given time within a single process, even on multi-core processors. While effective for simplifying memory management in Python, it fundamentally limits the ability of threads to achieve true parallelism for CPU-bound tasks. To achieve CPU-bound parallelism in Python, one typically resorts to the multiprocessing module, using separate processes instead of threads.   
 
 - **C# (.NET)**: C# and the .NET runtime do not have a GIL. This is arguably the most significant difference. C# threads managed by the .NET runtime can execute truly in parallel on multiple CPU cores. This means that for CPU-bound tasks (e.g., complex calculations, data processing), using multiple threads in C# can lead to substantial performance improvements proportional to the number of available cores, a benefit largely unrealized with threads in Python. For I/O-bound tasks, both Python and C# threads can provide concurrency benefits by allowing threads to overlap waiting periods.   
 
 
-### Core Libraries and Abstractions
+## Core Libraries and Abstractions
 
 - **Python**: You primarily worked with the threading module for thread-based concurrency (often I/O-bound focus due to GIL), the multiprocessing module for process-based parallelism (bypassing the GIL for CPU-bound tasks), and potentially concurrent.futures which provides a common interface over both.
 
 - **C#**: C# offers a richer, more layered set of built-in libraries within the System.Threading and System.Threading.Tasks namespaces:
 
-    - System.Threading.Thread: Represents a low-level OS thread, offering direct control but generally less used for common tasks now.
+    - **System.Threading.Thread**: Represents a low-level OS thread, offering direct control but generally less used for common tasks now.
 
-    - System.Threading.ThreadPool: Provides a pool of managed worker threads, reducing the overhead of thread creation/destruction for short tasks.
+    - **System.Threading.ThreadPool**: Provides a pool of managed worker threads, reducing the overhead of thread creation/destruction for short tasks.
 
-    - Task Parallel Library (TPL - System.Threading.Tasks): This is the cornerstone of modern C# concurrency. It introduces the Task and Task<TResult> abstractions, representing asynchronous operations. TPL includes high-level constructs like `Task.Run`, `Parallel.For`, and `Parallel.ForEach`, which often utilize the ThreadPool efficiently behind the scenes.   
+    - **Task Parallel Library**: This is the cornerstone of modern C# concurrency. It introduces the Task and Task<TResult> abstractions, representing asynchronous operations. TPL includes high-level constructs like `Task.Run`, `Parallel.For`, and `Parallel.ForEach`, which often utilize the ThreadPool efficiently behind the scenes.   
     async / await Keywords: Built upon the TPL, these keywords provide a vastly simplified syntax for writing asynchronous (especially I/O-bound) code that is non-blocking and highly readable.   
 
-### Memory Model
+## Memory Model
 
 - **Python**: While Python manages memory, the details of its memory model regarding visibility and reordering across threads are less formally specified than in C#.
 
 - **C#**: C# and .NET adhere to a more formally defined memory model (ECMA/ISO standards). This provides stronger guarantees about how memory operations (reads and writes) become visible to other threads and how instruction reordering might occur, leading to potentially more predictable behavior in complex concurrent scenarios across different hardware architectures. (Note: Deep understanding requires delving into memory barriers and volatile semantics, often handled implicitly by higher-level C# constructs).
 
 
-### Type System
+## Type System
 
 - **Python**: Python's dynamic typing offers flexibility but means type-related errors (e.g., passing incorrect data types to threads) might only surface at runtime.   
 
 - **C#**: C#'s static typing allows the compiler to catch many type errors before runtime. In concurrent programming, this can help prevent certain classes of bugs related to data sharing and communication between threads or tasks, as type mismatches are detected early.   
 
-## Creating and Using Threads in C#
 
-TODO
 
-### System.Threading.Thread Class
+
+
+
+
+
+
+
+
+# 11.3 Creating and Using Threads in C#
+
+## System.Threading.Thread Class
 
 This class, located in the System.Threading namespace, represents a managed thread within your .NET application. Each instance of Thread corresponds to an underlying operating system thread.
 
-### Creating Threads
+## Creating Threads
 
 You create a thread by instantiating the Thread class, passing it a delegate that represents the method the thread will execute. There are a few ways to specify this method:
 
-### 1) Using ThreadStart Delegate
+## 1) Using ThreadStart Delegate
 
-For methods that take no parameters and return void.
+For methods that take no parameters and return void.  Note that this example follows the same Create, Start, Join pattern as threads in Python.
 
 ```C#
 using System;
@@ -141,7 +147,7 @@ public class BasicThreading
         Console.WriteLine($"Worker thread {id}: Finished work.");
     }
 
-    public static void Main() // Renamed Main for clarity
+    public static void Main()
     {
         var id = Thread.CurrentThread.ManagedThreadId;
 
@@ -174,9 +180,11 @@ Main thread 1: Worker thread finished. Exiting.
 ```
 
 
-### 2) Passing arguments to a thread
+## 2) Passing arguments to a thread
 
 For methods that take a single parameter of type object and return void. This is how you pass data directly via the Start method.
+
+Note that the function the is used as a thread has the argument of type Object.  In order to the function top use this variable, it must be cast to a type that can be used.  `if (data is string message)` is that casting.
 
 ```C#
 using System;
@@ -187,7 +195,8 @@ public class ParameterizedThreading
     public static void DoWorkWithParameter(object data)
     {
         var id = Thread.CurrentThread.ManagedThreadId;
-        // Parameter is always object, needs casting
+
+        // argument is always object, needs casting
         if (data is string message) // Use pattern matching for safe casting
         {
             Console.WriteLine($"Worker thread {id}: Received '{message}'. Starting work.");
@@ -211,7 +220,7 @@ public class ParameterizedThreading
         string messageToSend = "Hello from Main!";
 
         // Start the thread and pass data via the Start method
-        workerThread.Start(messageToSend); // The argument here is passed as 'object'
+        workerThread.Start(messageToSend);
 
         Console.WriteLine($"Main thread {id}: Worker thread started. Waiting...");
         workerThread.Join();
@@ -232,9 +241,9 @@ Main thread 1: Exiting.
 
 Note: Using object sacrifices type safety. You must cast the parameter within the thread method, which can lead to runtime errors if the wrong type is passed.
 
-### 3) Using Lambda Expressions (Recommended for Simplicity) 
+## 3) Using Lambda Expressions (Recommended for Simplicity) 
 
-Often the cleanest way, especially for short tasks or when capturing local variables.
+Often the cleanest way, especially for short tasks or when capturing local variables.  [Review of Lambda functions in C#](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/lambda-expressions)
 
 ```C#
 using System;
@@ -294,16 +303,16 @@ Main thread 1: Exiting.
 
 Lambda Capture: Be mindful of variable lifetimes when capturing variables (like dataToPass and iterations) inside a lambda. If the variable's value changes in the outer scope after the thread starts but before the thread uses it, the thread might see the changed value (depending on timing).
 
-### Starting Threads
+## Starting Threads
 
 Once a Thread object is created, you start its execution by calling the `thread.Start()` method.  You pass the data object to the Start(object parameter) overload.  If using ThreadStart or a parameterless lambda, you call the parameterless Start().
 
 
-### Joining Threads (thread.Join())
+## Joining Threads (thread.Join())
 
 Often, the main thread needs to wait for a worker thread to complete its task before proceeding (e.g., before using the results or exiting the application). The `thread.Join()` method blocks the calling thread until the thread on which Join() was called terminates.
 
-### Foreground vs. Background Threads
+## Foreground vs. Background Threads
 
 - **Foreground Threads (Default)**: A .NET application will not exit as long as any foreground threads are still running. They keep the process alive.
 
@@ -355,7 +364,7 @@ Background thread: Starting work...
 
 Note: If you comment out `worker.IsBackground = true;`, the application will wait for the worker to finish.
 
-### Naming Threads
+## Naming Threads
 
 For debugging purposes, it's helpful to give threads meaningful names using the Name property:
 
@@ -365,11 +374,21 @@ workerThread.Name = "MyDataProcessor";
 workerThread.Start();
 ```
 
-## Synchronization Primitives in C#
+
+
+
+
+
+
+
+
+
+
+# 11.4 Synchronization Primitives in C#
 
 Having understood the fundamental need for synchronization from our earlier discussions (preventing race conditions, ensuring data integrity, coordinating actions between concurrent operations), let's explore the specific tools C# provides to achieve this. Unlike Python's GIL which implicitly handles some low-level interpreter locking, C# requires explicit synchronization when multiple threads access shared, mutable state. Fortunately, the .NET Framework offers a rich set of primitives.
 
-1. The lock Keyword (Monitor)
+## The lock Keyword (Monitor)
 
 The lock statement is the most commonly used synchronization primitive in C#. It provides a simple way to acquire a mutual-exclusion lock for a given object, ensuring that only one thread can enter the locked block of code (critical section) at a time.
 
@@ -473,7 +492,7 @@ Expected counter: 20000000
 Actual counter  : 10127122
 ```
 
-2. System.Threading.Monitor
+## System.Threading.Monitor
 
 The Monitor class provides the underlying mechanism for the lock statement and offers more advanced features, including condition variable support (Wait, Pulse, PulseAll).
 
@@ -585,9 +604,9 @@ Consumer 1: No more items, exiting.
 Monitor Example finished.
 ```
 
-3. System.Threading.Mutex
+## System.Threading.Mutex
 
-A Mutex (Mutual Exclusion) is similar to lock, but it can be system-wide, meaning it can synchronize threads across different processes if given a name.
+A Mutex (Mutual Exclusion) is similar to lock, but it can be system-wide, meaning it can synchronize threads across different processes/programs if given a name.
 
 - Purpose: Primarily for inter-process synchronization, though usable within a single process.
 
@@ -663,13 +682,13 @@ Thread B: Releasing mutex...
 Mutex Example finished.
 ```
 
-4. System.Threading.Semaphore / SemaphoreSlim
+## System.Threading.Semaphore / SemaphoreSlim
 
 A semaphore limits the number of threads that can access a specific resource or pool of resources concurrently.
 
-- Purpose: Control concurrency level, manage resource pools (e.g., database connections).
-- SemaphoreSlim: A lightweight version optimized for intra-process use (generally preferred over Semaphore unless cross-process is needed).
-- Methods: Wait()/WaitAsync() (acquire permit, decrements count), Release() (release permit, increments count).
+- **Purpose**: Control concurrency level, manage resource pools (e.g., database connections).
+- **SemaphoreSlim**: A lightweight version optimized for intra-process use (generally preferred over Semaphore unless cross-process is needed).
+- **Methods**: `Wait()/WaitAsync()` (acquire permit, decrements count), `Release()` (release permit, increments count).
 
 ```C#
 using System;
@@ -740,13 +759,13 @@ Thread 6: <--- Finished work. Releasing slot.
 SemaphoreSlim Example finished.
 ```
 
-5. Event Wait Handles (AutoResetEvent, ManualResetEvent, ManualResetEventSlim)
+## Event Wait Handles (AutoResetEvent, ManualResetEvent, ManualResetEventSlim)
 
 Used for signaling between threads. One thread waits (WaitOne) until another thread signals (Set).
 
-- AutoResetEvent: Resets automatically to non-signaled after releasing one waiting thread.
--  ManualResetEvent / ManualResetEventSlim: Stays signaled until explicitly reset (Reset()). Releases all waiting threads while signaled. Slim is preferred for intra-process use.
-- Purpose: Thread communication, signaling completion or readiness.
+- **AutoResetEvent**: Resets automatically to non-signaled after releasing one waiting thread.
+- **ManualResetEvent / ManualResetEventSlim**: Stays signaled until explicitly reset (Reset()). Releases all waiting threads while signaled. Slim is preferred for intra-process use.
+- **Purpose**: Thread communication, signaling completion or readiness.
 
 ```C#
 using System;
@@ -797,8 +816,7 @@ WaitingThread: Signal received! Continuing work.
 ManualResetEventSlim Example finished.
 ```
 
-
-6. System.Threading.ReaderWriterLockSlim
+## System.Threading.ReaderWriterLockSlim
 
 Optimized for scenarios where a resource is read much more frequently than it is written. It allows multiple concurrent readers or one exclusive writer.
 
@@ -907,7 +925,7 @@ ReaderWriterLockSlim Example finished.
 
 ```
 
-7. System.Threading.Interlocked
+## System.Threading.Interlocked
 
 Provides static methods for performing simple atomic operations on variables (primarily integers and longs), often avoiding the need for heavier locks.
 
@@ -971,11 +989,21 @@ C# offers a comprehensive suite of synchronization primitives. Understanding the
 - Use Interlocked for simple atomic operations to avoid locking overhead.
 
 
-## Thread Pools in C#
 
-While C# has a threadPool feature, it is simpler keep track of threads using a list.  You can read about [Thread Pools Here](https://learn.microsoft.com/en-us/dotnet/api/system.threading.threadpool?view=net-9.0).
 
-### Example 1: Simple List of Tasks
+
+
+
+
+
+
+
+
+# 11.5 Thread Pools in C#
+
+While C# has a threadPool feature, it is simpler to keep track of threads using a list.  You can read about [Thread Pools Here](https://learn.microsoft.com/en-us/dotnet/api/system.threading.threadpool?view=net-9.0).
+
+## Example 1: Simple List of Tasks
 
 ```C#
 using System;
@@ -1041,17 +1069,27 @@ Task 4 (Thread 12): Finished work.
 Main thread: All threads completed. Exiting.
 ```
 
-## Task Parallel Library (TPL)
+
+
+
+
+
+
+
+
+
+
+# 11.6 Task Parallel Library (TPL)
 
 The Task Parallel Library (TPL), primarily located in the `System.Threading.Tasks` namespace, represents .NET's modern, preferred approach for creating concurrent and parallel applications. It provides a higher level of abstraction over raw threads and the ThreadPool, simplifying common patterns, managing resources efficiently, and integrating seamlessly with features like async/await.
 
-The central abstraction in TPL is the `System.Threading.Tasks.Task` (and its generic counterpart Task<TResult>). A Task represents an asynchronous operation. It's not necessarily a thread itself, but rather a unit of work that can be scheduled to run, often utilizing threads from the ThreadPool.
+The central abstraction in TPL is the `System.Threading.Tasks.Task` (and its generic counterpart Task\<TResult\>). A Task represents an asynchronous operation. It's not necessarily a thread itself, but rather a unit of work that can be scheduled to run, often utilizing threads from the ThreadPool.
 
 - **Task**: Represents an operation that does not return a value.
 
-- **Task<TResult>**: Represents an operation that does return a value of type TResult.
+- **Task\<TResult\>**: Represents an operation that does return a value of type TResult.
 
-### Creating and Running Tasks with Task.Run
+## Creating and Running Tasks with Task.Run
 
 The simplest and most common way to execute a CPU-bound operation on a background thread (using the ThreadPool) is Task.Run().
 
@@ -1106,7 +1144,7 @@ Task 2 (Thread 9): Finished CPU work.
 Main thread 1: All tasks completed.
 ```
 
-### Waiting for Tasks and Getting Results
+## Waiting for Tasks and Getting Results
 
 TPL provides robust ways to wait for task completion and retrieve results, a significant improvement over direct ThreadPool usage.
 
@@ -1211,7 +1249,7 @@ Result for Task 3: 9
 Main thread 1: Exiting.
 ```
 
-### Task Continuations (ContinueWith)
+## Task Continuations (ContinueWith)
 
 Continuations allow you to specify code that should run automatically when a preceding task (the "antecedent") finishes.  While ContinueWith is powerful, the async/await keywords (covered next) provide a much more readable and natural way to handle asynchronous workflows and continuations in most cases.
 
@@ -1275,7 +1313,7 @@ Continuation: Antecedent task completed with result: 'Initial Result'
 Main thread 1: Continuation finished.
 ```
 
-### Data Parallelism (System.Threading.Tasks.Parallel Class)
+## Data Parallelism (System.Threading.Tasks.Parallel Class)
 
 TPL provides the static Parallel class to simplify common patterns where you perform the same operation on many different data items concurrently.
 
@@ -1365,7 +1403,17 @@ Parallel.For took: 698 ms
 Data Parallelism Example finished.
 ```
 
-## Asynchronous Programming with async and await
+
+
+
+
+
+
+
+
+
+
+# 11.7 Asynchronous Programming with async and await
 
 Building upon the foundation laid by the Task Parallel Library (TPL), C# provides powerful language features – the async and await keywords – specifically designed to simplify writing asynchronous code. While TPL's Task object represents an asynchronous operation, async/await provides a much more readable and manageable syntax for working with these operations, especially for I/O-bound scenarios.  [See Documentation on async and await](https://learn.microsoft.com/en-us/dotnet/csharp/asynchronous-programming/)
 
@@ -1379,42 +1427,42 @@ If you perform these operations synchronously, the calling thread blocks – it 
 
 Async and await work together to enable asynchronous operations without blocking the calling thread.
 
-### async Modifier
+## async Modifier
 
 - Applied to a method signature (e.g., public async Task MyMethodAsync()).
 - Signals to the compiler that the method contains one or more await expressions.
 - Enables the use of await within the method.
-- Causes the method to return Task, Task<TResult>, or void (though async void is discouraged except for event handlers). The returned Task represents the ongoing execution of the async method.
+- Causes the method to return Task, Task\<TResult\>, or void (though async void is discouraged except for event handlers). The returned Task represents the ongoing execution of the async method.
 
-### await Operator
+## await Operator
 
 - Can only be used inside a method marked async.
-- Applied to an awaitable operation (most commonly a Task or Task<TResult>).
+- Applied to an awaitable operation (most commonly a Task or Task\<TResult\>).
 
-### Crucial Behavior
+## Crucial Behavior
 
 - If the awaited task has not yet completed, await does the following:
 - It registers a continuation (callback) with the task.
 - It returns control immediately to the caller of the async method. The current thread is not blocked and is free to do other work (like respond to UI events or handle other web requests).
 - When the awaited task eventually completes, the continuation is scheduled to run, and execution resumes within the async method right after the await expression.
 - If the awaited task has already completed when await is encountered, execution continues synchronously within the method without yielding control.
-- If awaiting a Task<TResult>, await unwraps the task and returns the TResult value.
+- If awaiting a Task\<TResult\>, await unwraps the task and returns the TResult value.
 Return Types for async Methods
 
-### async Task
+## async Task
 
 - Use for asynchronous methods that perform an operation but don't return a value to the caller (analogous to a void synchronous method).
-- async Task<TResult>: Use for asynchronous methods that compute and return a value of type TResult.
+- async Task\<TResult\>: Use for asynchronous methods that compute and return a value of type TResult.
 
-### async void
+## async void
 
 Primarily for event handlers (like button clicks in UI frameworks). Avoid using async void for other purposes because exceptions thrown from async void methods are harder to catch and can crash the application.
 
-### How it Works
+## How it Works
 
 The compiler transforms an async method into a sophisticated state machine. When await yields control, the current state of the method is saved. When the awaited task completes, the runtime uses the continuation to restore the method's state and resume execution, potentially on a different thread (often a ThreadPool thread, managed by the Synchronization Context or Task Scheduler).
 
-### Example Basic Async Operations
+## Example Basic Async Operations
 
 ```C#
 using System;
@@ -1497,11 +1545,21 @@ Main thread 1: Waiting for ProcessDataAsync to complete...
 Main thread 1: ProcessDataAsync completed. Exiting.
 ```
 
-## Concurrent Collections (System.Collections.Concurrent)
+
+
+
+
+
+
+
+
+
+
+# 11.8 Concurrent Collections
 
 A common requirement in concurrent programming is to have multiple threads safely access and modify a shared collection (like a list, dictionary, queue, etc.) without causing race conditions or data corruption.
 
-### The Problem with Standard Collections
+## The Problem with Standard Collections
 
 Standard .NET collection classes like List<T>, Dictionary<TKey, TValue>, Queue<T>, and Stack<T> are not thread-safe for concurrent write operations (or scenarios involving reads concurrent with writes). If multiple threads attempt to modify these collections simultaneously without external locking, the internal state can become corrupted, leading to unpredictable behavior, incorrect data, or application crashes.
 
@@ -1517,11 +1575,11 @@ Parallel.For(0, 1000, i => {
 
 While you can use manual locking (like the lock statement) around every access to a standard collection to make it thread-safe, this can be cumbersome, error-prone, and sometimes inefficient due to coarse-grained locking.
 
-### Introducing System.Collections.Concurrent
+## Introducing System.Collections.Concurrent
 
 The `System.Collections.Concurrent` namespace provides a set of collection classes specifically designed for safe and efficient use in multi-threaded scenarios. These collections handle all necessary internal synchronization, often using fine-grained locking or lock-free techniques for better performance compared to manually locking standard collections.
 
-### ConcurrentQueue<T>
+## ConcurrentQueue<T>
 
 A thread-safe FIFO (First-In, First-Out) queue.
 
@@ -1590,7 +1648,7 @@ Final Queue size (approx): 2
 ConcurrentQueue Example finished.
 ```
 
-### ConcurrentStack<T>
+## ConcurrentStack<T>
 
 A thread-safe LIFO (Last-In, First-Out) stack.
 
@@ -1661,9 +1719,9 @@ Final Stack size (approx): 45
 ConcurrentStack Example finished.
 ```
 
-### ConcurrentBag<T>
+## ConcurrentBag<T>
 
-A thread-safe, unordered collection of items. It's optimized for scenarios where the same thread might be both producing and consuming items, as it tries to keep items local to a thread for efficiency.
+A thread-safe, unordered collection of items. In Python, it's called a set.  It's optimized for scenarios where the same thread might be both producing and consuming items, as it tries to keep items local to a thread for efficiency.
 
 Use Case
 
@@ -1735,7 +1793,7 @@ Final Bag size: 0
 ConcurrentBag Example finished.
 ```
 
-### ConcurrentDictionary<TKey, TValue>
+## ConcurrentDictionary<TKey, TValue>
 
 A thread-safe dictionary (key-value store). Multiple threads can read and write concurrently with high performance.
 
@@ -1745,12 +1803,12 @@ Shared caches, lookup tables, state tracking in concurrent applications.
 
 
 Key Methods (often atomic or near-atomic):
-- `TryAdd(TKey key, TValue value)`: Attempts to add a key/value pair. Returns false if the key already exists.
-- `TryGetValue(TKey key, out TValue value)`: Attempts to get the value associated with a key.
-- `TryRemove(TKey key, out TValue value)`: Attempts to remove a key/value pair.
-- `TryUpdate(TKey key, TValue newValue, TValue comparisonValue)`: Attempts to update the value only if the current value matches the comparisonValue.
-- `AddOrUpdate(TKey key, TValue addValue, Func<TKey, TValue, TValue> updateValueFactory)`: Adds a key/value if the key doesn't exist, or updates the existing value using the factory function if it does.
-- `GetOrAdd(TKey key, TValue value)` / `GetOrAdd(TKey key, Func<TKey, TValue> valueFactory)`: Gets the value if the key exists, or adds the new value/factory-generated value if it doesn't.
+- **TryAdd(TKey key, TValue value)**: Attempts to add a key/value pair. Returns false if the key already exists.
+- **TryGetValue(TKey key, out TValue value)**: Attempts to get the value associated with a key.
+- **TryRemove(TKey key, out TValue value)**: Attempts to remove a key/value pair.
+- **TryUpdate(TKey key, TValue newValue, TValue comparisonValue)**: Attempts to update the value only if the current value matches the comparisonValue.
+- **AddOrUpdate(TKey key, TValue addValue, Func\<TKey, TValue, TValue\> updateValueFactory)**: Adds a key/value if the key doesn't exist, or updates the existing value using the factory function if it does.
+- **GetOrAdd(TKey key, TValue value)** / **GetOrAdd(TKey key, Func\<TKey, TValue\> valueFactory)**: Gets the value if the key exists, or adds the new value/factory-generated value if it doesn't.
 
 
 ```C#
@@ -1838,7 +1896,7 @@ Player3: 34
 ConcurrentDictionary Example finished.
 ```
 
-### BlockingCollection<T>
+## BlockingCollection<T>
 
 A wrapper class that provides blocking and bounding capabilities for concurrent collections (it uses ConcurrentQueue<T> by default). It's exceptionally useful for implementing producer-consumer patterns.
 
@@ -1847,11 +1905,11 @@ Use Case
 The go-to class for robust producer-consumer scenarios.
 
 Key Features:
-- `Blocking`: Take() blocks if the collection is empty; Add() blocks if the collection is bounded and full.
-- `Bounding`: Can be initialized with a maximum capacity.
-- `Signaling Completion`: CompleteAdding() signals that no more items will be added.
-- `Consuming Enumerable`: GetConsumingEnumerable() provides an IEnumerable<T> that blocks waiting for items and automatically completes when CompleteAdding() is called and the collection is empty.
-- Methods: `Add(T)`, `Take()`, `TryAdd(T)`, `TryTake(out T)`, `CompleteAdding()`, `IsAddingCompleted`.
+- **Blocking**: Take() blocks if the collection is empty; Add() blocks if the collection is bounded and full.
+- **Bounding**: Can be initialized with a maximum capacity.
+- **Signaling Completion**: CompleteAdding() signals that no more items will be added.
+- **Consuming Enumerable**: GetConsumingEnumerable() provides an IEnumerable<T> that blocks waiting for items and automatically completes when CompleteAdding() is called and the collection is empty.
+- Methods: **Add(T)**, **Take()**, **TryAdd(T)**, **TryTake(out T)**, **CompleteAdding()**, **IsAddingCompleted**.
 
 
 ```C#
@@ -1937,11 +1995,11 @@ BlockingCollection Example finished.
 ```
 
 
-Benefits of Concurrent Collections:
+Benefits of Concurrent Collections
 
-1. `Thread Safety`: Eliminates the need for manual locking around basic collection operations.
-1. `Simplicity`: Makes concurrent code involving shared collections easier to write and reason about.
-1. `Performance`: Often provide better performance than manual locking on standard collections due to optimized internal implementations (fine-grained locking, lock-free techniques).
+1. **Thread Safety**: Eliminates the need for manual locking around basic collection operations.
+1. **Simplicity**: Makes concurrent code involving shared collections easier to write and reason about.
+1. **Performance**: Often provide better performance than manual locking on standard collections due to optimized internal implementations (fine-grained locking, lock-free techniques).
 
 Conclusion
 
