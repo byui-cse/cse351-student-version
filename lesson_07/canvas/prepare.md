@@ -5,7 +5,7 @@
 Section | Content
 --- | ---
 7.1 | [Process and Thread Scheduling](#Process-and-Thread-Scheduling)
-7.2 | [Context Switching](#Context-Switching)
+7.2 | [Context Switching](#Context-Switching) :key:
 7.3 | [Memory Management](#Memory-Management)
 7.4 | [Hardware Considerations](#Hardware-Considerations)
 7.5 | [File Systems](#File-Systems)
