@@ -6,7 +6,7 @@ If you are comfortable installing python packages please see the [Quick Install]
 
 ### Quick Install
 
-In the following image, a simple program was run in VSCode. The terminal window displays the full path of Python in yellow. (ie., `"C:/users/.../python.exe"`). That is the path you must copy and use in the instructions below. The best method to get the path is to run a simple Python program in VSCode and the path will be automatically displayed in the output.
+In the following image, a simple program was run in VSCode. (ie., create a simple Python program that prints out "Hello World" and run it.) The terminal window displays the full path of Python in yellow. (ie., `"C:/users/.../python.exe"`). That is the path you must copy and use in the instructions below. The best method to get the path is to run a simple Python program in VSCode and the path will be automatically displayed in the output.
 
 ![](./assets/running-python.png)
 
@@ -18,7 +18,7 @@ You need to have `git` installed on your computer. [Instructions to installing g
 
 ```
 Command to run (Mac or Windows):
-<python path used in VS Code> -m pip install git+https://github.com/byui-cse/cse351-py-package.git
+<python path used in VS Code FROM ABOVE> -m pip install git+https://github.com/byui-cse/cse351-py-package.git
 ```
 
 ### Using the package in your projects
@@ -26,7 +26,7 @@ Command to run (Mac or Windows):
 The following code will include the common files for the course. Most of your assignments include this already but if it is ever missing, you can import it into your assignments:
 
 ```python
-# Include cse 351 common Python files
+# Include cse351 common Python files
 from cse351 import *
 ```
 
