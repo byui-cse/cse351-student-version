@@ -15,6 +15,8 @@ class MyThread(threading.Thread):
         # Code to be executed in the thread
         print(f"Thread {self.name} with value = {self.value} is running")
         self.results = 'This is the answer'
+
+
 my_thread = MyThread("Thread-1", 1234)    # Creates the thread
 my_thread.start()                         # This calls run() in the class
 my_thread.join()                          # wait it (ie., the run() function) to finish
