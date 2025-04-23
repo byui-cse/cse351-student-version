@@ -44,7 +44,7 @@ See syllabus.
 
 ## Required Software and Tools (Python, C#, IDEs, etc.)
 
-We will be using Python 3 in this course.  We highly requirement that you install the latest version of Python from [python.org](https://www.python.org).  This is version 3.13.x. 
+We will be using Python 3 in this course.  We highly recommend that you install the latest version of Python from [python.org](https://www.python.org).  This is version 3.13.x. 
 
 If any of the concepts or topics in the list below seem unfamiliar to you, `it is your responsibility to review these topics`. The basic data structures used in this course are: 
 - Lists
@@ -104,7 +104,7 @@ UML class diagrams were introduced in CSE 210.  Please review these diagrams.
 
 # What is Parallelism
 
-This section introduces the core concept of parallelism in computing, contrasting it with concurrency, classifying different types of parallel architectures, and exploring various forms and granularities of parallel execution.
+This section introduces the core concept of parallelism in computing, contrasting it with concurrency, classifying different types of parallel architectures, and exploring various forms and granularity of parallel execution.
 
 ## Definition of Parallelism vs. Concurrency
 
@@ -389,7 +389,7 @@ In Python, a thread is a concurrent unit of execution *within a single process*.
 - **Shared Memory:** Threads within the same process share the same memory space. This makes communication between threads relatively easy (they can directly access and modify the same data), but it also introduces the risk of race conditions and data corruption if access to shared resources is not carefully synchronized.
 - **Lightweight:** Threads are generally more lightweight than processes. Creating and switching between threads typically has lower overhead than creating and switching between processes.
 - **Concurrency, Not True Parallelism (in CPython):**  Due to the Global Interpreter Lock (GIL) in CPython, threads cannot achieve true parallelism for CPU-bound tasks.  However, they can still provide concurrency for I/O-bound tasks, allowing a program to remain responsive while waiting for external operations.
-- **Pre-emptive multitasking.** The operating system can interupt a thread at any time to let another thread run.
+- **Pre-emptive multitasking.** The operating system can interrupt a thread at any time to let another thread run.
 
 ## User-Level vs. Kernel-Level Threads
 
@@ -423,7 +423,7 @@ CPython's `threading` module typically uses a **one-to-one model**, where each P
 
 ## Using Global Variables in Python Programs
 
-We will be using a few global variables in this course, however, this will only happen if we can't pass values to a thread when it's created.  Using global variables when they is a solution with using arguments will cause points to be taken off from assignments.
+We will be using a few global variables in this course, however, this will only happen if we can't pass values to a thread when it's created.  Using global variables when there is a solution that uses arguments will cause points to be taken off from assignments.
 
 ## Thread Creation and Management (in Python's `threading` module)
 
@@ -540,7 +540,7 @@ t = threading.Thread(target=thread_function, args=('Bob',))
 
 2. Start the thread.
 
-A thread doesn't start to execute until you call the start() method. This allows you to create all of the threads required for your task and then start them when needed.
+A thread doesn't start to execute until you call the start() method. This allows you to create all the threads required for your task and then start them when needed.
 
 ```python
 t.start()
@@ -678,7 +678,7 @@ thread.start()
 print('After the thread - End of program')
 ```
 
-Here is the output of the above program. Notice that the text `Hello World` was displayed after the text `After the thread - End of program`. The reason for this is that the main thread will continue to run after it starts the timer (ie., `thread.start()`) The program ends when the main thread and the timer are finished.
+Here is the output of the above program. Notice that the text `Hello World` was displayed after the text `After the thread - End of program`. The reason for this is that the main thread will continue to run after it starts the timer (i.e., `thread.start()`) The program ends when the main thread and the timer are finished.
 
 ```
 Before the thread
@@ -979,7 +979,7 @@ print(f"Final counter value: {counter:,}, expected: {2 * TIMES:,}")
 
 A deadlock occurs when two or more threads are blocked indefinitely, waiting for each other to release resources (in this case, locks) that they need.
 
-### Example of deallock
+### Example of deadlock
 
 ```python
 import threading
