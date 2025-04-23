@@ -963,7 +963,7 @@ We will be using the function `apply_async()` with process pools for this week's
 
 import multiprocessing as mp 
 
-from cse251 import *
+from cse351 import *
 
 def sum_all_values(x):
     total = 0
@@ -995,7 +995,7 @@ This second example is using the function `apply_async()`. It is asynchronous me
 
 import multiprocessing as mp 
 
-from cse251 import *
+from cse351 import *
 
 def sum_all_values(x):
     total = 0
@@ -1050,7 +1050,7 @@ Here is the same program from example 2 processing a larger range of values.
 
 import multiprocessing as mp 
 
-from cse251 import *
+from cse351 import *
 
 def sum_all_values(x):
     total = 0
@@ -1089,7 +1089,7 @@ In order to know when the pool is finished, you need to have the statements `poo
 import multiprocessing as mp
 import time
 
-from cse251 import *
+from cse351 import *
 
 result_list = []
 
@@ -1151,7 +1151,7 @@ The advantage of using a call back function with the process pool is that the pr
 import multiprocessing as mp
 import time
 
-from cse251 import *
+from cse351 import *
 
 result_list = []
 

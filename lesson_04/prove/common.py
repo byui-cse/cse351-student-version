@@ -16,7 +16,7 @@ import threading
 import json
 import requests
 
-from cse251 import *
+from cse351 import *
 
 TOP_API_URL = 'http://127.0.0.1:8123'
 
