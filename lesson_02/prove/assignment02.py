@@ -12,7 +12,7 @@ import os
 import random
 import threading
 from money import *
-from cse351 import Log
+from cse351 import *
 
 # ---------------------------------------------------------------------------
 def main(): 
