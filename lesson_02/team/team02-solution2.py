@@ -1,5 +1,5 @@
 """
-Course: CSE 251 
+Course: CSE 351 
 Lesson: L02 team activity
 File:   prove.py
 Author: <Add name here>
@@ -37,7 +37,7 @@ import threading
 from common import *
 
 # Include cse 351 common Python files
-from cse251 import *
+from cse351 import *
 
 CHAR = 'characters'
 PLAN = 'planets'
