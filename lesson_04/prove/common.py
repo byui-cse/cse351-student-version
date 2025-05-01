@@ -41,7 +41,7 @@ def get_data_from_server(url):
         try:
             response = requests.get(url, timeout=10)
             response.raise_for_status()
-            if response.status_code == 200:
+            if response.status_code == 200 and response.json() is not None:
                 return response.json()
             break
 
