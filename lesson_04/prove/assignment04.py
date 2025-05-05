@@ -5,6 +5,16 @@ Student   : <your name here>
 
 Instructions:
     - review instructions in the course
+
+In order to retrieve a weather record from the server, Use the URL:
+
+f'{TOP_API_URL}/record/{name}/{recno}
+
+where:
+
+name: name of the city
+recno: record number starting from 0
+
 """
 
 import time
