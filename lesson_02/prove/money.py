@@ -67,7 +67,7 @@ class Money:
 
 
     def __ne__(self, value):
-        return self.digits != value.digits
+        return self.digits != value
 
 
     def __add(self, a, b):
