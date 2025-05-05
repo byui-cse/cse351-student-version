@@ -1,7 +1,7 @@
 """
 Course: CSE 351 
 Lesson: L02 team activity
-File:   prove.py
+File:   team02-solution2.py
 Author: <Add name here>
 
 Purpose: Retrieve Star Wars details from a server
