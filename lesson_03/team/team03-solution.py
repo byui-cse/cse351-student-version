@@ -44,22 +44,7 @@ from cse351 import *
 THREADS = 10
 call_count = 0
 
-class GetUrl(threading.Thread):
-
-    def __init__(self, url):
-        threading.Thread.__init__(self)
-        self.url = url
-        self.name = ''
-
-    def get_name(self):
-        return self.name
-
-    def run(self):
-        item = get_data_from_server(self.url)
-        self.name = item['name']
-
-
-def get_url(que):
+def worker(que):
     global call_count
 
     while True:
@@ -88,7 +73,7 @@ def main():
     # Create threads
     threads = []
     for i in range(THREADS):
-        t = threading.Thread(target=get_url, args=(que,))
+        t = threading.Thread(target=worker, args=(que,))
         threads.append(t)
 
     # Start threads
@@ -112,10 +97,11 @@ def main():
     for url in film6['species']:
         que.put(url)
 
+    # MUST add a "all done" message for each worker
     for i in range(THREADS):
         que.put(None)
     
-    # Join threads
+    # Join threads - wait for the workers to finish
     for t in threads:
         t.join()
 

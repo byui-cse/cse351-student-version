@@ -150,11 +150,11 @@ These describe different approaches to breaking down a computational problem int
 
 Granularity refers to the size of the computational units that are executed concurrently.  It's a measure of the ratio of computation to communication/synchronization overhead.
 
-## Coarse-grained Parallelism:
+**Coarse-grained Parallelism:** 
 
 Large tasks are executed concurrently, with relatively infrequent communication or synchronization between them. The amount of computation performed by each task is significantly larger than the overhead of communication.
 
-**Characteristics:**
+## Characteristics
 -   Lower communication overhead.
 -   Easier to implement.
 -   Less potential for speedup (limited by the number of large tasks).

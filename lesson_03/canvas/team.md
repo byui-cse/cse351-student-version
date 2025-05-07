@@ -67,7 +67,7 @@ style O fill:#cfc,stroke:#333,stroke-width:1px,color:#000
 
 When your program is finished, Here is a solution.  Compare them to your approach.
 
-- [Solution](../team/team03_solution.py)
+- [Solution](../team/team03-solution.py)
 
 You should work to complete this team activity for the one hour period first, without looking at the sample solution. However, if you have worked on it for at least an hour and are still having problems, you may feel free to use the sample solution to help you finish your program.
 

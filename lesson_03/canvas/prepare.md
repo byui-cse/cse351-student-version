@@ -49,7 +49,7 @@ What is the impact on CPU-bound tasks?  CPU-bound tasks are those that spend mos
 - Image processing.
 - Large-scale data analysis.
 
-For these tasks, using threads in Python will **not result in a speedup proportional to the number of cores**.  In fact, it can sometimes even slow down the program due to the overhead of thread management and context switching. The GIL serializes the execution of Python, preventing true parallel execution.
+For there tasks, using threads in Python will `not result in a speedup proportional tothe number of cores`.  In fact, it can sometimes even slow down the program due to the overhead of thread management and context switching. The GIL serializes the execution of Python, preventing true parallel execution.
 
 Why does the GIL exist? The GIL simplifies CPython's implementation, particularly memory management. It makes it easier to integrate C extensions and ensures thread safety for the interpreter's internal data structures. Removing the GIL is a complex undertaking that has been explored but poses significant challenges to maintaining compatibility and performance.
 
@@ -60,7 +60,7 @@ Debugging multithreaded programs can be significantly more challenging than debu
 
 - **Non-determinism:** The order in which threads execute can vary, making it difficult to reproduce bugs consistently. Race conditions (discussed below) can appear intermittently.
 *Deadlocks:** Threads can get stuck waiting for each other indefinitely, leading to a program freeze.
-- **Heisenbugs:** Bugs that disappear or change their behavior when you try to observe them (e.g., Using a debugger, or print() statements). This can happen because the act of debugging can alter the timing and execution order of threads.
+- **Heisenbugs:** Bugs that disappear or change their behavior when you try to observe them (e.g., Using a bugger, or print() statements). This can happen because the act of debugging can alter the timing and execution order of threads.
 
 Logging (writing print statements to a file), can help track the flow of execution and the state of assignments and programs.
 
@@ -105,13 +105,9 @@ The most common source of thread safety problems is shared mutable state.  This 
 
 ### Shared Variables
 
-Global variables, instance variables of shared objects, and elements within shared data structures (lists, dictionaries, etc.) are all examples of shared mutable state.  If multiple threads can read from and write to these variables, it can lead to unpredictable behavior unless properly synchronized.
+Global variables, instance variables of shared objects, and elements within shared data structures (lists, dictionaries, etc.) are all examples of shared mutable state.  If multiple threads can read and  Non-Atomic Operations
 
-### Non-Atomic Operations
-
-Even seemingly simple operations like incrementing a variable (counter += 1) are often not atomic at the bytecode level. They involve multiple steps (read, modify, write), creating opportunities for race conditions if accessed by multiple threads simultaneously without proper synchronization.
-
-### Shared Resources (Files, Databases, etc.)
+Even seemingly simple operations like incrementing a variable (counter += 1) are often not atomic at the bytecode level. They involve multiple steps (read, modify, write), creating opportunities for Shared Resources (Files, Databases, etc.)
 
 Accessing external resources like files or databases from multiple threads requires careful coordination.  Multiple threads writing to the same file simultaneously without proper locking can lead to data corruption or loss.  Database connections often need to be managed carefully to avoid conflicts and ensure data consistency.
 
@@ -124,7 +120,7 @@ Even when using synchronization primitives (locks, semaphores, etc.), incorrect 
 - **Forgotten Locks**: Failing to acquire a lock before accessing a shared resource.
 **Releasing Locks Too Early/Late**: Holding a lock for too short or too long a time can either lead to race conditions or reduce concurrency unnecessarily.
 
-- **Nested Locks**: Acquiring the same lock multiple times without using an RLock (reentrant lock) can cause deadlocks.
+- **Nested Locks**: Acquiring the same lock multiple times without using an RLock can cause deadlocks.
 
 - **Livelock**: Similar to deadlock.  Threads are not blocked, but they keep retrying an action that will always fail because of another thread.
 
@@ -173,7 +169,7 @@ Steps Involved in a Context Switch:
 
 The operating system (OS) plays a crucial role in managing threads
 
-- The OS provides system calls for **creating and terminating threads**. When a thread is created, the OS scheduler is responsible for **deciding which thread to run and for how long**. Different scheduling algorithms have different priorities (e.g., fairness, responsiveness, throughput).
+- The OS provides system calls for **creating and terminating threads**. When a thread is created, the he OS scheduler is responsible for **deciding which thread to run and for how long**. Different scheduling algorithms have different priorities (e.g., fairness, responsiveness, throughput).
 
 - The OS provides mechanisms for **thread synchronization** (e.g., mutexes, semaphores, condition).  
 
@@ -188,7 +184,7 @@ Context switching is not free.  It introduces overhead, which can impact the per
 
 - As discussed earlier, the overhead of context switching is less significant for I/O-bound tasks because the threads spend much of their time waiting anyway. The context switch allows other threads to form useful work during these waiting periods. For CPU-bound tasks, the overhead of context switching (combined with the GIL's limitations) often outweighs the benefits of threading in CPython.
 - Excessive context switching can degrade performance. If you have too many threads competing for CPU time, the system may spend more time switching between them than actually executing their code. This is known as "thrashing".
-- Thread pools help manage the overhead by reusing a limited number of threads instead of creating and destroying them repeatedly. This reduces the frequency of thread creation and destruction, and can improve efficiency.
+- Threads pool help manage the overhead by reusing a limited number of threads instead of creating and destroying them repeatedly. This reduced the frequency of thread creation and destruction, and can improve efficiency.
 
 
 
@@ -343,7 +339,7 @@ print(f"Time taken (sequential): {end_time_sequential - start_time_sequential:.4
 
 Program Output:
 
-Here, you will notice that the time for the thread pool was a lot slower.  The slow down is caused by the overhead of managing the pool where the OS needs to schedule the threads.  The sequential version of this program doesn't have this overhead.
+Here, you will notice that the time for the thread pool was a lot slower.  The slow down is caused by the over head of managing the pool where the OS needs to schedule the threads.  The sequential version of this program doesn't have this over head.
 
 ```text
 Time taken (with thread pool): 0.5908 seconds
@@ -370,7 +366,7 @@ Challenges for shared memory:
 
 - As discussed earlier, **race conditions** occur when multiple threads access and modify shared data concurrently, leading to unpredictable and incorrect results. The order of operations becomes non-deterministic.   
 - **Without proper synchronization**, data can become corrupted or inconsistent due to partial updates or interleaved operations.
-- Shared memory issues can be **extremely difficult to debug** due to their non-deterministic nature and the potential for subtle timing-dependent errors.  For example, adding a `print()` statement will change the timing of your threads and cause a different result.
+- Shared memory issues can be **extremely difficult to debug** due to their non-deterministic nature and the potential for subtle timing-dependent errors.  For example, adding print() statement will change the timing of your threads and cause a different result.
 
 ### Race Conditions
 
@@ -392,10 +388,10 @@ In the context of inter-thread communication, this means that messages or data i
 
 ## Advantages of Queues for Thread Communication:
 
-- `queue.Queue` is designed to be **thread-safe**. All the necessary locking and synchronization are handled internally, eliminating the need for manual lock management and reducing the risk of race conditions.
+- queue.Queue is designed to be **thread-safe**. All the necessary locking and synchronization are handled internally, eliminating the need for manual lock management and reducing the risk of race conditions.
 - Queues provide a **higher-level abstraction for communication**, making code easier to read, write, and reason about. You don't have to deal directly with low-level synchronization primitives like locks.
-- The **blocking behavior of `put()` and `get()`** (when `block=True`) simplifies coordination between threads. Threads can wait for data to become available or for space to become free without busy-waiting (repeatedly checking a condition).
-- The `maxsize` parameter allows you to create **bounded queues**, preventing producers from overwhelming consumers and potentially running out of memory.
+- The **blocking behavior of put() and get()** (when block=True) simplifies coordination between threads. Threads can wait for data to become available or for space to become free without busy-waiting (repeatedly checking a condition).
+- The maxsize parameter allows you to create **bounded queues**, preventing producers from overwhelming consumers and potentially running out of memory.
 - **FIFO queues** guarantee that items are processed in the order they are added, which is essential for many applications.
 
 
@@ -410,7 +406,7 @@ import queue
 q = queue.Queue()
 ```
 
-Click on [Main Methods of queue.Queue](https://docs.python.org/3/library/queue.html) to review the methods of a queue.  Note, that `qsize()`, `empty()`, `full()` are approximate in their return values.  See the documentation to learn more.
+Click on [Main Methods of queue.Queue](https://docs.python.org/3/library/queue.html) to review the methods of a queue.  Note, that qsize(), empty(), full() are approximate in their return values.  See the documentation to learn more.
 
 ### Queue Example
 
@@ -489,7 +485,7 @@ Producer-consumer example finished.
 
 ## Queue Example 2
 
-Here, there are 3 threads adding to the queue and 3 threads reading from it.  Note, that the `producer()` MUST place a `None` item on the queue for **each consumer thread**.  Also, the number of producer threads to not need to match the number of consumer threads.
+Here, there are 3 threads adding to the queue and 3 threads reading from it.  Note, that the producer() MUST place a `None` item on the queue for **each consumer thread**.  Also, the number of producer threads to not need to match the number of consumer threads.
 
 ```python
 import threading
@@ -629,7 +625,7 @@ def access_resource_calls(thread_id, semaphore):
 
 
 def test(thread_func, message):
-    print()
+    print()-
     print('-' * 40)
     print(message)
     print('-' * 40)
@@ -693,9 +689,9 @@ Key differences and when to use a semaphore VS a lock
 
 - Mutexes are used for exclusive access to a single resource. Only one thread can hold the lock at a time.
 - Binary Semaphores are functionally equivalent to a mutex. Use interchangeably with `threading.Lock`.
-- Counting Semaphores are used when you have a limited number of resources or want to allow a specific number of threads to access a resource concurrently.
+- Counting Semaphores are usde when you have a limited number of resources or want to allow a specific number of threads to access a resource concurrently.
 
-Semaphores are a powerful tool for managing concurrency and controlling access to shared resources in multithreaded applications. They provide a flexible mechanism for both exclusive access (binary semaphores) and controlled concurrent access (counting semaphores). Understanding their behavior and proper usage is essential for writing robust and efficient concurrent code. Using the `with` statement is crucial for correct semaphore management, preventing deadlocks and resource leaks.
+Semaphores are a powerful tool for managing concurrency and controlling access to shared resources in multithreaded applications. They provide a flexible mechanism for both exclusive access (binary semaphores) and controlled concurrent access (counting semaphores). Understanding their behavior and proper usage is essential for writing robust and efficient concurrent code. Using the with statement is crucial for correct semaphore management, preventing deadlocks and resource leaks.
 
 
 ## Barriers for Threads
