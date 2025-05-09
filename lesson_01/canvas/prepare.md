@@ -150,11 +150,11 @@ These describe different approaches to breaking down a computational problem int
 
 Granularity refers to the size of the computational units that are executed concurrently.  It's a measure of the ratio of computation to communication/synchronization overhead.
 
-**Coarse-grained Parallelism:** 
+### Coarse-grained Parallelism: 
 
 Large tasks are executed concurrently, with relatively infrequent communication or synchronization between them. The amount of computation performed by each task is significantly larger than the overhead of communication.
 
-## Characteristics
+**Characteristics:**
 -   Lower communication overhead.
 -   Easier to implement.
 -   Less potential for speedup (limited by the number of large tasks).
@@ -162,7 +162,7 @@ Large tasks are executed concurrently, with relatively infrequent communication 
 
 **Example:**  Distributing the simulation of different physical systems to different nodes in a cluster. Each node performs a large amount of independent computation.
 
-## Fine-grained Parallelism
+### Fine-grained Parallelism
 Small tasks are executed concurrently, with frequent communication and synchronization. The amount of computation performed by each task is small, and the overhead of communication can be significant.
 
 **Characteristics:**
