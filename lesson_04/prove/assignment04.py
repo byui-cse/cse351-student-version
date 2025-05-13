@@ -72,7 +72,7 @@ def verify_noaa_results(noaa):
         avg = noaa.get_temp_details(name)
 
         if abs(avg - answer) > 0.00001:
-            msg = f'FAILED  Excepted {answer}'
+            msg = f'FAILED  Expected {answer}'
         else:
             msg = f'PASSED'
         print(f'{name:>15}: {avg:<10} {msg}')

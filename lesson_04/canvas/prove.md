@@ -103,7 +103,7 @@ The local server will need to be started before you run your assignment.  Follow
 
 ### Queue (That main uses)
 
-1. This queue if used by main() and the thread functions.  
+1. This queue is used by main() and the thread functions.  
 1. main() will add commands to this queue for the threads to use.
 1. Limit the size of the queue to 10 items
 1. Note, main() will have to add a "all done" message to the queue to tell the threads when to stop.  Review the reading material for examples.
@@ -112,7 +112,7 @@ The local server will need to be started before you run your assignment.  Follow
 
 This is a thread where `threading.Thread(target=retrieve_weather_data, args=())` is used to create the thread.  Add any variables as required in the args tuple.
 
-This thread will read commands from the queue and call the server to retrieve weather data for a city.  Then, it will place that information on another queue that the workers threads will use.
+This thread will read commands from the queue and call the server to retrieve weather data for a city.  Then, it will place that information on another queue that the worker threads will use.
 
 ### Queue (That the thread function use with the Workers threads)
 
