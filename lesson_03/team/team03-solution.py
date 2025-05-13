@@ -1,7 +1,7 @@
 """
 Course: CSE 351 
-Lesson: L02 team activity
-File:   team02-solution1.py
+Lesson: L03 team activity
+File:   W03team-solution.py
 Author: <Add name here>
 
 Purpose: Retrieve Star Wars details from a server
@@ -33,6 +33,7 @@ TODO
 
 from datetime import datetime, timedelta
 import threading
+import queue
 
 from common import *
 
@@ -40,39 +41,20 @@ from common import *
 from cse351 import *
 
 # global
+THREADS = 10
 call_count = 0
 
-class GetUrl(threading.Thread):
-
-    def __init__(self, url):
-        threading.Thread.__init__(self)
-        self.url = url
-        self.name = ''
-
-    def get_name(self):
-        return self.name
-
-    def run(self):
-        item = get_data_from_server(self.url)
-        self.name = item['name']
-
-
-def get_urls(film6, kind):
+def worker(que):
     global call_count
 
-    threads = []
-    for url in film6[kind]:
-        t = GetUrl(url)
+    while True:
         call_count += 1
-        t.start()
-        threads.append(t)
-    
-    for t in threads:
-        t.join()
+        url = que.get()
+        if url is None:
+            break
 
-    print(kind)
-    for t in threads:
-        print(f'  - {t.get_name()}')
+        data = get_data_from_server(url)
+        print(f'  - {data['name']}')
 
 
 def main():
@@ -85,12 +67,43 @@ def main():
     call_count += 1
     print_dict(film6)
 
-    # Retrieve people
-    get_urls(film6, 'characters')
-    get_urls(film6, 'planets')
-    get_urls(film6, 'starships')
-    get_urls(film6, 'vehicles')
-    get_urls(film6, 'species')
+    # Create shared queue
+    que = queue.Queue()
+
+    # Create threads
+    threads = []
+    for i in range(THREADS):
+        t = threading.Thread(target=worker, args=(que,))
+        threads.append(t)
+
+    # Start threads
+    for t in threads:
+        t.start()
+
+    # fill queue with urls
+
+    for url in film6['characters']:
+        que.put(url)
+    
+    for url in film6['planets']:
+        que.put(url)
+    
+    for url in film6['starships']:
+        que.put(url)
+    
+    for url in film6['vehicles']:
+        que.put(url)
+    
+    for url in film6['species']:
+        que.put(url)
+
+    # MUST add a "all done" message for each worker
+    for i in range(THREADS):
+        que.put(None)
+    
+    # Join threads - wait for the workers to finish
+    for t in threads:
+        t.join()
 
     log.stop_timer('Total Time To complete')
     log.write(f'There were {call_count} calls to the server')

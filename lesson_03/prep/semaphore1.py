@@ -22,7 +22,7 @@ def access_resource_calls(thread_id, semaphore):
 
 
 def test(thread_func, message):
-    print()-
+    print()
     print('-' * 40)
     print(message)
     print('-' * 40)

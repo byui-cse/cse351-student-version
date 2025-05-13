@@ -12,6 +12,7 @@ These files are found in the folder `lesson_04/prove` in the Github repository.
 
 - `assignment04.py` program file for your assignment.  This is the file you will be submitting.
 - `common.py` Common functions and variables for the assignment
+- `server.py` Server program that runs locally on your computer
 - `data` This is a folder of weather data
 
 ## Requirements
@@ -27,6 +28,7 @@ These files are found in the folder `lesson_04/prove` in the Github repository.
 | --- | --- |
 | assignment04.py | This is the assignment Python file |
 | common.py | Common variables and functions for the assignment |
+| server.py | Server program that runs locally on your computer |
 | Worker Class | This is a threaded class to process the retrieved weather data |
 | NOAA Class | This class will hold all of the weather data based on each city |
 | retrieve_weather_data() function | This is a thread function that requests data from the local server |
@@ -95,11 +97,13 @@ The local server will need to be started before you run your assignment.  Follow
 1. Open a terminal/command shell and navigate to the folder where your assignment is located.
 1. Run the server with `python server.py`.  Note, you might need to have the full path to Python in order to run the server.  On Mac computers, try `python3 server.py`
 1. You can kill the server by pressing `ctrl-c` or closing the terminal/command window.
-1. Note: the server requires that the sub-folder `data` exists and that it contains the weather data files.
+
+- Note: the server requires that the sub-folder `data` exists and that it contains the weather data files.
+- You can also run the server from VSCode by selecting the option "Run Python program in dedicated terminal".
 
 ### Queue (That main uses)
 
-1. This queue if used by main() and the thread functions.  
+1. This queue is used by main() and the thread functions.  
 1. main() will add commands to this queue for the threads to use.
 1. Limit the size of the queue to 10 items
 1. Note, main() will have to add a "all done" message to the queue to tell the threads when to stop.  Review the reading material for examples.
@@ -108,7 +112,7 @@ The local server will need to be started before you run your assignment.  Follow
 
 This is a thread where `threading.Thread(target=retrieve_weather_data, args=())` is used to create the thread.  Add any variables as required in the args tuple.
 
-This thread will read commands from the queue and call the server to retrieve weather data for a city.  Then, it will place that information on another queue that the workers threads will use.
+This thread will read commands from the queue and call the server to retrieve weather data for a city.  Then, it will place that information on another queue that the worker threads will use.
 
 ### Queue (That the thread function use with the Workers threads)
 

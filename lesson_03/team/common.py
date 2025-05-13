@@ -12,26 +12,12 @@ Common data for the assignment
 """
 
 import time
-import threading
-import json
 import requests
 
 from cse351 import *
 
-TOP_API_URL = 'http://127.0.0.1:8123'
+TOP_API_URL = 'http://127.0.0.1:8790'
 
-CITIES = (
-    'sandiego',
-    'philadelphia',
-    'san_antonio',
-    'san_jose',
-    'new_york',
-    'houston',
-    'dallas',
-    'chicago',
-    'los_angeles',
-    'phoenix',
-)
 
 # ----------------------------------------------------------------------------
 def get_data_from_server(url):
@@ -41,7 +27,7 @@ def get_data_from_server(url):
         try:
             response = requests.get(url, timeout=10)
             response.raise_for_status()
-            if response.status_code == 200 and response.json() is not None:
+            if response.status_code == 200:
                 return response.json()
             break
 

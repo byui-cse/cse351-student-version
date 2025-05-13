@@ -5,6 +5,16 @@ Student   : <your name here>
 
 Instructions:
     - review instructions in the course
+
+In order to retrieve a weather record from the server, Use the URL:
+
+f'{TOP_API_URL}/record/{name}/{recno}
+
+where:
+
+name: name of the city
+recno: record number starting from 0
+
 """
 
 import time
@@ -62,7 +72,7 @@ def verify_noaa_results(noaa):
         avg = noaa.get_temp_details(name)
 
         if abs(avg - answer) > 0.00001:
-            msg = f'FAILED  Excepted {answer}'
+            msg = f'FAILED  Expected {answer}'
         else:
             msg = f'PASSED'
         print(f'{name:>15}: {avg:<10} {msg}')
