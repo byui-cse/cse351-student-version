@@ -90,7 +90,7 @@ def main():
             primes = len(f.readlines())
     else:
         primes = 0
-    print(f"Found {primes} primes.")
+    print(f"Found {primes} primes. Must be 108 found.")
 
 
 
