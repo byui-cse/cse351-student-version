@@ -4,11 +4,21 @@ Team  : Week 06
 File  : team.py
 Author:  <Your name>
 
-Purpose: Team Activity: 
+Steps to speed up the word search:
 
-Instructions:
+- STEP 1: Check if the letter at row, col is the first letter in the word
+- STEP 2: Use a list of tuples to keep track of the letters that are highlighted.
 
-- Review instructions in Canvas.
+Search for "STEP 1" and "STEP 2" in the code below.
+
+Note that threads would not make it faster as this is a CPU bound problem.
+Also, using processes causes issues with the shared board where we would need to
+used shared memory.
+
+Not all programs are suitable for parallelization!!!!!!!!!!
+
+            "When you have a hammer, everything looks like a nail."
+
 """
 
 import random
@@ -121,26 +131,39 @@ class Board():
     def _word_at_this_location(self, row, col, direction, word):
         """ Helper function: is the word found on the board at (x, y) in a direction """
         dir_x, dir_y = self.directions[direction]
-        highlight_copy = copy.deepcopy(self.highlighting)
+
+        # STEP 2: Use a list of tuples to keep track of the letters that are highlighted.
+        #         Don't use deepcopy()
+        changes = []
+
         for letter in word:
             board_letter = self.get_letter(row, col)
             if board_letter == letter:
-                self.highlight(row, col)
+                changes.append((row, col))
                 row += dir_x
                 col += dir_y
             else:
-                self.highlighting = copy.deepcopy(highlight_copy)
                 return False
+
+        # Highlight the found word
+        for r, c in changes:
+            self.highlight(r, c)
+
         return True
+
 
     def find_word(self, word):
         """ Find a word in the board """
         print(f'Finding {word}...')
         for row in range(self.size):
             for col in range(self.size):
-                for d in range(0, 8):
-                    if self._word_at_this_location(row, col, d, word):
-                        return True
+
+                # STEP 1: Check if the letter at row, col is the first letter in the word
+                #         only try to fit the word if the first letter matches the letter at row, col
+                if self.get_letter(row, col) == word[0]:
+                    for d in range(0, 8):
+                        if self._word_at_this_location(row, col, d, word):
+                            return True
         return False
 
 
