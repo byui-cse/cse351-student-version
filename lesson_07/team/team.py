@@ -1,17 +1,21 @@
 """ 
 Course: CSE 351
-Team  : 
-File  : 
-Author:  
+Team  : Week 07
+File  : team.py
+Author:  <Your name>
+
+Purpose: Team Activity: 
+
+Instructions:
+
+- Review instructions in Canvas.
 """
 
-# Include CSE 351 common Python files. 
+# Include cse 351 common Python files
 from cse351 import *
-
 
 def main():
     ...
 
-
-if __name__ == __main__:
+if __name__ == '__main__':
     main()
