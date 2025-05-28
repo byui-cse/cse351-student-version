@@ -2,7 +2,7 @@
 
 ## Overview
 
-There are 10 cities that have weather data.  You will be writing a program to retrieve this weather data from a local server.  The goal of this assignment to to use queues to communicate between threads.
+There are 10 cities that have weather data.  You will be writing a program to retrieve this weather data from a local server.  The goal of this assignment is to use queues to communicate between threads.
 
 
 
