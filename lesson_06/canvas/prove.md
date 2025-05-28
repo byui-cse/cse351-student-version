@@ -28,7 +28,7 @@ The following folders will be created when `assignment06.py` is initially run:
 
 1. Modify `assignment06.py` to process all images from `faces` to the final image folder `step3_edges`.  You are free to skip folders `step1_smoothed` and `step2_grayscale` if you decide.  You need to end up with the `faces` folder containing the original images and `step3_edges` containing the final images.
 1. Follow the program diagram below on how the program needs to be changed.
-1. There is no speedup requirement, however, you submitted program needs to be faster that the initial program.  You will submitting the initial run of the program and the finial run as log files.  There log files will show how much faster you got the program to run on your computer.
+1. There is no speedup requirement, however, your submitted program needs to be faster that the initial program.  You will submitting the initial run of the program and the finial run as log files.  There log files will show how much faster you got the program to run on your computer.
 1. No global variables.  Consts are fine.
 
 
