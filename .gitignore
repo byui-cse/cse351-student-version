@@ -11,7 +11,7 @@ logs/
 tasks/
 data_files/
 faces/
-step1_smothed/
+step1_smoothed/
 step2_grayscale/
 step3_edges/
 
