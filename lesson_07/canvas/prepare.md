@@ -9,9 +9,9 @@ Section | Content
 7.3 | [Memory Management](#memory-management)
 7.4 | [Hardware Considerations for Parallelism](#hardware-considerations-for-parallelism)
 7.5 | [File Systems](#file-systems)
+7.6 | [Recursion](#recursion) :key:
 
 :key: = Vital concepts that we will continue to build on in coming lessons / key learning outcomes for this course.
-
 
 
 
@@ -416,3 +416,29 @@ Use asynchronous I/O operations (if available) to allow your program to continue
 ### Memory-Mapped Files
 
 Memory-mapped files (using mmap in POSIX systems or equivalent APIs in other OSes) can provide a way to access file data as if it were in memory, potentially simplifying parallel access and reducing the need for explicit I/O operations. However, careful synchronization is still required.
+
+# Recursion
+
+We will be using recursion for the next assignment.
+
+> In computer science, recursion is a method of solving a problem where the solution depends on solutions to smaller instances of the same problem. Such problems can generally be solved by iteration, but this needs to identify and index the smaller instances at programming time. Recursion solves such recursive problems by using functions that call themselves from within their own code. The approach can be applied to many types of problems, and recursion is one of the central ideas of computer science.
+
+![](./assets/recursion-demo.gif)
+(Image from [Skilled.dev Recursion Course](https://skilled.dev/course/recursion))
+
+Please keep in mind that recursion by itself will not inherently introduce cache coherence issues, but the way you implement recursion in your programs and how data is accessed within a recursive function can potentially impact cache performance greatly.
+
+Please familiarize yourself with the concept of recursion and how it *looks* on the system. The image above for example shows recursion in action, and the image below shows the state of the call stack for this recursion.
+
+![](./assets/stack-call.gif)
+(Image from Code Academy [CSJS 22 Recursion Cheatsheet](https://www.codecademy.com/learn/cscj-22-basic-algorithms/modules/cscj-22-recursion/cheatsheet))
+
+## Recursion Resources
+
+If you need help understanding recursion or need to refresh your memory on how it works, please review these links:
+
+- [Recursion (computer science)](https://en.wikipedia.org/wiki/Recursion_\(computer_science\))
+- [Recursion in Python](https://realpython.com/python-thinking-recursively/#recursive-functions-in-python)
+- [Understanding Recursion](https://stackabuse.com/understanding-recursive-functions-with-python/)
+- [Video on Recursion](https://www.youtube.com/watch?v=ngCos392W4w)
+- [What on Earth is Recursion? - Computerphile](https://www.youtube.com/watch?v=Mv9NEXX1VHc)
