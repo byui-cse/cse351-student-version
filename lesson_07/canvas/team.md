@@ -1,33 +1,31 @@
-# Week 07 Team Teaching: Word Search Speedup
+# Team 7 Team: Dining Philosophers Problem
 
 ### Overview
 
-[Word Search](https://thewordsearch.com/) puzzles are fun to play. Your goal in this lesson is to speed up a word search solving program.
+We will be using the famous Dining Philosophers problem to practice skills we have learned so far in this course.
+
+### Problem Statement
+
+Five silent philosophers sit at a round table with bowls of spaghetti. Forks are placed between each pair of adjacent philosophers.
+
+Each philosopher must alternately think and eat. However, a philosopher can only eat spaghetti when they have both left and right forks. Each fork can be held by only one philosopher and so a philosopher can use the fork only if it is not being used by another philosopher. After an individual philosopher finishes eating, they need to put down both forks so that the forks become available to others. A philosopher can only take the fork on their right or the one on their left as they become available and they cannot start eating before getting both forks.
+
+Eating is not limited by the remaining amounts of spaghetti or stomach space; an infinite supply and an infinite demand are assumed.
+
+The problem is how to design a discipline of behavior (a concurrent algorithm) such that no philosopher will starve; i.e., each can forever continue to alternate between eating and thinking, assuming that no philosopher can know when others may want to eat or think.
+
+![](./assets/dining_philosophers_problem.png)
 
 ### Assignment
 
-The program [lesson_07/team.py](../team/team.py) creates a word search puzzle, then it solves it. However, the searching for the words is not fast and needs to be improved.
+Refer to the header of the Python files for the complete requirements for this team activity:
 
-### Instructions:
+Solve this problem with the skills you have learned so far in this course. You will be required to use threading for your solution.
 
-- Try to speed up this program. Use `any programming technique` you have learned in this course so far or in any other programming course.
-- You can modify the Board class.
-- Talk with your team before making changes.
-- Make backups if you try something is case it doesn't work.
-- Any changes to make it faster should not change the final results. (ie., a board with highlighted letters)
+### Sample Solutions
 
-### Core Requirements
-
-1. Make sure the [team.py](../team/team.py) file for this lesson works. The program will display the board before and after finding the words in it. Read the header in the program for any other instructions.  The completion time displayed at the end of the program is the time to find and highlight the words in the board.
-2. Discuss with your team members ideas on how to improve this program with regards to speed.
-3. Using any technique (ie, threads, processes, algorithm analysis, etc...)  make the program faster.
-4. Time your changes. What worked and what didn't?  Was it worth the effort?
-
-### Sample Solution
-
-- [Solution 1](../team/team07-solution1.py)
-- [Solution 2](../team/team07-solution2.py)
+We will go over the solution in the last class of this week.
 
 ### Submission
 
-When complete, please report your progress in the associated Canvas quiz.
+When complete, please report your progress in the associated Canvas quiz. If you decided to do additional work on the program after your team activity, either by yourself or with others, feel free to include that additional work when you report on your progress in Canvas.

@@ -1,7 +1,7 @@
 """
 Course: CSE 351 
-Lesson: L09 Team Part 1
-File:   team_part_1.py
+Week: 07 Team
+File:   team.py
 Author: <Add name here>
 
 Purpose: Solve the Dining philosophers problem to practice skills you have learned so far in this course.
