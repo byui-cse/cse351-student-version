@@ -8,19 +8,19 @@ The file folder `faces` contains 13,233 images that require to be processed.  Ea
 2) Converted to grayscale
 3) Edge detection
 
-The program contained in the file `assignment06.py` process of these steps for each image.  Your task is to speed up the processing of the images using Python processes from the `multiprocessing` package
+The program contained in the file `assignment06.py` completes these steps for each image.  Your task is to speed up the processing of the images using Python processes from the `multiprocessing` package
 
 ## Assignment files
 
 These files are found in the folder `lesson_06/prove` in the Github repository.
 
 - `assignment06.py` program file for your assignment.  This is the file you will be submitting.
-- Face images.  [Download the ZIP of images](https://drive.google.com/file/d/1eebhLE51axpLZoU6s_Shtw1QNcXqtyHM/view?usp=sharing).  Extract the images and place thme in a folder named `faces` in the same folder as the `assignment06.py` file.
+- Face images.  [Download the ZIP of images](https://drive.google.com/file/d/1eebhLE51axpLZoU6s_Shtw1QNcXqtyHM/view?usp=sharing).  Extract the images and place them in a folder named `faces` in the same folder as the `assignment06.py` file.
 
 The following folders will be created when `assignment06.py` is initially run:
 
-- `step1_smoothed`: Smoothed images from `Faces`
-- `step2_grayscale`: Converted image to gray scale from `step1_smoothed`
+- `step1_smoothed`: Smoothed images from `faces`
+- `step2_grayscale`: Converted images to gray scale from `step1_smoothed`
 - `step3_edges`: Final images with edge detection from `step2_grayscale`
 
 
@@ -28,24 +28,24 @@ The following folders will be created when `assignment06.py` is initially run:
 
 1. Modify `assignment06.py` to process all images from `faces` to the final image folder `step3_edges`.  You are free to skip folders `step1_smoothed` and `step2_grayscale` if you decide.  You need to end up with the `faces` folder containing the original images and `step3_edges` containing the final images.
 2. Follow the program diagram below on how the program needs to be changed.
-3. There is no speedup requirement, however, your submitted program needs to be faster that the initial program.  You will submitting the initial run of the program and the finial run as log files.  There log files will show how much faster you got the program to run on your computer.
-4. No global variables.  Consts are fine.
+3. There is no speedup requirement, however, your submitted program needs to be faster that the initial program.  You will be submitting the initial run of the program and the finial run as log files.  These log files will show how much faster you got the program to run on your computer.
+4. No global variables.  Constants are fine.
 
 
 ## Classes / Files
 
 | Class / File | Purpose |
 | --- | --- |
-| assignment06.py | This is the assignment Python file.  Modify anything you need to complete the requirements. |
+| `assignment06.py` | This is the assignment Python file.  Modify anything you need to complete the requirements. |
 | `faces` | 13,233 face images to be processed (see downlink above) |
-| `step1_smoothed` | Smoothed images from `Faces`|
+| `step1_smoothed` | Smoothed images from `faces`|
 | `step2_grayscale` | Converted image to gray scale from `step1_smoothed` |
 | `step3_edges` | Final images with edge detection from `step2_grayscale` |
 
 
 ### Program Diagram
 
-Here is a outline of the final program layout.  You are free to decide on the number of processes for each stage (ie., smoothing, converting to gray scale, edge detection).  Select good values for your computer so that your program runs the fastest.
+Here is an outline of the final program layout.  You are free to decide on the number of processes for each stage (ie., smoothing, converting to gray scale, edge detection).  Select good values for your computer so that your program runs the fastest.
 
 ```mermaid
 graph LR
@@ -126,7 +126,7 @@ graph LR
 
 ### Main
 
-Main() will read all of the files in the `faces` folder and add them to `que1`.  Note that you can add lists and tutples to a queue in Python.  A suggestion is to add a pair of values to the queue such as image filename to read and image filename to save to `step3_edges`.  However, there are many methods to do this.  Just remember that the final step must create a edge detected image to `step3_edges` that has the same name as the original image.
+Main() will read all of the files in the `faces` folder and add them to `que1`.  Note that you can add lists and tuples to a queue in Python.  A suggestion is to add a pair of values to the queue such as image filename to read and image filename to save to `step3_edges`.  However, there are many methods to do this.  Just remember that the final step must create an edge-detected image to `step3_edges` that has the same name as the original image.
 
 ### Queues
 
@@ -148,14 +148,14 @@ There is no sample output, however, the folder `step3_edges` should contain 13,2
 
 1. Anything can be placed in a Python queue.
 1. You will decide on the number of processes for each stage of processing.  At first, limit each stage with 1 process.
-1. Don't forget that an `All done` message must be sent to any processes that are reading from a queue
+1. Don't forget that an `All done` message must be sent to any processes that are reading from a queue.
 1. Sometimes, when a queue is finished being used, you can call `que.close()` on it.
 
 ## Rubric
 
-Modify the the Python file `assignment06.py` to speed up the process of the images.
+Modify the the Python file `assignment06.py` to speed up the processing of the images.
 
-Following the grading rubric outlined in the course syllabus.
+Follow the grading rubric outlined in the course syllabus.
 
 ## Submission
 
@@ -168,7 +168,7 @@ When finished, upload the following Python file in canvas:
 - `assignment06.py`
 - Log file of initial program
 - Log file of final program with your changes
-- Do not submit any images.
+- Do not submit any images
 
 Sample output log file of the initial program:
 
