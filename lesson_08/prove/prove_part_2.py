@@ -36,8 +36,8 @@ from maze import Maze
 import sys
 import cv2
 
-# Include cse 251 files
-from cse251 import *
+# Include cse 351 files
+from cse351 import *
 
 SCREEN_SIZE = 700
 COLOR = (0, 0, 255)
