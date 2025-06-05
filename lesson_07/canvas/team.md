@@ -24,7 +24,7 @@ Solve this problem with the skills you have learned so far in this course. You w
 
 ### Sample Solutions
 
-We will go over the solution in the last class of this week.
+[Solution](../team/philosphers1-solution.py)
 
 ### Submission
 

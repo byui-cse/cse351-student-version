@@ -24,7 +24,7 @@ Create a Waiter class. It will be the Waiter's job to manage use of the forks.
 
 ### Sample Solutions
 
-We will go over the solution in the last class of this week.
+[Solution](../team/philosphers2-solution.py)
 
 ### Submission
 
