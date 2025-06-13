@@ -141,6 +141,8 @@ if __name__ == "__main__":
     if not os.path.isdir(INPUT_FOLDER):
         print(f"Error: The input folder '{INPUT_FOLDER}' was not found.")
         print(f"Create it and place your face images inside it.")
+        print('Link to faces.zip:')
+        print('   https://drive.google.com/file/d/1eebhLE51axpLZoU6s_Shtw1QNcXqtyHM/view?usp=sharing')
     else:
         run_image_processing_pipeline()
 

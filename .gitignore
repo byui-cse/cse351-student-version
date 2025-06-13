@@ -10,6 +10,10 @@ IN_CLASS_DEMOS/*
 logs/
 tasks/
 data_files/
+faces/
+step1_smoothed/
+step2_grayscale/
+step3_edges/
 
 # Global include excluded
 !IN_CLASS_DEMOS/README.md
