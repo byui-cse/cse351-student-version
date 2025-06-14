@@ -94,6 +94,7 @@ def move(x , y, maze, color):
         return
     
     maze.move(x, y, color)
+    
     if maze.at_end(x,y):
         stop = True
         return
