@@ -2,7 +2,7 @@
 
 ## Overview
 
-You will be implementing both a [depth-first algorithm](https://www.youtube.com/watch?v=9RHO6jU--GU) (aka. DFS) and [breadth-first algorithm](https://www.youtube.com/watch?v=86g8jAQug04) (aka. BFS).  Please refer to those two video links for more information on these alogrithms.  You will be retrieving family tree information from a server.  This server can handle multiple concurrent requests.  Each request takes the server 0.25 seconds to reply.
+This assignment requires you to retrieve family history information from a local server.  You will be implementing both a [depth-first algorithm](https://www.youtube.com/watch?v=9RHO6jU--GU) (aka. DFS) and [breadth-first algorithm](https://www.youtube.com/watch?v=86g8jAQug04) (aka. BFS).  Please refer to those two video links for more information on these alogrithms.  You will be retrieving family tree information from a server.  This server can handle multiple concurrent requests.  Each request takes the server 0.25 seconds to reply.
 
 The assignment is divided into two parts.  The first part will retrieve the family tree information using DFS.  The second part will use BFS.
 
@@ -19,10 +19,6 @@ This class holds the family information from the server.
 **Tree**
 
 The tree class allows you to build a family tree from the families and individuals that you retrieve from the server.
-
-**Request_thread**
-
-The only method of requesting information from the server.
 
 ## Assignment
 

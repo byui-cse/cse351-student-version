@@ -5,10 +5,6 @@ File: assignment.py
 Author: <your name>
 Purpose: Assignment 10 - Family Search
 """
-import time
-import threading
-import json
-import requests
 from common import *
 from functions import depth_fs_pedigree, breadth_fs_pedigree, breadth_fs_pedigree_limit5
 
