@@ -20,7 +20,7 @@ In C#, implement the following structure in your program.
 
 - The main thread will add numbers to a queue.
 - Each worker thread will take a number from the queue and check if it's a prime number.  If it's a prime number, the worker will display it.
-- Create 10 workers.
+- Create 10 workers.  However, your program should be able to handle any number of threads.
 - Make sure that any number displayed are not "mixed up" with other numbers.  The output of the program you are creating should have the same format of the program that is given to you.  (ie., 10000999577, 10000999583, 10000999597, ...).  Each value separated by a comma.
 - Do not use Tasks for this assignment, only threads.
 - At the end of the program, you will display the number of primes found.  It must be 43,427 primes.
