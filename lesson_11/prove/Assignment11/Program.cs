@@ -31,7 +31,7 @@ public class Assignment11
         var stopwatch = Stopwatch.StartNew();
         
         // A single for-loop to check every number sequentially.
-        for (long i = START_NUMBER; i < START_NUMBER + RANGE_COUNT; i++)
+        for (long i = START_NUMBER; i <= START_NUMBER + RANGE_COUNT; i++)
         {
             numbersProcessed++;
             if (IsPrime(i))
