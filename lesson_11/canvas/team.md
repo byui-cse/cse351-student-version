@@ -15,7 +15,7 @@ Please look at the header comments in the C# project for instructions.
 
 ### Sample Solution
 
-`weel11-team-solution` folder contains a solution
+`week11-team-solution` folder contains a solution
 
 ### Submission
 
