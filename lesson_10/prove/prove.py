@@ -28,9 +28,9 @@ def run_part(log, start_id, generations, title, func):
 
     server_data = get_data_from_server(f'{TOP_API_URL}/end')
 
-    print_dict(server_data)
+    # print_dict(server_data)
     
-    tree.display(log)
+    # tree.display(log)
     log.write('')
     log.write(f'total_time                    : {total_time:.5f}')
     log.write(f'Generations                   : {generations}')
