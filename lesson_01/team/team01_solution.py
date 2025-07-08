@@ -40,7 +40,7 @@ def process_range(start, end, lock_prime, lock_processed):
         if is_prime(i):
             with lock_prime:
                 prime_count += 1
-            print(i, end=', ', flush=True)
+            # print(i, end=', ', flush=True)
 
         with lock_processed:
             numbers_processed += 1

@@ -44,10 +44,21 @@ def is_prime(n):
         i += 6
     return True
 
+def process_range(start, end, lock_prime, lock_processed):
+    global prime_count
+    global numbers_processed
+    for i in range(start, end):
+        if is_prime(i):
+                with lock_prime:
+                    prime_count += 1
+            # print(i, end=', ', flush=True)
+        with lock_processed:
+            numbers_processed += 1
+
 
 def main():
-    global prime_count                  # Required in order to use a global variable
-    global numbers_processed            # Required in order to use a global variable
+    # global prime_count                  # Required in order to use a global variable
+    # global numbers_processed            # Required in order to use a global variable
 
     log = Log(show_terminal=True)
     log.start_timer()
@@ -55,11 +66,30 @@ def main():
     start = 10000000000
     range_count = 100000
     numbers_processed = 0
-    for i in range(start, start + range_count):
-        numbers_processed += 1
-        if is_prime(i):
-            prime_count += 1
-            # print(i, end=', ', flush=True)
+    number_threads = 10
+    threads = []
+    thread_range = range_count // number_threads
+
+    lock_prime = threading.Lock()
+    lock_processed = threading.Lock()
+
+    for i in range(10):
+        threadStart = start + (thread_range * i)
+        threadEnd = threadStart + thread_range
+        t = threading.Thread(target=process_range, args=(threadStart, threadEnd, lock_prime, lock_processed))
+        threads.append(t)
+
+    for t in threads:
+        t.start()
+
+    for t in threads:
+        t.join()
+    
+    # for i in range(start, start + range_count):
+    #     numbers_processed += 1
+    #     if is_prime(i):
+    #         prime_count += 1
+    #         print(i, end=', ', flush=True)
     print(flush=True)
 
     # Should find 4306 primes

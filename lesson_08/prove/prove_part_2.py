@@ -21,11 +21,17 @@ position:
 
 What would be your strategy?
 
-<Answer here>
+I would have passed a path list as an argument to the move() function.
+this list would store the path of each thread. when a thread reaches
+the end it would print that threads path as each thread would have a 
+copy of the path list that way they don't interfere with one another.
 
 Why would it work?
 
-<Answer here>
+Each thread would have its own unique path. Since each thread would have a copy
+in each recurssive call each route is then tracked seperatly
+and can determine the correct path by just displaying the thread that finished
+since it would have the correct path list.
 
 """
 
@@ -67,6 +73,7 @@ current_color_index = 0
 thread_count = 0
 stop = False
 speed = SLOW_SPEED
+path = []
 
 def get_color():
     """ Returns a different color when called """
@@ -80,12 +87,71 @@ def get_color():
 
 # TODO: Add any function(s) you need, if any, here.
 
+def move(x , y, maze, color):
+    global stop, thread_count
+
+    if stop:
+        return
+    
+    maze.move(x, y, color)
+    
+    if maze.at_end(x,y):
+        stop = True
+        return
+    
+    moves = maze.get_possible_moves(x,y)
+
+    if len(moves) == 0:
+        return
+    
+    elif len(moves) == 1:
+        next_x, next_y = moves[0]
+        move(next_x, next_y, maze, color)
+    else:
+        for i, (next_x, next_y) in enumerate(moves):
+            if stop:
+                break
+
+            branch_color = color if i == 0 else get_color()
+            t = threading.Thread(target=move, args =(next_x, next_y, maze, branch_color))
+            thread_count += 1
+            t.start()
+
+            # if i == 0:
+            #     move(next_x, next_y, maze, color)
+            # else:
+            #     new_color = get_color()
+            #     t = threading.Thread(target=move, args =(next_x, next_y, maze, new_color))
+            #     thread_count += 1
+            #     t.start()
+
+    # start = maze.get_start_pos()
+    # path.append(start)
+    # color = get_color()
+    # maze.move(path[-1][0], path[-1][1], color)
+    # possible = maze.get_possible_moves(path[-1][0], path[-1][1])
+    # for paths in len(possible) - 1:
+    #     t = threading.Thread()
+    # # def split_moves()
+
 
 def solve_find_end(maze):
     """ Finds the end position using threads. Nothing is returned. """
     # When one of the threads finds the end position, stop all of them.
+    # global path
     global stop
     stop = False
+    start_x, start_y = maze.get_start_pos()
+    color = get_color()
+    move(start_x, start_y, maze, color)
+
+    # possible = maze.get_possible_moves()
+    # start = maze.get_start_pos()
+    # path.append(start)
+    # maze.move(path[-1][0], path[-1][1])
+    # possible = maze.get_possible_moves(path[-1][0], path[-1][1])
+    # for paths in len(possible) - 1:
+    #     t = threading.Thread()
 
 
 

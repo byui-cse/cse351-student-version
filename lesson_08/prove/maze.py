@@ -40,6 +40,9 @@ class Maze():
         self._screen_w = width
         self._screen_h = height
         self._delay = delay
+        self.mine = "mine"
+        self.test = "hello" #mine
+        self._start_pos = (0, 1)
 
         # numpy array
         if not os.path.exists(bitmap_file):
@@ -54,7 +57,7 @@ class Maze():
 
         self._width, self._height = self._pixels.shape
 
-        self._start_pos = (0, 1)
+
         self._end_pos = (self._width - 1, self._height - 2)
         
         self._border_size = 50
@@ -119,6 +122,7 @@ class Maze():
 
     def get_start_pos(self):
         """ Return the starting position of the maze """
+        # print("start", self.test)
         return self._start_pos
 
 

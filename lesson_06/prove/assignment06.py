@@ -111,6 +111,7 @@ def run_image_processing_pipeline():
     # - create the three processes groups
     # - you are free to change anything in the program as long as you
     #   do all requirements.
+    # testing
 
     # --- Step 1: Smooth Images ---
     process_images_in_folder(INPUT_FOLDER, STEP1_OUTPUT_FOLDER, task_smooth_image,
