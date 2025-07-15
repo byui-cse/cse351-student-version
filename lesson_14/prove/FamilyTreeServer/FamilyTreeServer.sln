@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyTreeServer", "FamilyTreeServer.csproj", "{2814FEB6-3014-4766-99D0-E7DE7216DFFD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2814FEB6-3014-4766-99D0-E7DE7216DFFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2814FEB6-3014-4766-99D0-E7DE7216DFFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2814FEB6-3014-4766-99D0-E7DE7216DFFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2814FEB6-3014-4766-99D0-E7DE7216DFFD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
