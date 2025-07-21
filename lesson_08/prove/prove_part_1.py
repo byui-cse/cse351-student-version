@@ -35,8 +35,36 @@ def solve_path(maze):
         The path is a list of positions, (x, y) """
     path = []
     # TODO: Solve the maze recursively while tracking the correct path.
-
+    start = maze.get_start_pos()
+    maze.move(start[0], start[1], (0, 0, 255))
+    path.append(start)
+    # print(path)
     # Hint: You can create an inner function to do the recursion
+    def recursion():
+        possible = maze.get_possible_moves(path[-1][0], path[-1][1]) 
+        # end = False
+        if len(possible) == 0:
+            end = maze.at_end(path[-1][0], path[-1][1])
+            if end:
+                return
+            else:
+                maze.restore(path[-1][0], path[-1][1])
+                path.pop()
+
+        
+        if len(possible) > 0:
+            path.append(possible[0])
+            maze.move(path[-1][0], path[-1][1], (0, 0, 255))
+            end = maze.at_end(path[-1][0], path[-1][1])
+            if end:
+                return
+        recursion()
+        
+
+        # for position in possible:
+        #     more = maze.get_possible_moves(position[0], position[1])
+        #     print("more", more)
+    recursion()
 
     return path
 

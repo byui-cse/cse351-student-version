@@ -25,6 +25,10 @@ def main():
     # Load ATM data files
     data_files = get_filenames('data_files')
     # print(data_files)
+    # with open('data_files\\atm-01.dat', 'r') as file:
+    #     lines = file.readlines()
+    # print(lines[1].split(',')[1])
+    
     
     log = Log(show_terminal=True)
     log.start_timer()
@@ -32,6 +36,15 @@ def main():
     bank = Bank()
 
     # TODO - Add a ATM_Reader for each data file
+    threads = []
+    for data in data_files:
+        # print(data)
+        t = ATM_Reader(data, bank)
+        t.start()
+        threads.append(t)
+
+    for t in threads:
+        t.join()
 
     test_balances(bank)
 
@@ -39,22 +52,134 @@ def main():
 
 
 # ===========================================================================
-class ATM_Reader():
+class ATM_Reader(threading.Thread):
     # TODO - implement this class here
+    def __init__(self, data_file, bank):
+        threading.Thread.__init__(self)
+        self.data_file = data_file
+        self.bank = bank
+
+    def run(self):
+        # print(self.data_file)
+        with open(self.data_file, 'r') as file:
+            lines = file.readlines()
+        for line in lines[2:]:
+            account = line.split(',')[0]
+            type = line.split(',')[1]
+            amount = line.split(',')[2]
+            if type == 'w':
+                self.bank.withdraw(account, amount)
+            elif type == 'd':
+                self.bank.deposit(account, amount)
+        
+        
     ...
 
 
 # ===========================================================================
 class Account():
     # TODO - implement this class here
+    # money
+    
+    def __init__(self, balance):
+        self.balance = balance
+
+    def deposit(self, amount):
+        value = Money(amount.strip())
+        # print(self.balance)
+        value2 = Money(str(self.balance))
+        # self.balance = value.add(self.balance)
+        self.balance = float(amount.strip()) + float(self.balance)
+        
+
+
+    def withdraw(self, amount):
+        self.balance = float(self.balance) - float(amount.strip()) 
+
+    def get_balance(self):
+        pass
+        # return money
     ...
 
 
 # ===========================================================================
 class Bank():
     # TODO - implement this class here
-    ...
+    accountstupples = (
+        (1, '0'),
+        (2, '0'),
+        (3, '0'),
+        (4, '0'),
+        (5, '0'),
+        (6, '0'),
+        (7, '0'),
+        (8, '0'),
+        (9, '0'),
+        (10, '0'),
+        (11, '0'),
+        (12, '0'),
+        (13, '0'),
+        (14, '0'),
+        (15, '0'),
+        (16, '0'),
+        (17, '0'),
+        (18, '0'),
+        (19, '0'),
+        (20, '0'),
+    )
+    global accounts
+    accounts = dict(accountstupples)
+    global lock 
+    lock = threading.Lock()
 
+    def __init__(self):
+        self.accounts = accounts
+
+    def deposit(self, account_number, amount):
+        lock.acquire()
+        try:
+            account_number = int(account_number)
+            account = Account(self.accounts[account_number])
+            account.deposit(str(amount))
+            self.accounts[account_number] = account.balance
+        finally:
+            lock.release()
+        # print(account)
+        # balance = accounts[account_number]
+        # amount = amount.split()
+        # total = float(balance) + float(amount[0])
+        # # print(total)
+        # total = str(total)
+        # # print(account_number, ":", accounts[account_number])
+        # accounts[account_number] = total
+        # # print(account_number, ":", accounts[account_number])
+        
+
+    def withdraw(self, account_number, amount):
+        lock.acquire()
+        try:
+            account_number = int(account_number)
+            account = Account(self.accounts[account_number])
+            account.withdraw(str(amount))
+            self.accounts[account_number] = account.balance
+        finally:
+            lock.release()
+        # account_number = int(account_number)
+        # balance = accounts[account_number]
+        # amount = amount.split()
+        # total = float(balance) - float(amount[0])
+        # # print(total)
+        # total = str(total)
+        # accounts[account_number] = total
+        # print(account_number, ":", accounts[account_number], "\n")
+        
+
+    def get_balance(self, account_number):
+        account_number = int(account_number)
+        # print("accounts", accounts[account_number])
+        amount = str("{:.2f}".format(self.accounts[account_number]))
+        # amount = "{:.2f}".format(amount)
+        return Money(amount)
 
 # ---------------------------------------------------------------------------
 
@@ -130,6 +255,7 @@ def test_balances(bank):
 
     wrong = False
     for account_number, balance in correct_results:
+        # print(account_number)
         bal = bank.get_balance(account_number)
         print(f'{account_number:02d}: balance = {bal}')
         if Money(balance) != bal:
