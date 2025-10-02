@@ -50,7 +50,7 @@ def get_urls(film6, kind):
     for url in urls:
         call_count += 1
         item = get_data_from_server(url)
-        print(f'  - {item['name']}')
+        print(f'  - {item["name"]}')
 
 def main():
     global call_count
