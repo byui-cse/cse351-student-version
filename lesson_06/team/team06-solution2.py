@@ -37,8 +37,7 @@ import string
 import copy
 import time
 
-# Include cse 251 common Python files
-from cse251 import *
+from cse351 import *
 
 words = ['BOOKMARK', 'SURNAME', 'RETHINKING', 'HEAVY', 'IRONCLAD', 'HAPPY', 
         'JOURNAL', 'APPARATUS', 'GENERATOR', 'WEASEL', 'OLIVE', 
