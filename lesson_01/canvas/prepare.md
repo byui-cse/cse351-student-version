@@ -36,7 +36,7 @@ The course is divided into 2 week blocks.  For each block, students will be requ
 
 ## Coding Examples
 
-The reading material as many coding examples.  Please take the time to understand them in each reading module.  All coding examples can be found in coding files under the folder `prep` for each module.
+The reading material has many coding examples.  Please take the time to understand them in each reading module.  All coding examples can be found in coding files under the folder `prep` for each module.
 
 ## Assessment Methods (Assignments, Exams, Projects)
 
