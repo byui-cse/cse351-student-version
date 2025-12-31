@@ -58,6 +58,16 @@ public class Tree
         return family;
     }
 
+    public bool DoesPersonExist(long id)
+    {
+        return _people.ContainsKey(id);
+    }
+
+    public bool DoesFamilyExist(long id)
+    {
+        return _families.ContainsKey(id);
+    }
+
     public void Display()
     {
         Logger.Write("\n\n");
