@@ -167,7 +167,13 @@ internal static class Program
                 SendNotFound(context);
                 return;
             }
-
+            
+            if (!_families.ContainsKey(id))
+            {
+                SendNotFound(context);
+                return;
+            }
+            
             output = JsonSerializer.Serialize(_families[id]);
             _familyRequestOrder.Add(Decode(id));
         }

@@ -46,8 +46,9 @@ class Program
     }
     
     static async Task Main()
-    {        
-        Logger.Configure(minimumLevel: LogLevel.Debug, logToFile: true, filePath: "../../../assignment.log");
+    {
+        string logLocation = Environment.CurrentDirectory[ ..(Environment.CurrentDirectory.LastIndexOf("Assignment14", StringComparison.Ordinal) + 13)];
+        Logger.Configure(minimumLevel: LogLevel.Debug, logToFile: true, filePath: $"{logLocation}assignment.log");
         
         var data = await Solve.GetDataFromServerAsync($"{Solve.TopApiUrl}");
         long start_id = (long)data["start_family_id"];
@@ -55,7 +56,7 @@ class Program
         try
         {
             // File.ReadLines reads the file line by line without loading it all into memory.
-            foreach (string line in File.ReadLines("../../../runs.txt"))
+            foreach (string line in File.ReadLines("runs.txt"))
             {
                 string[] parts = line.Split(',');
 
@@ -71,7 +72,7 @@ class Program
                             await run_part(start_id, generations, "Depth First Search", Solve.DepthFS);
                             break;
                         case 2:
-                            await run_part(start_id, generations, "Breath First Search", Solve.BreathFS);
+                            await run_part(start_id, generations, "Breadth First Search", Solve.BreadthFS);
                             break;
                     }
                 }
