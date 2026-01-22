@@ -21,6 +21,7 @@ These files are found in the folder `lesson_02/prove` in the Github repository.
 1. Review Python classes and the code examples in the reading material.
 1. Have your program match the account balances.  
 1. Run your program multiple times to ensure that you pass all of the tests.
+1. No global variables.
 
 
 ## Classes / Files
