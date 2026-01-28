@@ -57,8 +57,8 @@ classDiagram
     class Bank{
         - accounts: dictionary
         +\_\_init__()
-        +deposit(account, amount) void
-        +withdraw(account, amount) void
+        +deposit(account_id, amount) void
+        +withdraw(account_id, amount) void
         +get_balance(account)
     }
 
