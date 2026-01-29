@@ -82,7 +82,7 @@ graph LR
 
 ### Sample Solution
 
-When your program is finished, Here is a solution.  Compare them to your approach.
+When your program is finished, Here is a solution.  Compare it to your approach.
 
 - [Solution](../team/team04-solution.py)
 
