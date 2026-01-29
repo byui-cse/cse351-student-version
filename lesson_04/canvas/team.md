@@ -45,7 +45,7 @@ graph LR
     subgraph Producers
         P1[Producer 1]
         P2[Producer 2]
-        P3[Producer N]
+        P3[Producer 3]
     end
 
     Q[(cse351Queue max size of 10 items)]
@@ -53,7 +53,9 @@ graph LR
     subgraph Consumers
         C1[Consumer 1]
         C2[Consumer 2]
-        C3[Consumer N]
+        C3[Consumer 3]
+        C4[Consumer 4]
+        C5[Consumer 5]
     end
 
     F[Common File]
@@ -65,10 +67,14 @@ graph LR
     Q -- get() --> C1
     Q -- get() --> C2
     Q -- get() --> C3
+    Q -- get() --> C4
+    Q -- get() --> C5
 
     C1 -- Writes to --> F
     C2 -- Writes to --> F
     C3 -- Writes to --> F
+    C4 -- Writes to --> F
+    C5 -- Writes to --> F
 
     style P1 fill:#ADD8E6,stroke:#333,stroke-width:1px,color:#000
     style P2 fill:#ADD8E6,stroke:#333,stroke-width:1px,color:#000
@@ -76,6 +82,8 @@ graph LR
     style C1 fill:#90EE90,stroke:#333,stroke-width:1px,color:#000
     style C2 fill:#90EE90,stroke:#333,stroke-width:1px,color:#000
     style C3 fill:#90EE90,stroke:#333,stroke-width:1px,color:#000
+    style C4 fill:#90EE90,stroke:#333,stroke-width:1px,color:#000
+    style C5 fill:#90EE90,stroke:#333,stroke-width:1px,color:#000
     style Q fill:#f9f,stroke:#333,stroke-width:2px,color:#000
     style F fill:#fff,stroke:#333,stroke-width:1px,color:#000    
 ```
