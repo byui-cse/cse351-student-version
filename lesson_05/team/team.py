@@ -26,7 +26,7 @@ def is_prime(n):
     if n % 2 == 0 or n % 3 == 0:
         return False
     i = 5
-    while i ** 2 <= n:
+    while i * i <= n:
         if n % i == 0 or n % (i + 2) == 0:
             return False
         i += 6
@@ -44,6 +44,7 @@ def main():
     start = 10000000000
     range_count = 100000
     numbers_processed = 0
+    prime_count = 0
     for i in range(start, start + range_count):
         numbers_processed += 1
         if is_prime(i):
