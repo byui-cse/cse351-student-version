@@ -19,7 +19,7 @@ These files are found in the folder `lesson_04/prove` in the Github repository.
 
 1. Implement the classes for this assignment (See Program Diagram below).
 1. You will be required to retrieve weather data as fast as you can from the local server.  Note, that the server will delay each request a small amount of time.  For this assignment, the delay is 0.1 of a second.  
-1. Your program needs to retrieve all weather data under 60 seconds.
+1. Try to get your program to retrieve all weather data under 60 seconds.  Depending on the age of your computer, this might not be possible.
 
 
 ## Classes / Files
