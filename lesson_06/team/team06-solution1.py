@@ -34,14 +34,14 @@ import time
 # Include cse 351 common Python files
 from cse351 import *
 
-words = ['BOOKMARK', 'SURNAME', 'RETHINKING', 'HEAVY', 'IRONCLAD', 'HAPPY', 
-        'JOURNAL', 'APPARATUS', 'GENERATOR', 'WEASEL', 'OLIVE', 
-        'LINING', 'BAGGAGE', 'SHIRT', 'CASTLE', 'PANEL', 
-        'OVERCLOCKING', 'PRODUCER', 'DIFFUSE', 'SHORE', 
-        'CELL', 'INDUSTRY', 'DIRT', 
-        'TEACHING', 'HIGHWAY', 'DATA', 'COMPUTER', 
-        'TOOTH', 'COLLEGE', 'MAGAZINE', 'ASSUMPTION', 'COOKIE', 
-        'EMPLOYEE', 'DATABASE', 'POET', 'COMPUTER', 'SAMPLE']
+words = [
+    'APPARATUS', 'ASSUMPTION', 'BAGGAGE', 'BOOKMARK', 'CASTLE', 'CELL', 
+    'COLLEGE', 'COMPUTER', 'COOKIE', 'DATA', 'DATABASE', 'DIFFUSE', 
+    'DIRT', 'EMPLOYEE', 'GENERATOR', 'HAPPY', 'HEAVY', 'HIGHWAY', 
+    'INDUSTRY', 'IRONCLAD', 'JOURNAL', 'LINING', 'MAGAZINE', 'OLIVE', 
+    'OVERCLOCKING', 'PANEL', 'POET', 'PRODUCER', 'RETHINKING', 'SAMPLE', 
+    'SHIRT', 'SHORE', 'SURNAME', 'TEACHING', 'TOOTH', 'WEASEL'
+]
 
 # https://stackoverflow.com/questions/287871/how-to-print-colored-text-in-python
 class bcolors:

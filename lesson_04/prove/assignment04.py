@@ -23,7 +23,7 @@ from common import *
 from cse351 import *
 
 THREADS = 0                 # TODO - set for your program
-WORKERS = 10
+WORKERS = 0                 # TODO - set for your program
 RECORDS_TO_RETRIEVE = 5000  # Don't change
 
 
@@ -46,6 +46,28 @@ class NOAA:
 
     def get_temp_details(self, city):
         return 0.0
+
+
+# ---------------------------------------------------------------------------
+class Queue351():
+    """ This is the queue object to use for this class. Do not modify!! """
+
+    def __init__(self):
+        self.__items = []
+   
+    def put(self, item):
+        assert len(self.__items) <= 10
+        self.__items.append(item)
+
+    def get(self):
+        return self.__items.pop(0)
+
+    def get_size(self):
+        """ Return the size of the queue like queue.Queue does -> Approx size """
+        extra = 1 if random.randint(1, 50) == 1 else 0
+        if extra > 0:
+            extra *= -1 if random.randint(1, 2) == 1 else 1
+        return len(self.__items) + extra
 
 
 # ---------------------------------------------------------------------------
@@ -103,7 +125,7 @@ def main():
 
     records = RECORDS_TO_RETRIEVE
 
-    # TODO - Create any queues, pipes, locks, barriers you need
+    # TODO - Create any queues, semaphores, locks or barriers you need
 
 
 

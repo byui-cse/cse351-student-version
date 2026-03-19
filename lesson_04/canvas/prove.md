@@ -42,14 +42,14 @@ Note: all classes are found in the assignment file `assignment04.py`.  Normally,
 ```mermaid
 graph LR
     main[Main]
-    Q1[Queue 1]
+    Q1[351Queue 1]
     T1(Thread 1)
     T2(Thread 2)
-    TN(...)
-    Q2[Queue 2]
+    TN(Thread N)
+    Q2[351Queue 2]
     W1[Worker 1]
     W2[Worker 2]
-    WN[...]
+    WN[Worker M]
     NOAA_Class[NOAA Class]
 
     main -- Commands --> Q1;
@@ -103,6 +103,7 @@ The local server will need to be started before you run your assignment.  Follow
 
 ### Queue (That main uses)
 
+1. You **MUST** use the Queue351 class provided in this file.  Do not use the Queue class from Python.
 1. This queue is used by main() and the thread functions.  
 1. main() will add commands to this queue for the threads to use.
 1. Limit the size of the queue to 10 items
@@ -116,13 +117,14 @@ This thread will read commands from the queue and call the server to retrieve we
 
 ### Queue (That the thread function use with the Workers threads)
 
+1. You **MUST** use the Queue351 class provided in this file.  Do not use the Queue class from Python.
 1. This queue is used between the thread and the workers.  
 1. Limit the size of the queue to 10 items.  
 1. The information that is required to be sent over the queue is city name, date and temperature.  You can format this as you wish.
 
 ### Worker Class
 
-1. This is a threaded class.  
+1. This is a threaded class.  It needs a constructor and a run() method.
 1. You will create `WORKERS` number of workers.
 1. When a worker receives information over the queue, it will call a method in the class NOAA to store city name, date and temperature.
 

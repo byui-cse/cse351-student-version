@@ -13,14 +13,14 @@ The program [lesson_06/team.py](../team/team.py) creates a word search puzzle, t
 - Try to speed up this program. Use `any programming technique` you have learned in this course so far or in any other programming course.
 - You can modify the Board class.
 - Talk with your team before making changes.
-- Make backups if you try something is case it doesn't work.
+- Make backups if you try something in case it doesn't work.
 - Any changes to make it faster should not change the final results. (ie., a board with highlighted letters)
 
 ### Core Requirements
 
 1. Make sure the [team.py](../team/team.py) file for this lesson works. The program will display the board before and after finding the words in it. Read the header in the program for any other instructions.  The completion time displayed at the end of the program is the time to find and highlight the words in the board.
 2. Discuss with your team members ideas on how to improve this program with regards to speed.
-3. Using any technique (ie, threads, processes, algorithm analysis, etc...)  make the program faster.
+3. Using any technique (ie, threads, processes, algorithm analysis, etc...) to make the program faster.
 4. Time your changes. What worked and what didn't?  Was it worth the effort?
 
 ### Sample Solution
