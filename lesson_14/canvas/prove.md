@@ -26,7 +26,7 @@ The tree class allows you to build a family tree from the families and individua
 - Folder `assignment14` - C# assignment project files
 - `runs.txt` - Contains which search algorithms will be run and how many generations will be retrieved from the server.  You can modify this file while you are testing your program.
 
-### FS Server
+### FS Server (Python Version)
 
 There is a server program that you will need to run in it's own terminal window on your computer.  The program is `server.py`.  
 
@@ -37,6 +37,10 @@ There is a server program that you will need to run in it's own terminal window 
 1. There are two API calls that you will be making to build your tree.  The details are found in `functions.py`.
 
 While running, the server will display requests and replies from your assignment.  It also displays the current number of active threads making requests and the maximum number of threads.
+
+### FS Server (C# Version)
+
+In the folder **FamilyTreeServer** is a C# project that can be used instead of the Python version of the server.  The run this server, open the project into Rider in a separate project and run it.  Then in another instance of Rider, open the assignment 14 project.  This version of the server can handle more concurrent connections.
 
 ### Part 1
 
