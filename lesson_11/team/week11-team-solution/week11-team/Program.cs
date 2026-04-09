@@ -1,5 +1,5 @@
 ﻿/*
- * Course: CSE 3541
+ * Course: CSE 351
  * Week  : 11
  *
  * - You need to run the server in Python for this program first

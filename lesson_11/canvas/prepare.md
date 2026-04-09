@@ -33,7 +33,7 @@ The development environment for this section of the course will be using C#.  Yo
 
     We will be using the platform independent version of C# called .NET Core. You will need to use version 8 of .NET core. Please download the version for your operating system and install it so that you’re ready for class to begin.
 
-    The version of dotnet that we are using in this course is `version 8`.  It can be [downloaded here](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
+    The version of dotnet that we are using in this course is `version 10 SDK`.  It can be [downloaded here](https://dotnet.microsoft.com/en-us/download/dotnet/10.0)
 
 1. VS Code or JetBrains Rider
 

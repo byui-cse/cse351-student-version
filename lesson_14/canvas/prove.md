@@ -16,7 +16,7 @@ This class holds the family information from the server.
 
 **Tree**
 
-The tree class allows you to build a family tree from the families and individuals that you retrieve from the server.
+The tree class allows you to build a family tree from the families and individuals that you retrieve from the server.  This class must be used to keep track of the individuals and families that you retrieve.
 
 ## Assignment
 
@@ -34,13 +34,13 @@ There is a server program that you will need to run in it's own terminal window 
 1. Go to the directory of the assignment.
 1. Type `python server.py` to start the server.
 1. Note if the server is very busy it might not reply with a 200 reply code or might return an empty JSON.  You should handle these issues in your program.
-1. There are two API calls that you will be making to build your tree.  The details are found in `functions.py`.
+1. There are two API calls that you will be making to build your tree.  The details are found in `solve.cs`.
 
 While running, the server will display requests and replies from your assignment.  It also displays the current number of active threads making requests and the maximum number of threads.
 
 ### FS Server (C# Version)
 
-In the folder **FamilyTreeServer** is a C# project that can be used instead of the Python version of the server.  The run this server, open the project into Rider in a separate project and run it.  Then in another instance of Rider, open the assignment 14 project.  This version of the server can handle more concurrent connections.
+In the folder **FamilyTreeServer** is a C# project that can be used instead of the Python version of the server.  The run this server, open the project into Rider in a separate project and run it.  Then in another instance of Rider, open the assignment 14 project.  This version of the server can handle more concurrent connections and thus your project can run faster.
 
 ### Part 1
 
@@ -66,9 +66,9 @@ In the folder **FamilyTreeServer** is a C# project that can be used instead of t
 
 ## Submission
 
-Assignments are individual and not team based.  Any assignments found to be plagiarised will be graded according to the `ACADEMIC HONESTY` section in the syllabus. The Assignment will be graded in broad categories as outlined in the syllabus:
+Assignments are individual and not team based.  Any assignments found to be plagiarized will be graded according to the `ACADEMIC HONESTY` section in the syllabus. The Assignment will be graded in broad categories as outlined in the syllabus:
 
-- Upload the folowing files in canvas:
+- Upload the following files in canvas:
     - `Solve.cs`
     - `assignment.log`
 - You must clearly show in your code that you are using DFS and BFS algorithms.

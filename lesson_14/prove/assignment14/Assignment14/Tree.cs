@@ -27,11 +27,10 @@ public class Tree
         if (_people.ContainsKey(person.Id))
         {
             Console.WriteLine($"ERROR: Person with ID = {person.Id} already exists in the tree.");
+            return;
         }
-        else if (!_people.TryAdd(person.Id, person))
-        {
-            _people[person.Id] = person;
-        }
+
+        _people[person.Id] = person;
     }
 
     public void AddFamily(Family family)
@@ -39,11 +38,10 @@ public class Tree
         if (_families.ContainsKey(family.Id))
         {
             Console.WriteLine($"ERROR: Family with ID = {family.Id} already exists in the tree.");
+            return;
         }
-        else if (!_families.TryAdd(family.Id, family))
-        {
-            _families[family.Id] = family;
-        }
+
+        _families[family.Id] = family;
     }
 
     public Person? GetPerson(long id)
@@ -109,7 +107,7 @@ public class Tree
         Logger.Write($"Max generations                     : {CountGenerations()}");
         Logger.Write($"People connected to starting family : {CountConnectedToStart()}");
     }
-    
+
     private void DisplayParents(string role, Person? person)
     {
         if (person == null)
@@ -151,7 +149,7 @@ public class Tree
                     RecursiveCount(husband.ParentId);
                 }
             }
-            
+
             // Wife
             var wife = GetPerson(fam.WifeId);
             if (wife != null)
@@ -180,7 +178,7 @@ public class Tree
         void RecursiveGen(long familyId, int currentGen)
         {
             if (!_families.ContainsKey(familyId)) return;
-            
+
             if (maxGen < currentGen)
             {
                 maxGen = currentGen;
