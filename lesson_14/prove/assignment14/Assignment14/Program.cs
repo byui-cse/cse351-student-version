@@ -72,7 +72,7 @@ class Program
                             await run_part(start_id, generations, "Depth First Search", Solve.DepthFS);
                             break;
                         case 2:
-                            await run_part(start_id, generations, "Breadth First Search", Solve.BreathFS);
+                            await run_part(start_id, generations, "Breadth First Search", Solve.BreadthFS);
                             break;
                     }
                 }
