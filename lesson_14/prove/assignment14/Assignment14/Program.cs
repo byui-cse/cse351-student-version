@@ -47,8 +47,13 @@ class Program
     
     static async Task Main()
     {
-        string logLocation = Environment.CurrentDirectory[ ..(Environment.CurrentDirectory.LastIndexOf("Assignment14", StringComparison.Ordinal) + 13)];
-        Logger.Configure(minimumLevel: LogLevel.Debug, logToFile: true, filePath: $"{logLocation}assignment.log");
+        // This goes up 3 levels from bin/Debug/net8.0 to reach the Project Root
+        string projectRoot = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", ".."));
+        string logPath = Path.Combine(projectRoot, "assignment.log");
+
+        Logger.Configure(minimumLevel: LogLevel.Debug, logToFile: true, filePath: logPath);
+       
+        Logger.Write("".PadRight(45, '#'));
         
         var data = await Solve.GetDataFromServerAsync($"{Solve.TopApiUrl}");
         long start_id = (long)data["start_family_id"];
