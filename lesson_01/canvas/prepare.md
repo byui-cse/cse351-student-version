@@ -44,7 +44,7 @@ See syllabus.
 
 ## Required Software and Tools (Python, C#, IDEs, etc.)
 
-We will be using Python 3 in this course.  We highly recommend that you install the latest version of Python from [python.org](https://www.python.org).  This is version 3.13.x. 
+We will be using Python 3 in this course.  We highly recommend that you install the latest version of Python from [python.org](https://www.python.org). 
 
 If any of the concepts or topics in the list below seem unfamiliar to you, `it is your responsibility to review these topics`. The basic data structures used in this course are: 
 - Lists
