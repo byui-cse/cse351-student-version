@@ -28,8 +28,8 @@ This task is to retrieve data from a local server as fast as you can.
 
 When your program is finished, There are two solutions.  Compare them to your approach.
 
-1. [Solution 1](../team/team02_solution.py) Able to retrieve all data in about 4 seconds.
-1. [Solution 2](../team/team02_solution2.py) Able to retrieve all data in about 2 seconds.
+1. [Solution 1](../team/team02-solution1.py) Able to retrieve all data in about 4 seconds.
+1. [Solution 2](../team/team02-solution2.py) Able to retrieve all data in about 2 seconds.
 
 You should work to complete this team activity for the one hour period first, without looking at the sample solution. However, if you have worked on it for at least an hour and are still having problems, you may feel free to use the sample solution to help you finish your program.
 
