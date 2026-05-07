@@ -20,8 +20,7 @@ Instructions:
 
 TODO
 - Create a threaded function to make a call to the server where
-  it retrieves data based on a URL.  The function should have a method
-  called get_name() that returns the name of the character, planet, etc...
+  it retrieves data based on a URL.
 - The threaded function should only retrieve one URL.
 - Create a queue that will be used between the main thread and the threaded functions
 
