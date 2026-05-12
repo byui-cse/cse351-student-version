@@ -729,15 +729,12 @@ def worker(barrier, thread_id):
     print(f"Thread {thread_id}: Waiting at the barrier...")
     worker_id = barrier.wait()
 
-    print(f"Thread {thread_id}: Passed the barrier! (worker id: {worker_id})")
-
-    # Perform the next stage of the computation, now synchronized
-    time.sleep(random.uniform(0.1, 0.5))
-
-    print(f"Thread {thread_id}: Finishing.")
+    # select one thread to display a message
+    if thread_id == 0:
+        print(f"All Threads are finished")
 
 if __name__ == '__main__':
-    barrier = threading.Barrier(THREADS)
+    barrier = threading.Barrier(THREADS)        # must match number of threads
 
     threads = []
     for i in range(THREADS):
