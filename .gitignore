@@ -18,6 +18,7 @@ submissions/
 
 # Global include excluded
 !IN_CLASS_DEMOS/README.md
+global.json
 
 .vscode
 .DS_Store
