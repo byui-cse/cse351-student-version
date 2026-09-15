@@ -940,7 +940,7 @@ print(f"Final counter value: {counter:,}, expected: {2 * TIMES:,}")
 
 Result: With the lock in place, the race condition is eliminated. The final value of counter will consistently be 2,000,000, as expected. The acquire() and release() calls guarantee that only one thread can modify counter at a time. The try...finally block is a best practice to ensure the lock is always released.
 
-You can also use `wait lock:` instead of `acquire()` and `release()`
+You can also use `with lock:` instead of `acquire()` and `release()`
 
 ```python
 import threading
